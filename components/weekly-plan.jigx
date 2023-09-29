@@ -1,0 +1,295 @@
+type: component.default
+children:
+  - type: component.card
+    
+    options:
+      children:
+        
+        # FIRST ROW
+        - type: component.view
+          options:
+            style:
+              flex: 
+                direction: row
+              alignItems: center
+              justifyContent: space-between
+            children:
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                    gap: minimal
+                  children:
+                    - type: component.text
+                      options:
+                        value: "Your weekly plan:"
+                        align: left
+                        size: small  
+                    - type: component.text
+                      options:
+                        value: "20 - 26. 05. 2023"
+                        align: left
+                        weight: bold
+                        size: small  
+              - type: component.icon
+                when: =@ctx.inputs.isClickable = true ? true:false
+                options:
+                  icon: arrow-right
+                  color: color9
+                  shape: circle
+                  type: duotone
+                  size: small
+                  onPress: 
+                    when: =@ctx.inputs.isClickable = true ? true:false
+                    type: action.go-to
+                    options:
+                      linkTo: weekly-plan
+        # CONTENT 
+        - type: component.view
+          options:
+            style:
+              flex: 
+                grow: 1
+                basis: 1
+                direction: row
+              alignItems: flex-end
+              justifyContent: space-around
+
+            children:
+              # MONDAY
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                      grow: 1
+                      shrink: 1
+                    gap: small
+                    background:
+                      color: =@ctx.solution.state.clickedDay = 'Monday' ? color3:""
+                    radius: medium
+                    padding: medium
+                    justifyContent: space-between
+                  onPress: 
+                    when: =@ctx.inputs.isClickable = true ? true:false
+                    type: action.action-list
+                    options:
+                      isSequential: true
+                      actions:
+                        - type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.day
+                            value: Monday
+                  children:
+                    - type: component.image
+                      options:
+                        size: 
+                          height: 25
+                          width: 25
+                        source:
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/e92873e3-0548-4a72-82e7-11e449d0a3fa/water%20drop.png?view=open
+                    - type: component.text
+                      options:
+                        value: Mon
+                        align: center
+                        emphasis: high
+                        size: tiny  
+
+              # TUESDAY
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                      grow: 1
+                      shrink: 1
+                    gap: small
+                    border:
+                      color: primary
+                      style: solid
+                    background:
+                      color: color9
+                    radius: medium
+                    padding: medium
+                    justifyContent: space-between
+                  onPress: 
+                    when: =@ctx.inputs.isClickable = true ? true:false
+                    type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.day
+                      value: Tuesday
+                  children:
+                    - type: component.image
+                      options:
+                        size: 
+                          height: 25
+                          width: 25
+                        source:
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/eec8ecbb-bcce-46e2-870c-27eae880c2fe/Fire.png?view=open
+                    - type: component.text
+                      options:
+                        value: Tue
+                        align: center
+                        emphasis: high
+                        size: tiny                           
+
+              # WEDNESDAY
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                      grow: 1
+                      shrink: 1
+                    gap: small
+                    # background:
+                    #   color: primary
+                    radius: medium
+                    padding: medium
+                    justifyContent: space-between
+                  onPress: 
+                    when: =@ctx.inputs.isClickable = true ? true:false
+                    type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.day
+                      value: Wednesday
+                  children:
+                    - type: component.icon
+                      options:
+                        icon: checkbox-unchecked
+                        size: medium
+                    - type: component.text
+                      options:
+                        value: Wed
+                        align: center
+                        emphasis: high
+                        size: tiny                         
+
+              # THURSDAY
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                      grow: 1
+                      shrink: 1
+                    gap: small
+                    # background:
+                    #   color: primary
+                    radius: medium
+                    padding: medium
+                    justifyContent: space-between
+                  onPress: 
+                    when: =@ctx.inputs.isClickable = true ? true:false
+                    type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.day
+                      value: Thursday
+                  children:
+                    - type: component.icon
+                      options:
+                        icon: checkbox-unchecked
+                        size: medium
+                    - type: component.text
+                      options:
+                        value: Thu
+                        align: center
+                        emphasis: high
+                        size: tiny   
+    
+              # FRIDAY
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                      grow: 1
+                      shrink: 1
+                    gap: small
+                    # background:
+                    #   color: primary
+                    radius: medium
+                    padding: medium
+                    justifyContent: space-between
+                  onPress: 
+                    when: =@ctx.inputs.isClickable = true ? true:false
+                    type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.day
+                      value: Friday
+                  children:
+                    - type: component.icon
+                      options:
+                        icon: checkbox-unchecked
+                        size: medium
+                    - type: component.text
+                      options:
+                        value: Fri
+                        align: center
+                        emphasis: high
+                        size: tiny       
+    
+              # SATURDAY
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                      grow: 1
+                      shrink: 1
+                    gap: small
+                    # background:
+                    #   color: primary
+                    radius: medium
+                    padding: medium
+                    justifyContent: space-between
+                  onPress: 
+                    when: =@ctx.inputs.isClickable = true ? true:false
+                    type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.day
+                      value: Saturday
+                  children:
+                    - type: component.icon
+                      options:
+                        icon: checkbox-unchecked
+                        size: medium
+                    - type: component.text
+                      options:
+                        value: Sat
+                        align: center
+                        emphasis: high
+                        size: tiny   
+
+              # SUNDAY
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                      grow: 1
+                      shrink: 1
+                    gap: small
+                    # background:
+                    #   color: primary
+                    radius: medium
+                    padding: medium
+                    justifyContent: space-between
+                  onPress: 
+                    when: =@ctx.inputs.isClickable = true ? true:false
+                    type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.day
+                      value: Sunday
+                  children:
+                    - type: component.icon
+                      options:
+                        icon: checkbox-unchecked
+                        size: medium
+                    - type: component.text
+                      options:
+                        value: Sun
+                        align: center
+                        emphasis: high
+                        size: tiny                               

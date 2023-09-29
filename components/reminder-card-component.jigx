@@ -1,0 +1,113 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        background:
+          color: =@ctx.inputs.notifications.color
+        radius: large
+        padding: none
+        gap: small
+        margin: minimal
+      children:
+        - type: component.view
+          options:
+            style:
+              flex:
+                direction: row
+              gap: small
+              justifyContent: space-between
+              padding: 
+                top: regular
+                left: regular
+                right: regular
+            children:         
+              - type: component.text
+                options:
+                  value: =@ctx.inputs.notifications.title
+                  align: left
+                  size: small
+              - type: component.text
+                options:
+                  value: =@ctx.inputs.notifications.time
+                  weight: bold
+                  align: left                        
+        - type: component.view
+          options: 
+            onPress: 
+              # when: =@ctx.inputs.notifications.isCheckable = true ? true:false
+              # type: action.set-state
+              # options:
+              #   state: =@ctx.solution.state.meds
+              #   value: =@ctx.solution.state.meds + 1  
+              # type: action.go-to
+              # options:
+              #   linkTo: checklist
+              type: action.action-list
+              options:
+                isSequential: true
+                actions:
+                  - type: action.set-state
+                    when: =@ctx.inputs.notifications.isCheckable = true ? true:false
+                    options:
+                      state: =@ctx.solution.state.meds
+                      value: =@ctx.solution.state.meds + 1 
+                  - type: action.go-to
+                    when: =@ctx.inputs.notifications.isCheckable = false ? true:false
+                    options:
+                      linkTo: checklist
+            style:
+              flex: 
+                direction: row
+              radius: large
+              padding:
+                bottom: small
+                top: none
+                horizontal: regular
+              justifyContent: flex-start
+              alignItems: center
+              gap: small
+            children: 
+              - type: component.view
+                options:
+                  style:
+                    padding: none
+                  children:
+                    - type: component.image
+                      options:
+                        size: 
+                          height: 50
+                          width: 50
+                        source:
+                          uri: =@ctx.inputs.notifications.image
+                  
+              - type: component.view
+                options:
+                  style:
+                    flex:
+                      direction: column
+                      grow: 1
+                    gap: none
+                    padding: none
+                  children:
+                    - type: component.text
+                      options:
+                        value: =@ctx.inputs.notifications.value
+                        # Daily meds
+                        weight: bold
+                        align: left   
+                    - type: component.text
+                      options:
+                        value: =@ctx.inputs.notifications.message
+                        # isSubtle: true
+                        align: left  
+                        size: small                                                        
+              - type: component.icon
+                when: =@ctx.inputs.notifications.isCheckable = true ? false:true
+                options:
+                  icon: =@ctx.inputs.notifications.icon
+                  # icon: =@ctx.solution.state.meds = 0 ? 'checkbox-unchecked':'checkbox-checked'
+              - type: component.icon
+                when: =@ctx.inputs.notifications.isCheckable = true ? true:false
+                options:
+                  icon: =@ctx.solution.state.meds = 0 ? 'checkbox-unchecked':'checkbox-checked'

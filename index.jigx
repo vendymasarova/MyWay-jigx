@@ -1,0 +1,18 @@
+name: adhd_myway
+title: adhd_myway
+category: health
+
+onRefresh: 
+  type: action.set-state
+  options:
+    state: =@ctx.solution.state.checklist
+    value: 0
+    
+widgets:
+  - size: 1x1
+    jigId: custom-home
+home:
+  - instanceId: home
+    jigId: custom-home
+    
+    

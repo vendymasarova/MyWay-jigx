@@ -1,0 +1,20 @@
+title: Name
+description: Description of your Jig
+type: jig.default
+
+children:
+  - type: component.custom-component
+    componentId: weekly-plan
+    inputs:
+      isClickable: true 
+  - type: component.section
+    options:
+      title: day
+      children:
+        - type: component.entity
+          options:
+            children:
+              - type: component.entity-field
+                options:
+                  label: day
+                  value: =@ctx.solution.state.day

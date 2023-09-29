@@ -1,0 +1,55 @@
+title: Name
+description: Description of your Jig
+type: jig.default
+
+onRefresh: 
+  # type: action.set-state
+  # options:
+  #   state: =@ctx.solution.state.checklist
+  #   value: 0
+  type: action.action-list
+  options:
+    isSequential: true
+    actions:
+      - type: action.set-state
+        options:
+          state: =@ctx.solution.state.checklist
+          value: 0
+      - type: action.set-state
+        options:
+          state: =@ctx.solution.state.meds
+          value: 0
+          
+    
+datasources:
+  notifications:
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          title: Dont forget to leave the house in
+          value: See your checklist
+          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+          time: 18min
+          isDone: false
+          message: you are ready to go!
+          icon: arrow-right
+          color: color3
+          isCheckable: false
+
+children:
+  - type: component.custom-component
+    componentId: header-component
+    inputs:
+      avatar: https://t14345253.p.clickup-attachments.com/t14345253/78f1ae20-94cd-438b-90dd-92812838e663/avatar1.png?view=open
+      welcomeMessage: Hello, Jane! 👋
+      name: Jane
+      date: ='Today is ' & $fromMillis($toMillis($now()), '[FNn], [D]. [M]. [Y]')
+  - type: component.custom-component
+    componentId: reminder-card-component
+    inputs:
+      notifications: =@ctx.datasources.notifications
+  - type: component.custom-component
+    componentId: weekly-plan
+    inputs:
+      isClickable: true 

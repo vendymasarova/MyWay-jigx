@@ -1,0 +1,74 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        flex: 
+          direction: row
+        justifyContent: space-between
+        alignItems: flex-start
+      children:
+        - type: component.view
+          options:
+            style:
+              flex:
+                direction: row
+              gap: small
+              alignItems: center 
+            onPress: 
+              type: action.go-to
+              options:
+                linkTo: user-data
+            children:
+              # Avatar
+              - type: component.avatar
+                options:
+                  title: =@ctx.inputs.name
+                  uri: =@ctx.inputs.avatar
+                  size: large
+                  align: left
+              # Text
+              - type: component.view
+                options:
+                  style:
+                    # justifyContent: space-between
+                    alignItems: center
+                    gap: small
+                  children:
+                    - type: component.text
+                      options:
+                        value: =@ctx.inputs.welcomeMessage
+                        align: center
+                        weight: semi-bold
+                        size: large
+                        # emphasis: high
+                    - type: component.text
+                      options:
+                        value: =@ctx.inputs.date
+                        emphasis: high
+        - type: component.view
+          options:
+            style:
+              flex:
+                direction: row
+              gap: minimal
+              alignItems: center
+            onPress: 
+              type: action.go-to
+              options:
+                linkTo: notifications
+            children:
+              - type: component.icon
+                options:
+                  icon: alarm-bell
+                  color: color9
+                  shape: circle
+                  type: duotone
+                  size: small
+              - type: component.text
+                options:
+                  value: '1'
+                  color: color9
+                  weight: semi-bold
+                  
+                
