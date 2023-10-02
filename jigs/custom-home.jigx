@@ -22,7 +22,7 @@ onRefresh:
           
     
 datasources:
-  notifications:
+  checklist:
     type: datasource.static
     options:
       data:
@@ -46,9 +46,9 @@ children:
       name: Jane
       date: ='Today is ' & $fromMillis($toMillis($now()), '[FNn], [D]. [M]. [Y]')
   - type: component.custom-component
-    componentId: reminder-card-component
+    componentId: reminder-card-component-checklist
     inputs:
-      notifications: =@ctx.datasources.notifications
+      checklist: =@ctx.datasources.checklist
   - type: component.custom-component
     componentId: weekly-plan
     inputs:

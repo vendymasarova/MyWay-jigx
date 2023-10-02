@@ -26,16 +26,6 @@ datasources:
     options:
       data:
         - id: 1
-          title: Dont forget to leave the house in
-          value: See your checklist
-          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
-          time: 18 min
-          isDone: false
-          message: you are prepared!
-          icon: arrow-right
-          color: color3
-          isCheckable: false
-        - id: 2
           title: You should take your meds in
           value: Daily meds
           image: https://t14345253.p.clickup-attachments.com/t14345253/b0ea69f5-4d28-4188-8036-2c286b5009cc/pills.png?view=open      
@@ -45,13 +35,36 @@ datasources:
           icon: checkbox
           color: color9
           isCheckable: true
+          
+  checklist:
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          title: Dont forget to leave the house in
+          value: See your checklist
+          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+          time: 18 min
+          isDone: false
+          message: you are prepared!
+          icon: arrow-right
+          color: color3
+          isCheckable: false
 
 children:
+  - type: component.list
+    options:
+      data: =@ctx.datasources.checklist
+      item: 
+        type: component.custom-component
+        componentId: reminder-card-component-checklist
+        inputs:
+          checklist: =@ctx.current.item
   - type: component.list
     options:
       data: =@ctx.datasources.notifications
       item: 
         type: component.custom-component
-        componentId: reminder-card-component
+        componentId: reminder-card-component-todo
         inputs:
           notifications: =@ctx.current.item

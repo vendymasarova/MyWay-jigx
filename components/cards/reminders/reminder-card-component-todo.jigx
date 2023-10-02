@@ -1,6 +1,7 @@
 type: component.default
 children:
   - type: component.view
+    when: =@ctx.solution.state.meds = 1 ? false:true
     options:
       style:
         background:

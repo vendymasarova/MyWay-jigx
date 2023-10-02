@@ -15,4 +15,11 @@ home:
   - instanceId: home
     jigId: custom-home
     
+assets:
+  theme:
+    palette:
+      light:
+        color14: 
+          background: '#FFFFFF'
+          onBackground: '#000000'
     

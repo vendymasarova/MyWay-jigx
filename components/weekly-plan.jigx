@@ -66,8 +66,6 @@ children:
                       grow: 1
                       shrink: 1
                     gap: small
-                    background:
-                      color: =@ctx.solution.state.clickedDay = 'Monday' ? color3:""
                     radius: medium
                     padding: medium
                     justifyContent: space-between
