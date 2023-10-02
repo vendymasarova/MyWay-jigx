@@ -20,12 +20,8 @@ children:
                   style:
                     flex: 
                       shrink: 1
-                    # width:
-                    #   min: 70
                     padding: small
                     radius: medium
-                    # border:
-                    #   color: color3
                     background:
                       color: color3
                   children:

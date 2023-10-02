@@ -1,0 +1,76 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        flex: 
+          grow: 1
+          shrink: 1
+          direction: row
+        gap: medium
+        margin: 
+          right: small
+          bottom: small
+      children:
+        - type: component.card
+          options:
+            children:
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      shrink: 1
+                    width: 220
+                  children:
+                    - type: component.view
+                      options:
+                        style:
+                          flex: 
+                            direction: column
+                          padding: small
+                          radius: medium
+                          width: 60
+                          height: 60
+                          background:
+                            color: =@ctx.inputs.routines.color
+                          justifyContent: center
+                          alignItems: center
+                        children:
+                          - type: component.image
+                            options:
+                              size:
+                                height: 50
+                                width: 50
+                              resizeMode: contain
+                              # title: =@ctx.inputs.routines.name
+                              source:
+                                uri:  =@ctx.inputs.routines.image
+                    - type: component.view
+                      options:
+                        style:
+                          margin:
+                            top: medium
+                          gap: small
+                        children:
+                          - type: component.text
+                            options:
+                              value: =@ctx.inputs.routines.name
+                              weight: bold
+                              size: large
+                          - type: component.view
+                            options:
+                              style:
+                                flex:
+                                  direction: row
+                                gap: small
+                              children:
+                                - type: component.icon
+                                  options:
+                                    icon: checklist
+                                    emphasis: medium
+                                - type: component.text
+                                  options:
+                                    value: 3/5
+                                    emphasis: high
+                              # space for progressbar
+                            
