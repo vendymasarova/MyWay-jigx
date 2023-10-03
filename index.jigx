@@ -11,6 +11,8 @@ onRefresh:
 widgets:
   - size: 1x1
     jigId: custom-home
+  - size: 1x1
+    jigId: weekly-plan-composite
 home:
   - instanceId: home
     jigId: custom-home
@@ -21,5 +23,8 @@ assets:
       light:
         color14: 
           background: '#FFFFFF'
+          onBackground: '#000000'
+        color2:
+          background: '#B4E5BC'
           onBackground: '#000000'
     

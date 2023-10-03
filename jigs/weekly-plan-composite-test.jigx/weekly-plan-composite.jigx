@@ -1,0 +1,11 @@
+title: Name
+description: Description of your Jig
+type: jig.composite
+
+children:
+  - jigId: weekly-plan-list
+    # inputs:
+    #   recordid: =@ctx.jig.inputs.parameter
+  - jigId: weekly-plan-detail
+    inputs:
+      day: =@ctx.solution.state.day

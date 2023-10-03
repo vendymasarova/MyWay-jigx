@@ -1,0 +1,79 @@
+title: =@ctx.jig.inputs.day
+description: Description of your Jig
+type: jig.default
+
+datasources:
+  filters:
+    type: datasource.static
+    options:
+      data:
+        - category-name: All   
+          category-selected: ""
+        - category-name: To Do 
+          category-selected: "" 
+        - category-name: Home work
+          category-selected: "true"  
+        - category-name: Appointments
+          category-selected: "" 
+          
+  tasks:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/tasks
+  
+      query: 
+        SELECT 
+          id, 
+          '$.category',
+          '$.type',
+          '$.color',
+          '$.icon',
+          '$.name',
+          '$.due-date',
+          '$.day',
+          '$.for',
+          '$.description'
+        FROM [default/tasks]
+        WHERE '$.day' = @day 
+        ORDER BY '$.category'
+        # AND '$.category' LIKE @filter or @filter IS NULL
+        
+      queryParameters:
+        # filter: =@ctx.components.tasks-category.state.filter
+        day: =@ctx.jig.inputs.day
+
+children:
+  # - type: component.list
+  #   options:
+  #     data: =@ctx.datasources.filters
+  #     maximumItemsToRender: 8
+  #     isHorizontal: true
+  #     isHorizontalScrollIndicatorHidden: true
+  #     item: 
+  #       type: component.custom-component
+  #       componentId: filter
+  #       inputs:
+  #         filters: =@ctx.current.item
+  - type: component.list
+    instanceId: tasks-category
+    options:
+      # filter:
+      #   - title: All
+      #     value: ''
+      #   - title: To Do
+      #     value: To Do
+      #   - title: Home work
+      #     value: Home work
+      #   - title: Appointments
+      #     value: Appointments
+      data: =@ctx.datasources.tasks
+      maximumItemsToRender: 8
+      item: 
+        type: component.custom-component
+        # when: =@ctx.current.item.day =  ? true:false
+        componentId: task
+        inputs:
+          tasks: =@ctx.current.item

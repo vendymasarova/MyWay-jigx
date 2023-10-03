@@ -1,12 +1,62 @@
-title: Name
+title: =@ctx.solution.state.day
 description: Description of your Jig
 type: jig.default
+
+datasources:
+  filters:
+    type: datasource.static
+    options:
+      data:
+        - category-name: All   
+          category-selected: ""
+        - category-name: To Do 
+          category-selected: "" 
+        - category-name: Home work
+          category-selected: "true"  
+        - category-name: Appointments
+          category-selected: "" 
+          
+  tasks:
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          category: Home work
+          type: school
+          color: color3
+          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+          name: English homework
+          due-date: '15 October | 8:00'
+          description: For this assignment, select two poems from the list below and write a one-page comparative analysis. Explore the themes, literary devices, and overall messages of the poems. Discuss the similarities and differences in their approach to these elements. Use specific examples from the poems to support your analysis. Be concise and insightful in your analysis.
+          for: Mr. Smith
+          day: Tuesday
 
 children:
   - type: component.custom-component
     componentId: weekly-plan
     inputs:
-      isClickable: true 
+      isClickable: true
+  - type: component.list
+    options:
+      data: =@ctx.datasources.filters
+      maximumItemsToRender: 8
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      item: 
+        type: component.custom-component
+        componentId: filter
+        inputs:
+          filters: =@ctx.current.item
+  - type: component.list
+    options:
+      data: =@ctx.datasources.tasks
+      maximumItemsToRender: 8
+      item: 
+        type: component.custom-component
+        # when: =@ctx.current.item.day =  ? true:false
+        componentId: task
+        inputs:
+          tasks: =@ctx.current.item
   - type: component.section
     options:
       title: day
@@ -18,3 +68,4 @@ children:
                 options:
                   label: day
                   value: =@ctx.solution.state.day
+  

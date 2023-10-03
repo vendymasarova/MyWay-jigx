@@ -72,6 +72,7 @@ children:
       data: =@ctx.datasources.routines
       maximumItemsToRender: 8
       isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
       item: 
         type: component.custom-component
         componentId: routine-card-component

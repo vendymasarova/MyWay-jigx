@@ -1,0 +1,9 @@
+title: Name
+description: Description of your Jig
+type: jig.default
+
+children:
+  - type: component.custom-component
+    componentId: weekly-plan
+    inputs:
+      isClickable: true

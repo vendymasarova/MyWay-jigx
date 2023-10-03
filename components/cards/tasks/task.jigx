@@ -1,0 +1,135 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        margin: 
+          bottom: small
+      children:
+        - type: component.card
+          options:
+            children:
+              # Content
+              - type: component.view
+                options:
+                  style:
+                  children:
+                    - type: component.view
+                      options:
+                        style:
+                          flex:
+                            direction: row
+                          justifyContent: space-between
+                          margin: 
+                            bottom: large
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                background:
+                                  color: primary
+                                radius: large
+                                padding: 
+                                  left: regular
+                                  right: regular
+                                  top: small
+                                  bottom: small
+                                margin: 
+                                  top: medium
+                                flex: 
+                                  grow: 0
+                              children:
+                                - type: component.text
+                                  options:
+                                    value: =@ctx.inputs.tasks.category
+                          - type: component.icon
+                            options:
+                              icon: three-dots
+                    - type: component.view
+                      options:
+                        style:
+                          gap: medium
+                          margin:
+                            bottom: large
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                flex:
+                                  direction: row
+                                alignItems: center
+                                gap: medium
+                              children:
+                                - type: component.view
+                                  options:
+                                    style:
+                                      flex: 
+                                        direction: column
+                                      padding: small
+                                      radius: medium
+                                      width: 50
+                                      height: 50
+                                      background:
+                                        color: =@ctx.inputs.tasks.color
+                                      justifyContent: center
+                                      alignItems: center
+                                    children:
+                                      - type: component.image
+                                        options:
+                                          size:
+                                            height: 40
+                                            width: 40
+                                          resizeMode: contain
+                                          # title: =@ctx.inputs.tasks.name
+                                          source:
+                                            uri:  =@ctx.inputs.tasks.icon
+                                - type: component.text
+                                  options:
+                                    value: =@ctx.inputs.tasks.name
+                                    size: large
+                                    weight: semi-bold
+                          - type: component.text
+                            options:
+                              value: =@ctx.inputs.tasks.description
+                              emphasis: high
+                              numberOfLines: 2
+                    - type: component.view
+                      options:
+                        style:
+                          gap: small
+                          margin: 
+                            bottom: large
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                flex:
+                                  direction: row
+                              children:
+                                - type: component.text
+                                  options:
+                                    value: 'Deadline: '
+                                    weight: semi-bold
+                                - type: component.text
+                                  options:
+                                    value: =@ctx.inputs.tasks.due-date
+                                    emphasis: medium
+                          - type: component.view
+                            options:
+                              style:
+                                flex:
+                                  direction: row
+                              children:
+                                - type: component.text
+                                  options:
+                                    value: 'For: '
+                                    weight: semi-bold
+                                - type: component.text
+                                  options:
+                                    value: =@ctx.inputs.tasks.for  
+                                    emphasis: medium
+                    - type: component.button
+                      options:
+                        title: Mark as done
+                        type: secondary
+                        isCompact: true

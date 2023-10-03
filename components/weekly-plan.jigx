@@ -44,7 +44,7 @@ children:
                     when: =@ctx.inputs.isClickable = true ? true:false
                     type: action.go-to
                     options:
-                      linkTo: weekly-plan
+                      linkTo: weekly-plan-composite
         # CONTENT 
         - type: component.view
           options:
