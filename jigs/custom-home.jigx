@@ -64,15 +64,19 @@ children:
       avatar: https://t14345253.p.clickup-attachments.com/t14345253/78f1ae20-94cd-438b-90dd-92812838e663/avatar1.png?view=open
       welcomeMessage: Hello, Jane! 👋
       name: Jane
-      date: ='Today is ' & $fromMillis($toMillis($now()), '[FNn], [D]. [M]. [Y]')
-  - type: component.custom-component
-    componentId: reminder-card-component-checklist
-    inputs:
-      checklist: =@ctx.datasources.checklist
+      date: =$fromMillis($toMillis($now()), '[FNn], [D]. [M]. [Y]')
+  # - type: component.custom-component
+  #   componentId: reminder-card-component-checklist
+  #   inputs:
+  #     checklist: =@ctx.datasources.checklist
   - type: component.custom-component
     componentId: weekly-plan
     inputs:
       isClickable: true 
+  - type: component.custom-component
+    componentId: title
+    inputs:
+      title: Daily routines
   - type: component.list
     options:
       data: =@ctx.datasources.routines

@@ -1,5 +1,5 @@
-title: Routines
-description: =@ctx.jig.inputs.routine & @ctx.datasources.routines.routine_id
+title: =@ctx.datasources.routines.name
+description: =@ctx.jig.inputs.routine 
 type: jig.default
 icon: contact
           
@@ -30,7 +30,6 @@ datasources:
         SELECT 
           id, 
           '$.name', 
-          '$.description',
           '$.image',
           '$.isDone',
           '$.type',
@@ -64,15 +63,10 @@ datasources:
         todoRoutineId: =@ctx.jig.inputs.routine
  
 children:
-  - type: component.list
-    options:
-      data: =@ctx.datasources.routines
-      maximumItemsToRender: 8
-      item: 
-        type: component.custom-component
-        componentId: routine-header
-        inputs:
-          routines: =@ctx.datasources.routines
+  - type: component.custom-component
+    componentId: routine-header
+    inputs:
+      routines: =@ctx.datasources.routines
   - type: component.list
     options:
       data: =@ctx.datasources.todos

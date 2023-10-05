@@ -42,10 +42,19 @@ children:
                         weight: semi-bold
                         size: large
                         # emphasis: high
-                    - type: component.text
+                    - type: component.view
                       options:
-                        value: =@ctx.inputs.date
-                        emphasis: high
+                        style:
+                          justifyContent: center
+                          alignItems: center
+                        children:
+                          - type: component.text
+                            options:
+                              value: 'Today is:'
+                          - type: component.text
+                            options:
+                              value: =@ctx.inputs.date
+                              emphasis: medium
         - type: component.view
           options:
             style:
