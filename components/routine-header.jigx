@@ -33,7 +33,7 @@ children:
                         resizeMode: contain
                         # title: =@ctx.inputs.routines.name
                         source:
-                          uri:  https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
               - type: component.text
                 options:
                   value: Before school routine

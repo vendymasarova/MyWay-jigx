@@ -37,19 +37,25 @@ datasources:
           color: color3
           isCheckable: false
   routines:
-    type: datasource.static
+    type: datasource.sqlite
     options:
-      data:
-        - id: 1
-          type: school
-          name: Before school
-          color: color3
-          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
-        - id: 2
-          type: morning
-          color: color9
-          name: Morning routine
-          image: https://t14345253.p.clickup-attachments.com/t14345253/0e08797f-f939-41d3-815e-6b638a941ae1/Sun.png?view=open
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/routines
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.image',
+          '$.isDone',
+          '$.type',
+          '$.time',
+          '$.routine_id'
+        FROM [default/routines] 
+      queryParameters:
+        myParam: value
 
 children:
   - type: component.custom-component

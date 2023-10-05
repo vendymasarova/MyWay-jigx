@@ -57,6 +57,8 @@ children:
                     when: =@ctx.inputs.checklist.isCheckable = false ? true:false
                     options:
                       linkTo: checklist
+                      
+                      
             style:
               flex: 
                 direction: row

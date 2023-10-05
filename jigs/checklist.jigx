@@ -1,5 +1,5 @@
 title: Routines
-# description: Description of your Jig
+description: =@ctx.jig.inputs.routine & @ctx.datasources.routines.routine_id
 type: jig.default
 icon: contact
           
@@ -19,35 +19,67 @@ actions:
           
 datasources:
   routines:
-    type: datasource.static
+    type: datasource.sqlite
     options:
-      data:
-        - id: 1
-          name: School bag
-          isChecked: false
-          image: https://t14345253.p.clickup-attachments.com/t14345253/a44dccc7-f28c-4377-a531-4ee425878ff6/Study%20bag.png?view=open
-        - id: 2
-          name: Pencils
-          isChecked: false
-          image: https://t14345253.p.clickup-attachments.com/t14345253/646c1c55-c975-4f91-86b7-202713a78356/Pencil.png?view=open
-        - id: 3
-          name: Water
-          isChecked: false
-          image: https://t14345253.p.clickup-attachments.com/t14345253/3b42d7d9-5d7e-4f40-87f0-4da4dbb6229f/Water%20Bottle.png?view=open
-        - id: 4
-          name: Snack
-          isChecked: false
-          image: https://t14345253.p.clickup-attachments.com/t14345253/141ded58-8cde-4efb-87f2-1335cfb0c794/Burger.png?view=open
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/routines
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.description',
+          '$.image',
+          '$.isDone',
+          '$.type',
+          '$.time',
+          '$.routine_id'
+        FROM [default/routines] 
+        WHERE '$.routine_id' = @routineId
+      queryParameters:
+        routineId: =@ctx.jig.inputs.routine
 
+  todos:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/todos
+  
+      query: 
+        SELECT 
+          id, 
+          '$.type', 
+          '$.name',
+          '$.image',
+          '$.isChecked',
+          '$.routine_id'
+        FROM [default/todos] 
+        WHERE '$.routine_id' = @todoRoutineId
+        ORDER BY '$.isChecked'
+      queryParameters:
+        todoRoutineId: =@ctx.jig.inputs.routine
+ 
 children:
-  - type: component.custom-component
-    componentId: routine-header
   - type: component.list
     options:
       data: =@ctx.datasources.routines
       maximumItemsToRender: 8
       item: 
         type: component.custom-component
+        componentId: routine-header
+        inputs:
+          routines: =@ctx.datasources.routines
+  - type: component.list
+    options:
+      data: =@ctx.datasources.todos
+      maximumItemsToRender: 8
+      item: 
+        type: component.custom-component
         componentId: todo-component
         inputs:
-          routines: =@ctx.current.item
+          todos: =@ctx.current.item
+          

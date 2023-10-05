@@ -14,6 +14,12 @@ children:
       children:
         - type: component.card
           options:
+            onPress: 
+              type: action.go-to
+              options:
+                linkTo: checklist
+                parameters:
+                  routine: =@ctx.inputs.routines.routine_id
             children:
               - type: component.view
                 options:
@@ -32,7 +38,7 @@ children:
                           width: 60
                           height: 60
                           background:
-                            color: =@ctx.inputs.routines.color
+                            color: =@ctx.inputs.routines.type = 'school' ? 'color3':@ctx.inputs.routines.type = 'personal' ? 'color8':'color2'
                           justifyContent: center
                           alignItems: center
                         children:
@@ -48,21 +54,33 @@ children:
                     - type: component.view
                       options:
                         style:
+                          flex:
+                            # grow: 1
                           margin:
                             top: medium
                           gap: small
                         children:
-                          - type: component.text
+                          - type: component.view
                             options:
-                              value: =@ctx.inputs.routines.name
-                              weight: bold
-                              size: large
+                              style:
+                                flex:
+                                  grow: 1
+                                height: 
+                                  min: 70
+                              children:
+                                - type: component.text
+                                  options:
+                                    value: =@ctx.inputs.routines.name
+                                    weight: bold
+                                    size: large
                           - type: component.view
                             options:
                               style:
                                 flex:
                                   direction: row
+                                  # grow: 1
                                 gap: small
+                                # justifyContent: flex-end
                               children:
                                 - type: component.icon
                                   options:

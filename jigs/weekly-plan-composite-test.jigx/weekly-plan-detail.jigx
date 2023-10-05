@@ -1,5 +1,4 @@
 title: =@ctx.jig.inputs.day
-description: Description of your Jig
 type: jig.default
 
 datasources:
@@ -34,46 +33,61 @@ datasources:
           '$.name',
           '$.due-date',
           '$.day',
+          '$.day_id',
           '$.for',
           '$.description'
         FROM [default/tasks]
         WHERE '$.day' = @day 
         ORDER BY '$.category'
-        # AND '$.category' LIKE @filter or @filter IS NULL
-        
       queryParameters:
-        # filter: =@ctx.components.tasks-category.state.filter
+        day: =@ctx.jig.inputs.day
+  
+  todos:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/todos
+  
+      query: 
+        SELECT 
+          id, 
+          '$.type', 
+          '$.name',
+          '$.isChecked',
+          '$.day_id',
+          '$.image',
+          '$.day'
+        FROM [default/todos] 
+        WHERE '$.day' = @day
+        ORDER BY '$.isChecked'
+      queryParameters:
         day: =@ctx.jig.inputs.day
 
 children:
-  # - type: component.list
-  #   options:
-  #     data: =@ctx.datasources.filters
-  #     maximumItemsToRender: 8
-  #     isHorizontal: true
-  #     isHorizontalScrollIndicatorHidden: true
-  #     item: 
-  #       type: component.custom-component
-  #       componentId: filter
-  #       inputs:
-  #         filters: =@ctx.current.item
   - type: component.list
     instanceId: tasks-category
     options:
-      # filter:
-      #   - title: All
-      #     value: ''
-      #   - title: To Do
-      #     value: To Do
-      #   - title: Home work
-      #     value: Home work
-      #   - title: Appointments
-      #     value: Appointments
       data: =@ctx.datasources.tasks
       maximumItemsToRender: 8
       item: 
         type: component.custom-component
-        # when: =@ctx.current.item.day =  ? true:false
         componentId: task
         inputs:
           tasks: =@ctx.current.item
+  - type: component.section
+    # when: =@ctx.datasources.todos.day != @ctx.solution.state.day ? false:true
+    options:
+      title: To Do
+      children:
+        - type: component.list
+          instanceId: todos-category
+          options:
+            data: =@ctx.datasources.todos
+            maximumItemsToRender: 8
+            item: 
+              type: component.custom-component
+              componentId: todo-component
+              inputs:
+                todos: =@ctx.current.item
