@@ -10,7 +10,6 @@ children:
         gap: medium
         margin: 
           right: small
-          bottom: small
       children:
         - type: component.card
           options:
@@ -88,7 +87,7 @@ children:
                                     emphasis: medium
                                 - type: component.text
                                   options:
-                                    value: 3/5
+                                    value: =@ctx.inputs.number
                                     emphasis: high
                               # space for progressbar
                             

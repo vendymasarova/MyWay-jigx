@@ -1,0 +1,9 @@
+title: Name
+description: Description of your Jig
+type: jig.composite
+
+children:
+  - jigId: new-task-list
+  - jigId: new-task-form
+    inputs:
+      id: =@ctx.solution.state.taskId

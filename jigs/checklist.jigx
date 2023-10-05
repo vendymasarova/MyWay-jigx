@@ -34,7 +34,8 @@ datasources:
           '$.isDone',
           '$.type',
           '$.time',
-          '$.routine_id'
+          '$.routine_id',
+          '$.description'
         FROM [default/routines] 
         WHERE '$.routine_id' = @routineId
       queryParameters:

@@ -1,9 +1,9 @@
-title: Name
-description: Description of your Jig
+title: Weekly plan
 type: jig.composite
 
 children:
   - jigId: weekly-plan-list
+    isTitleHidden: true
     # inputs:
     #   recordid: =@ctx.jig.inputs.parameter
   - jigId: weekly-plan-detail

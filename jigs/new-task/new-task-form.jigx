@@ -1,0 +1,124 @@
+title: =@ctx.solution.state.taskId = 1 ? 'Create To Do':'Create a new task'
+type: jig.default
+
+datasources:
+  images: 
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          name: pencil
+          image: https://t14345253.p.clickup-attachments.com/t14345253/646c1c55-c975-4f91-86b7-202713a78356/Pencil.png?view=open
+        - id: 2
+          name: breakfast
+          image: https://t14345253.p.clickup-attachments.com/t14345253/5be1182b-8e77-4fb7-ab0d-69b607dc3a64/Boiled%20Egg.png?view=open
+        - id: 3
+          name: bag
+          image: https://t14345253.p.clickup-attachments.com/t14345253/a44dccc7-f28c-4377-a531-4ee425878ff6/Study%20bag.png?view=open
+        - id: 4
+          name: water
+          image: https://t14345253.p.clickup-attachments.com/t14345253/3b42d7d9-5d7e-4f40-87f0-4da4dbb6229f/Water%20Bottle.png?view=open
+        - id: 5
+          name: hygiene
+          image: https://t14345253.p.clickup-attachments.com/t14345253/f39f073c-2ddb-4bec-8b38-b9887bd71e19/Clean%20Teeth.png?view=open
+        - id: 6
+          name: snack
+          image: https://t14345253.p.clickup-attachments.com/t14345253/141ded58-8cde-4efb-87f2-1335cfb0c794/Burger.png?view=open
+        - id: 7
+          name: stretch
+          image: https://t14345253.p.clickup-attachments.com/t14345253/debd3a94-da9e-482b-8c0f-2b1782506771/Tummy%20Exercise.png?view=open
+        
+  types:
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          type: school
+          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+        - id: 2
+          type: work
+          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+        - id: 3
+          type: personal
+          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+        - id: 4
+          type: housework
+          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+
+children:
+  - type: component.form
+    when: =@ctx.solution.state.taskId = 1 ? true:false
+    instanceId: task-form
+    options:
+      children:
+        - type: component.field-row
+          options:
+            children:
+              - type: component.text-field
+                instanceId: name
+                options:
+                  label: Name
+        - type: component.dropdown
+          instanceId: type
+          options:
+            label: Type
+            data: =@ctx.datasources.types
+            style:
+              flex: 1
+            item:
+              type: component.dropdown-item
+              options:
+                title: =@ctx.current.item.type
+                value: =@ctx.current.item.type
+                leftElement: 
+                  element: avatar
+                  text: =@ctx.current.item.image
+                  uri: =@ctx.current.item.image
+        - type: component.dropdown
+          instanceId: icon
+          options:
+            label: Icon
+            data: =@ctx.datasources.images
+            style:
+              flex: 1
+            item:
+              type: component.dropdown-item
+              options:
+                title: =@ctx.current.item.name
+                value: =@ctx.current.item.image
+                leftElement: 
+                  element: image
+                  text: ''
+                  uri: =@ctx.current.item.image
+                  resizeMode: contain
+        - type: component.checkbox
+          instanceId: has-value
+          options:
+            label: Has a due-date?
+            isRequired: false
+            isOptionalLabelHidden: true
+            icon: calendar
+            onChange: 
+              type: action.set-state
+              options:
+                state: =@ctx.solution.state.has-date
+                value: =@ctx.components.has-value.state.value
+        - type: component.field-row
+          when: =@ctx.solution.state.has-date = true ? true:false
+          options:
+            children:
+              - type: component.date-picker
+                instanceId: due-date
+                options:
+                  label: Due-date
+              - type: component.text-field
+                instanceId: time
+                options:
+                  label: Time
+
+          
+            
+          
+                  
+                  
+  

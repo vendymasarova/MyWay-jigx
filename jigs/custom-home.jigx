@@ -36,6 +36,7 @@ datasources:
           icon: arrow-right
           color: color3
           isCheckable: false
+          
   routines:
     type: datasource.sqlite
     options:
@@ -56,6 +57,36 @@ datasources:
         FROM [default/routines] 
       queryParameters:
         myParam: value
+  todos:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/todos
+  
+      query: 
+        SELECT 
+          id, 
+          '$.type', 
+          '$.name',
+          '$.image',
+          '$.isChecked',
+          '$.routine_id'
+        FROM [default/todos] 
+        WHERE '$.routine_id' = @todoRoutineId
+      queryParameters:
+        todoRoutineId: =@ctx.jig.inputs.routine
+  
+  create-new:
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          goTo: new-task-composite
+          icon: plus
+          iconColor: color9
+          title: Create new task
 
 children:
   - type: component.custom-component
@@ -88,4 +119,9 @@ children:
         componentId: routine-card-component
         inputs:
           routines: =@ctx.current.item
-            
+          number: 3/5
+  - type: component.custom-component
+    componentId: create-new
+    inputs:
+      create-new: =@ctx.datasources.create-new
+    

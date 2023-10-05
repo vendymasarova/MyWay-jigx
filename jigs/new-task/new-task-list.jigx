@@ -1,0 +1,31 @@
+title: Name
+description: Description of your Jig
+type: jig.list
+icon: contact
+
+datasources:
+  list: 
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          name: To Do
+        - id: 2
+          name: Home work
+
+data: =@ctx.datasources.list
+isHorizontal: true
+isHorizontalScrollIndicatorHidden: true
+item:
+  type: component.list-item
+  options:
+    title: =@ctx.current.item.name
+    onPress: 
+      type: action.action-list
+      options:
+        actions:
+          - type: action.set-state
+            options:
+              state: =@ctx.solution.state.taskId
+              value: =@ctx.current.item.id
+    

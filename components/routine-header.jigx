@@ -23,7 +23,7 @@ children:
                     padding: small
                     radius: medium
                     background:
-                      color: color3
+                      color: =@ctx.inputs.routines.type = 'school' ? 'color3':@ctx.inputs.routines.type = 'personal' ? 'color8':'color2'
                   children:
                     - type: component.image
                       options:
@@ -33,10 +33,10 @@ children:
                         resizeMode: contain
                         # title: =@ctx.inputs.routines.name
                         source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+                          uri: =@ctx.inputs.routines.image
               - type: component.text
                 options:
-                  value: Before school routine
+                  value: =@ctx.inputs.routines.name
                   weight: bold
                   size: large
         - type: component.view
@@ -52,9 +52,9 @@ children:
                   icon: time-clock-circle
               - type: component.text
                 options:
-                  value: '7:00 - 7:30'
+                  value: =@ctx.inputs.routines.time
                   weight: semi-bold
         - type: component.text
           options:
-            value: Check if you have all those things prepared for your schoolday.
+            value: =@ctx.inputs.routines.description
             emphasis: high
