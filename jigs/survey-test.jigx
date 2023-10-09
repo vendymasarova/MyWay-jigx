@@ -1,0 +1,21 @@
+title: Name
+description: Description of your Jig
+type: jig.default
+
+actions:
+  - children:
+      - type: action.go-to
+        options:
+          title: Go to
+          linkTo: survey-emotions
+
+children:
+  - type: component.entity
+    options:
+      children:
+        - type: component.entity-field
+          options:
+            label: hello
+            value: sdfs
+          
+  

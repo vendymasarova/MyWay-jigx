@@ -3,15 +3,32 @@ type: jig.default
 
 actions:
   - children:
-      - type: action.submit-form
+      - type: action.action-list
         options:
-          formId: todo-form
-          provider: DATA_PROVIDER_DYNAMIC
-          title: Submit form
-          entity: default/todos
-          method: save
-          onSuccess: 
-            title: Huraa
+          title: Add new task
+          isSequential: false
+          actions:
+            - type: action.submit-form
+              when: =@ctx.solution.state.taskId = 1 ? true:false
+              options:
+                formId: todo-form
+                provider: DATA_PROVIDER_DYNAMIC
+                title: Submit form
+                entity: default/todos
+                method: save
+                onSuccess: 
+                  title: Huraa
+                  
+            - type: action.submit-form
+              when: =@ctx.solution.state.taskId = 2 ? true:false
+              options:
+                formId: task-form
+                provider: DATA_PROVIDER_DYNAMIC
+                title: Submit form
+                entity: default/tasks
+                method: save
+                onSuccess: 
+                  title: Huraa
 
 datasources:
   images: 
@@ -49,14 +66,43 @@ datasources:
           image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
         - id: 2
           type: Work
-          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+          image: https://t14345253.p.clickup-attachments.com/t14345253/719dba73-c6b4-42e3-83d3-d0d645f3327b/Shirt.png?view=open
         - id: 3
           type: Personal
-          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+          image: https://t14345253.p.clickup-attachments.com/t14345253/f8f9c04e-5fa6-4d43-88d1-530f04a2546d/Personal.png?view=open
         - id: 4
           type: Housework
-          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+          image: https://t14345253.p.clickup-attachments.com/t14345253/3b66460c-bb58-402b-88a0-10f2e11f0daa/Cleaning.png?view=open
+  
+  subjects:
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          name: Math
+        - id: 2
+          name: History
+        - id: 3
+          name: Science
+        - id: 4
+          name: English
+        - id: 5
+          name: Art
+        - id: 6
+          name: Music
+        - id: 7
+          name: Other
 
+  task-type:
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          type: Home work
+        - id: 2
+          type: Long term assignment
+        - id: 3
+          type: Test and exams
 children:
   - type: component.form
     when: =@ctx.solution.state.taskId = 1 ? true:false
@@ -67,11 +113,11 @@ children:
           options:
             children:
               - type: component.text-field
-                instanceId: name
+                instanceId: todo-name
                 options:
                   label: Name
         - type: component.dropdown
-          instanceId: type
+          instanceId: todo-type
           options:
             label: Type
             data: =@ctx.datasources.types
@@ -87,7 +133,7 @@ children:
                   text: =@ctx.current.item.image
                   uri: =@ctx.current.item.image
         - type: component.dropdown
-          instanceId: image
+          instanceId: todo-image
           options:
             label: Icon
             data: =@ctx.datasources.images
@@ -107,6 +153,72 @@ children:
                   element: avatar
                   text: =@ctx.current.item.name
                   uri: =@ctx.current.item.image
+        - type: component.checkbox
+          instanceId: todo-has-value
+          options:
+            label: Has a due-date?
+            isRequired: false
+            isOptionalLabelHidden: true
+            icon: calendar
+            onChange: 
+              type: action.set-state
+              options:
+                state: =@ctx.solution.state.has-date
+                value: =@ctx.components.todo-has-value.state.value
+        - type: component.field-row
+          when: =@ctx.solution.state.has-date = true ? true:false
+          options:
+            children:
+              - type: component.date-picker
+                instanceId: todo-due-date
+                options:
+                  label: Due-date
+              - type: component.date-picker
+                instanceId: todo-time
+                options:
+                  label: Time
+                  mode: time
+                  format: HH:mm
+                  
+  - type: component.form
+    when: =@ctx.solution.state.taskId = 2 ? true:false
+    instanceId: task-form
+    options:
+      children:
+        - type: component.field-row
+          options:
+            children:
+              - type: component.text-field
+                instanceId: name
+                options:
+                  label: Name
+        - type: component.dropdown
+          instanceId: type
+          options:
+            label: Type
+            data: =@ctx.datasources.task-type
+            style:
+              flex: 1
+            item:
+              type: component.dropdown-item
+              options:
+                title: =@ctx.current.item.type
+                value: =@ctx.current.item.type
+        - type: component.text-field
+          instanceId: description
+          options:
+            isMultiline: true
+            label: Desctiption
+        - type: component.dropdown
+          instanceId: for
+          options:
+            label: What subject?
+            data: =@ctx.datasources.subjects
+            item:
+              type: component.dropdown-item
+              options:
+                title: =@ctx.current.item.name
+                value: =@ctx.current.item.name
         - type: component.checkbox
           instanceId: has-value
           options:
@@ -133,10 +245,3 @@ children:
                   label: Time
                   mode: time
                   format: HH:mm
-
-        
-            
-          
-                  
-                  
-  

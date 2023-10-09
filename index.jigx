@@ -13,10 +13,12 @@ widgets:
     jigId: custom-home
   - size: 1x1
     jigId: weekly-plan-composite
+  - size: 1x1
+    jigId: survey-test
 home:
   - instanceId: home
     jigId: custom-home
-    
+      
 assets:
   theme:
     palette:
@@ -27,4 +29,32 @@ assets:
         color2:
           background: '#B4E5BC'
           onBackground: '#000000'
+  icons:
+    - alarm-bell # auto-generated
+    - anger-emotions-1 # auto-generated
+    - arrow-right # auto-generated
+    - beach-palm # auto-generated
+    - calendar # auto-generated
+    - checkbox-unchecked # auto-generated
+    - checklist # auto-generated
+    - contact # auto-generated
+    - emoji-tired-face # auto-generated
+    - family-heart # auto-generated
+    - fast-food-pizza # auto-generated
+    - happiness-emotions-1 # auto-generated
+    - love-cloud # auto-generated
+    - mood-happy # auto-generated
+    - mood-moody # auto-generated
+    - mood-question # auto-generated
+    - notes # auto-generated
+    - plus # auto-generated
+    - sadness-emotions-1 # auto-generated
+    - school-building # auto-generated
+    - smiley-surprised # auto-generated
+    - stress-1 # auto-generated
+    - three-dots # auto-generated
+    - time-clock-circle # auto-generated
+    - user-friends-1 # auto-generated
+    - weather # auto-generated
+    - yoga # auto-generated
     

@@ -56,7 +56,7 @@ children:
                   - type: action.go-to
                     when: =@ctx.inputs.checklist.isCheckable = false ? true:false
                     options:
-                      linkTo: checklist 
+                      linkTo: checklist-composite
                       parameters:
                         routine: =@ctx.inputs.checklist.routine_id
                            

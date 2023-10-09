@@ -1,5 +1,4 @@
-title: Name
-description: =@ctx.datasources.routines.routine_id
+title: Routine
 type: jig.composite
 
 datasources:
@@ -14,6 +13,7 @@ datasources:
       query: 
         SELECT 
           id, 
+          '$.name',
           '$.routine_id'
         FROM [default/routines] 
         WHERE '$.routine_id' = @yourRoutineId
@@ -24,6 +24,7 @@ children:
   - jigId: checklist-detail
     inputs:
       routineId: =@ctx.datasources.routines.routine_id
+    isTitleHidden: true
   - jigId: checklist-form
     inputs:
       routineId: =@ctx.datasources.routines.routine_id
