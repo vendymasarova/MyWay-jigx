@@ -8,6 +8,15 @@ children:
           shrink: 1
           direction: row
         radius: medium
+      onPress: 
+        type: action.execute-entity
+        options:
+          provider: DATA_PROVIDER_DYNAMIC
+          entity: default/todos
+          method: delete
+          goBack: stay
+          data:
+            id: =@ctx.inputs.todos.id
       children:
         - type: component.view
           options:

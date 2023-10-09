@@ -103,11 +103,11 @@ children:
                       grow: 1
                       shrink: 1
                     gap: small
-                    border:
-                      color: primary
-                      style: solid
-                    background:
-                      color: color9
+                    # border:
+                    #   color: primary
+                    #   style: solid
+                    # background:
+                    #   color: color9
                     radius: medium
                     padding: medium
                     justifyContent: space-between
@@ -153,13 +153,16 @@ children:
                       state: =@ctx.solution.state.day
                       value: Wednesday
                   children:
-                    - type: component.icon
+                    - type: component.image
                       options:
-                        icon: checkbox-unchecked
-                        size: medium
+                        size: 
+                          height: 25
+                          width: 25
+                        source:
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/eec8ecbb-bcce-46e2-870c-27eae880c2fe/Fire.png?view=open
                     - type: component.text
                       options:
-                        value: Wed
+                        value: We
                         align: center
                         emphasis: high
                         size: tiny                         
@@ -185,10 +188,13 @@ children:
                       state: =@ctx.solution.state.day
                       value: Thursday
                   children:
-                    - type: component.icon
+                    - type: component.image
                       options:
-                        icon: checkbox-unchecked
-                        size: medium
+                        size: 
+                          height: 25
+                          width: 25
+                        source:
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/e92873e3-0548-4a72-82e7-11e449d0a3fa/water%20drop.png?view=open
                     - type: component.text
                       options:
                         value: Thu
@@ -205,8 +211,8 @@ children:
                       grow: 1
                       shrink: 1
                     gap: small
-                    # background:
-                    #   color: primary
+                    background:
+                      color: color9
                     radius: medium
                     padding: medium
                     justifyContent: space-between

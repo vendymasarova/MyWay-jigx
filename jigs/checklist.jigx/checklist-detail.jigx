@@ -1,21 +1,21 @@
 title: =@ctx.datasources.routines.name
-description: =@ctx.jig.inputs.routine 
+description: =@ctx.solution.state.new-todo
 type: jig.default
 icon: contact
           
-actions:
-  - children:
-      - type: action.action-list
-        when: =@ctx.solution.state.checklist = 1 ? false:true
-        options:
-          title: Mark as done
-          isSequential: true
-          actions:
-            - type: action.go-back
-            - type: action.set-state
-              options:
-                state: =@ctx.solution.state.checklist
-                value: 1
+# actions:
+#   - children:
+#       - type: action.action-list
+#         when: =@ctx.solution.state.new-todo = true ? true:false
+#         options:
+#           title: Mark as done
+#           isSequential: true
+#           actions:
+#             - type: action.go-back
+#             - type: action.set-state
+#               options:
+#                 state: =@ctx.solution.state.checklist
+#                 value: 1
           
 datasources:
   routines:
@@ -37,9 +37,9 @@ datasources:
           '$.routine_id',
           '$.description'
         FROM [default/routines] 
-        WHERE '$.routine_id' = @routineId
+        WHERE '$.routine_id' = @yourRoutineId
       queryParameters:
-        routineId: =@ctx.jig.inputs.routine
+        yourRoutineId: =@ctx.jig.inputs.routineId
 
   todos:
     type: datasource.sqlite
@@ -61,7 +61,7 @@ datasources:
         WHERE '$.routine_id' = @todoRoutineId
         ORDER BY '$.isChecked'
       queryParameters:
-        todoRoutineId: =@ctx.jig.inputs.routine
+        todoRoutineId: =@ctx.jig.inputs.routineId
  
 children:
   - type: component.custom-component
@@ -70,11 +70,16 @@ children:
       routines: =@ctx.datasources.routines
   - type: component.list
     options:
-      data: =@ctx.datasources.todos
       maximumItemsToRender: 8
+      data: =@ctx.datasources.todos
       item: 
         type: component.custom-component
         componentId: todo-component
         inputs:
           todos: =@ctx.current.item
-          
+      onShowMorePress:
+        type: action.go-to
+        options:
+          linkTo: checklist-all
+          parameters:
+            routineId: =@ctx.datasources.routines.routine_id

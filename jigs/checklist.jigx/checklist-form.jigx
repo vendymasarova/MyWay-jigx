@@ -1,17 +1,27 @@
-title: =@ctx.solution.state.taskId = 1 ? 'Create To Do':'Create a new task'
+
+title: =@ctx.jig.inputs.routineId
+description: =@ctx.jig.inputs.routineId
 type: jig.default
 
 actions:
   - children:
       - type: action.submit-form
         options:
-          formId: todo-form
+          formId: new-todo-routine-form
           provider: DATA_PROVIDER_DYNAMIC
-          title: Submit form
+          title: Create new Todo
           entity: default/todos
           method: save
+          goBack: stay
           onSuccess: 
-            title: Huraa
+            type: action.reset-state
+            options:
+              state: =@ctx.solution.state.new-todo
+              
+            # type: action.set-state
+            # options:
+            #   state: =@ctx.solution.state.new-todo
+            #   value: =@ctx.components.checkbox.state.value
 
 datasources:
   images: 
@@ -39,7 +49,7 @@ datasources:
         - id: 7
           name: Stretch
           image: https://t14345253.p.clickup-attachments.com/t14345253/debd3a94-da9e-482b-8c0f-2b1782506771/Tummy%20Exercise.png?view=open
-        
+  
   types:
     type: datasource.static
     options:
@@ -57,10 +67,50 @@ datasources:
           type: Housework
           image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
 
+  routines:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/routines
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.image',
+          '$.isDone',
+          '$.type',
+          '$.time',
+          '$.routine_id',
+          '$.description'
+        FROM [default/routines] 
+        WHERE '$.routine_id' = @yourRoutineId
+      queryParameters:
+        yourRoutineId: =@ctx.jig.inputs.routineId
+        
 children:
   - type: component.form
-    when: =@ctx.solution.state.taskId = 1 ? true:false
-    instanceId: todo-form
+    instanceId: new-todo-checkbox
+    options:
+      isDiscardChangesAlertEnabled: false
+      children:
+        - type: component.checkbox
+          instanceId: checkbox
+          options:
+            label: Add new todo
+            isOptionalLabelHidden: true
+            isRequired: false
+            onChange: 
+              type: action.set-state
+              options:
+                state: =@ctx.solution.state.new-todo
+                value: =@ctx.components.checkbox.state.value
+                
+  - type: component.form
+    when: =@ctx.solution.state.new-todo = true ? true:false
+    instanceId: new-todo-routine-form
     options:
       children:
         - type: component.field-row
@@ -70,22 +120,18 @@ children:
                 instanceId: name
                 options:
                   label: Name
-        - type: component.dropdown
+        - type: component.text-field
           instanceId: type
           options:
-            label: Type
-            data: =@ctx.datasources.types
-            style:
-              flex: 1
-            item:
-              type: component.dropdown-item
-              options:
-                title: =@ctx.current.item.type
-                value: =@ctx.current.item.type
-                leftElement: 
-                  element: avatar
-                  text: =@ctx.current.item.image
-                  uri: =@ctx.current.item.image
+            label: type
+            isHidden: true
+            initialValue: =@ctx.datasources.routines.type
+        - type: component.number-field
+          instanceId: routine_id
+          options:
+            isHidden: true
+            label: routine id
+            initialValue: =@ctx.datasources.routines.routine_id
         - type: component.dropdown
           instanceId: image
           options:
@@ -107,36 +153,7 @@ children:
                   element: avatar
                   text: =@ctx.current.item.name
                   uri: =@ctx.current.item.image
-        - type: component.checkbox
-          instanceId: has-value
-          options:
-            label: Has a due-date?
-            isRequired: false
-            isOptionalLabelHidden: true
-            icon: calendar
-            onChange: 
-              type: action.set-state
-              options:
-                state: =@ctx.solution.state.has-date
-                value: =@ctx.components.has-value.state.value
-        - type: component.field-row
-          when: =@ctx.solution.state.has-date = true ? true:false
-          options:
-            children:
-              - type: component.date-picker
-                instanceId: due-date
-                options:
-                  label: Due-date
-              - type: component.date-picker
-                instanceId: time
-                options:
-                  label: Time
-                  mode: time
-                  format: HH:mm
-
+                  
         
-            
+        
           
-                  
-                  
-  

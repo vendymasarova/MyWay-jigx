@@ -1,0 +1,69 @@
+type: component.default
+children:
+  - type: component.form
+    instanceId: new-todo-checkbox
+    options:
+      children:
+        - type: component.checkbox
+          instanceId: checkbox
+          options:
+            label: Add new todo
+            color:
+              - when: 
+                color: color9
+            onChange: 
+              type: action.set-state
+              options:
+                state: =@ctx.solution.state.new-todo
+                value: =@ctx.components.checkbox.state.value
+                
+  - type: component.form
+    when: =@ctx.solution.state.new-todo = 1 ? true:false
+    instanceId: new-todo-routine-form
+    options:
+      children:
+        - type: component.field-row
+          options:
+            children:
+              - type: component.text-field
+                instanceId: name
+                options:
+                  label: Name
+        - type: component.dropdown
+          instanceId: type
+          options:
+            label: Type
+            data: =@ctx.datasources.types
+            style:
+              flex: 1
+            item:
+              type: component.dropdown-item
+              options:
+                title: =@ctx.current.item.type
+                value: =@ctx.current.item.type
+                leftElement: 
+                  element: avatar
+                  text: =@ctx.current.item.image
+                  uri: =@ctx.current.item.image
+        - type: component.dropdown
+          instanceId: image
+          options:
+            label: Icon
+            data: =@ctx.datasources.images
+            style:
+              flex: 1
+            item:
+              type: component.dropdown-item
+              options:
+                title: =@ctx.current.item.name
+                value: =@ctx.current.item.image
+                # leftElement: 
+                #   element: image
+                #   text: ''
+                #   uri: =@ctx.current.item.image
+                #   resizeMode: contain
+                leftElement: 
+                  element: avatar
+                  text: =@ctx.current.item.name
+                  uri: =@ctx.current.item.image
+        

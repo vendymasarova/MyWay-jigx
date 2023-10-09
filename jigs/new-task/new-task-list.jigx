@@ -1,5 +1,4 @@
-title: Name
-description: Description of your Jig
+title: Create new task
 type: jig.list
 icon: contact
 
@@ -10,16 +9,23 @@ datasources:
       data:
         - id: 1
           name: To Do
+          icon: checklist
         - id: 2
           name: Home work
+          icon: notes
 
 data: =@ctx.datasources.list
 isHorizontal: true
 isHorizontalScrollIndicatorHidden: true
+
 item:
   type: component.list-item
   options:
     title: =@ctx.current.item.name
+    leftElement: 
+      element: icon
+      icon: =@ctx.current.item.icon
+      isDuotone: true
     onPress: 
       type: action.action-list
       options:

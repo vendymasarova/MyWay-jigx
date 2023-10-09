@@ -1,0 +1,30 @@
+title: Name
+description: =@ctx.datasources.routines.routine_id
+type: jig.composite
+
+datasources:
+  routines:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/routines
+  
+      query: 
+        SELECT 
+          id, 
+          '$.routine_id'
+        FROM [default/routines] 
+        WHERE '$.routine_id' = @yourRoutineId
+      queryParameters:
+        yourRoutineId: =@ctx.jig.inputs.routine
+
+children:
+  - jigId: checklist-detail
+    inputs:
+      routineId: =@ctx.datasources.routines.routine_id
+  - jigId: checklist-form
+    inputs:
+      routineId: =@ctx.datasources.routines.routine_id
+    isTitleHidden: true

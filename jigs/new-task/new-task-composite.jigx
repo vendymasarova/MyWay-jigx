@@ -1,9 +1,9 @@
-title: Name
-description: Description of your Jig
+title: Create new task
 type: jig.composite
 
 children:
   - jigId: new-task-list
+    isTitleHidden: true
   - jigId: new-task-form
     inputs:
       id: =@ctx.solution.state.taskId

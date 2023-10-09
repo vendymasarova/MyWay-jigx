@@ -76,7 +76,7 @@ children:
                   size: small
               - type: component.text
                 options:
-                  value: '1'
+                  value: '2'
                   color: color9
                   weight: semi-bold
                   

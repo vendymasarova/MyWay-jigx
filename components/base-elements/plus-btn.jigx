@@ -1,0 +1,29 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        
+      children:
+        - type: component.form
+          instanceId: 
+          options:
+            children:
+              - type: component.checkbox
+                instanceId: sdfa
+                options:
+                  label: ''
+                
+      # - type: component.icon
+      #   options:
+      #     icon: plus
+      #     color: color9
+      #     type: duotone
+      #     shape: circle
+      #     size: large
+      #     onPress: 
+      #       type: action.set-state
+      #       options:
+      #         state: =@ctx.solution.state.new-item
+      #         value: 
+      

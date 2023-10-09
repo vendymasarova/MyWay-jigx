@@ -16,7 +16,7 @@ children:
             onPress: 
               type: action.go-to
               options:
-                linkTo: checklist
+                linkTo: checklist-composite
                 parameters:
                   routine: =@ctx.inputs.routines.routine_id
             children:

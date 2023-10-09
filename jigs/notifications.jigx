@@ -1,5 +1,4 @@
-title: Name
-description: Description of your Jig
+title: Reminders
 type: jig.default
 
 onRefresh: 
@@ -50,6 +49,7 @@ datasources:
           icon: arrow-right
           color: color3
           isCheckable: false
+          routine_id: 1
 
 children:
   - type: component.list

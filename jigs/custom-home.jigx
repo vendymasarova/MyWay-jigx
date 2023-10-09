@@ -1,5 +1,4 @@
 title: Name
-description: Description of your Jig
 type: jig.default
 
 onRefresh: 
@@ -36,6 +35,7 @@ datasources:
           icon: arrow-right
           color: color3
           isCheckable: false
+          routine_id: 1
           
   routines:
     type: datasource.sqlite
@@ -96,10 +96,10 @@ children:
       welcomeMessage: Hello, Jane! 👋
       name: Jane
       date: =$fromMillis($toMillis($now()), '[FNn], [D]. [M]. [Y]')
-  # - type: component.custom-component
-  #   componentId: reminder-card-component-checklist
-  #   inputs:
-  #     checklist: =@ctx.datasources.checklist
+  - type: component.custom-component
+    componentId: reminder-card-component-checklist
+    inputs:
+      checklist: =@ctx.datasources.checklist
   - type: component.custom-component
     componentId: weekly-plan
     inputs:
