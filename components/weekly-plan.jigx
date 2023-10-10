@@ -33,7 +33,7 @@ children:
                         weight: bold
                         size: small  
               - type: component.icon
-                when: =@ctx.inputs.isClickable = true ? true:false
+                when: =@ctx.inputs.linkTo != null ? true:false
                 options:
                   icon: arrow-right
                   color: color9
@@ -41,10 +41,9 @@ children:
                   type: duotone
                   size: small
                   onPress: 
-                    when: =@ctx.inputs.isClickable = true ? true:false
                     type: action.go-to
                     options:
-                      linkTo: weekly-plan-composite
+                      linkTo: =@ctx.inputs.linkTo
         # CONTENT 
         - type: component.view
           options:

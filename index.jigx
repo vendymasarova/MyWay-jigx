@@ -30,7 +30,6 @@ assets:
           background: '#B4E5BC'
           onBackground: '#000000'
   icons:
-    - alarm-bell # auto-generated
     - anger-emotions-1 # auto-generated
     - arrow-right # auto-generated
     - beach-palm # auto-generated

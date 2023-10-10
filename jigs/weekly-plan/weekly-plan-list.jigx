@@ -7,3 +7,4 @@ children:
     componentId: weekly-plan
     inputs:
       isClickable: true
+      

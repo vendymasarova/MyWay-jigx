@@ -34,8 +34,21 @@ datasources:
           message: you are ready to go!
           icon: arrow-right
           color: color3
+          type: school
           isCheckable: false
           routine_id: 1
+        - id: 2
+          title: Let's do you morning routine!
+          value: See your checklist
+          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
+          time: 1min
+          isDone: false
+          message: you are ready to go!
+          icon: arrow-right
+          color: color3
+          type: personal
+          isCheckable: false
+          routine_id: 2
           
   routines:
     type: datasource.sqlite
@@ -97,17 +110,35 @@ children:
       name: Jane
       date: =$fromMillis($toMillis($now()), '[FNn], [D]. [M]. [Y]')
   - type: component.custom-component
-    componentId: reminder-card-component-checklist
+    componentId: title-with-link
     inputs:
-      checklist: =@ctx.datasources.checklist
+      title: Reminders
+      link: notifications
+  - type: component.list
+    options:
+      data: =@ctx.datasources.checklist
+      maximumItemsToRender: 8
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      item: 
+        type: component.custom-component
+        componentId: reminder-card-component-checklist
+        inputs:
+          checklist: =@ctx.current.item
+  # - type: component.custom-component
+  #   componentId: reminder-card-component-checklist
+  #   inputs:
+  #     checklist: =@ctx.datasources.checklist
   - type: component.custom-component
     componentId: weekly-plan
     inputs:
       isClickable: true 
+      linkTo: weekly-plan-composite
   - type: component.custom-component
-    componentId: title
+    componentId: title-with-link
     inputs:
-      title: Daily routines
+      title: Reminders
+      link: all-routines
   - type: component.list
     options:
       data: =@ctx.datasources.routines

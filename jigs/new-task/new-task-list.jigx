@@ -11,7 +11,7 @@ datasources:
           name: To Do
           icon: checklist
         - id: 2
-          name: Home work
+          name: Task
           icon: notes
 
 data: =@ctx.datasources.list

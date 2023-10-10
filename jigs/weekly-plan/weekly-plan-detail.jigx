@@ -38,7 +38,7 @@ datasources:
           '$.description'
         FROM [default/tasks]
         WHERE '$.day' = @day 
-        ORDER BY '$.category'
+        # ORDER BY '$.category'
       queryParameters:
         day: =@ctx.jig.inputs.day
   

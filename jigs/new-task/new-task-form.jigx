@@ -193,7 +193,7 @@ children:
                 options:
                   label: Name
         - type: component.dropdown
-          instanceId: type
+          instanceId: category
           options:
             label: Type
             data: =@ctx.datasources.task-type
@@ -204,6 +204,12 @@ children:
               options:
                 title: =@ctx.current.item.type
                 value: =@ctx.current.item.type
+        - type: component.text-field
+          instanceId: type
+          options:
+            isHidden: true
+            label: Type
+            value: school
         - type: component.text-field
           instanceId: description
           options:
@@ -245,3 +251,6 @@ children:
                   label: Time
                   mode: time
                   format: HH:mm
+  
+  
+    

@@ -27,7 +27,7 @@ children:
                             options:
                               style:
                                 background:
-                                  color: primary
+                                  color: color9
                                 radius: large
                                 padding: 
                                   left: regular
@@ -82,6 +82,7 @@ children:
                                           resizeMode: contain
                                           # title: =@ctx.inputs.tasks.name
                                           source:
+                                            # uri:  =@ctx.inputs.tasks.category = 'Test and exams' ? 'https://t14345253.p.clickup-attachments.com/t14345253/3691edab-963e-4247-9f14-83dbdaafe306/Exam.png?view=open':@ctx.inputs.tasks.category = 'Home work' ? 'https://t14345253.p.clickup-attachments.com/t14345253/65bedc36-4a12-4bfc-8193-8cf8c17b2e7e/Homework.png?view=open':'https://t14345253.p.clickup-attachments.com/t14345253/89a1750b-c800-41b1-83cc-d4ece23f1517/Documents.png?view=open'
                                             uri:  =@ctx.inputs.tasks.icon
                                 - type: component.text
                                   options:

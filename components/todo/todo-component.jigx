@@ -98,4 +98,8 @@ children:
                                   data:
                                     id: =@ctx.inputs.todos.id
                                     isChecked: =@ctx.components.todo.state.value
+              - type: component.button
+                options:
+                  onPress: 
+                  title:
                   
