@@ -35,12 +35,12 @@ children:
                         children:         
                           - type: component.text
                             options:
-                              value: =@ctx.inputs.checklist.title
+                              value: =@ctx.inputs.checklist.reminder-title
                               align: left
                               size: small
                           - type: component.text
                             options:
-                              value: =@ctx.inputs.checklist.time
+                              value: =@ctx.inputs.checklist.reminder-time
                               weight: bold
                               align: left                        
                     - type: component.view
@@ -48,7 +48,7 @@ children:
                         onPress: 
                           type: action.action-list
                           options:
-                            isSequential: true
+                            isSequential: false
                             actions:
                               - type: action.set-state
                                 when: =@ctx.inputs.checklist.isCheckable = true ? true:false
@@ -93,18 +93,22 @@ children:
                               children:
                                 - type: component.text
                                   options:
-                                    value: =@ctx.solution.state.checklist = 0 ? @ctx.inputs.checklist.value:'You are ready!'
+                                    value: =@ctx.inputs.checklist.routine-subject != null ? @ctx.inputs.checklist.routine-subject:'See your checklist'
                                     # Daily meds
                                     weight: bold
                                     align: left   
-                                #                                                      
+                                - type: component.text
+                                  when: =@ctx.inputs.checklist.routine-description != null ? true:false
+                                  options:
+                                    value: =@ctx.inputs.checklist.routine-description
                           - type: component.icon
+                            when: =@ctx.inputs.checklist.isCheckable = false ? true:false
                             options:
-                              icon: =@ctx.solution.state.checklist = 1 ? 'checkbox-checked':@ctx.inputs.checklist.icon
-                              # icon: =@ctx.solution.state.meds = 0 ? 'checkbox-unchecked':'checkbox-checked'
-                          - type: component.icon
-                            when: =@ctx.inputs.checklist.isCheckable = true ? true:false
-                            options:
-                              icon: =@ctx.solution.state.meds = 0 ? 'checkbox-unchecked':'checkbox-checked'
+                              # icon: arrow-right
+                              icon: checkbox-unchecked
+                          # - type: component.icon
+                          #   when: =@ctx.inputs.checklist.isCheckable = false ? true:false
+                          #   options:
+                          #     icon: =@ctx.solution.state.meds = 0 ? 'checkbox-unchecked':'checkbox-checked'
                     
                                     

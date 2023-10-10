@@ -22,33 +22,33 @@ onRefresh:
     
 datasources:
   checklist:
-    type: datasource.static
+    type: datasource.sqlite
     options:
-      data:
-        - id: 1
-          title: Dont forget to leave the house in
-          value: See your checklist
-          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
-          time: 18min
-          isDone: false
-          message: you are ready to go!
-          icon: arrow-right
-          color: color3
-          type: school
-          isCheckable: false
-          routine_id: 1
-        - id: 2
-          title: Let's do you morning routine!
-          value: See your checklist
-          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
-          time: 1min
-          isDone: false
-          message: you are ready to go!
-          icon: arrow-right
-          color: color3
-          type: personal
-          isCheckable: false
-          routine_id: 2
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/routines
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.image',
+          '$.isDone',
+          '$.type',
+          '$.time',
+          '$.routine_id',
+          '$.isCheckable',
+          '$.reminder-title',
+          '$.reminder-time',
+          '$.routine-subject',
+          '$.routine-description',
+          '$.isReminiscent'
+        FROM [default/routines] 
+        WHERE '$.isReminiscent' = true
+        AND '$.routine_id' = @todoRoutineId
+      queryParameters:
+        todoRoutineId: =@ctx.jig.inputs.routine
           
   routines:
     type: datasource.sqlite
@@ -66,8 +66,10 @@ datasources:
           '$.isDone',
           '$.type',
           '$.time',
-          '$.routine_id'
+          '$.routine_id',
+          '$.isCheckable'
         FROM [default/routines] 
+        WHERE '$.isCheckable' = true
       queryParameters:
         myParam: value
   todos:
@@ -137,7 +139,7 @@ children:
   - type: component.custom-component
     componentId: title-with-link
     inputs:
-      title: Reminders
+      title: Routines
       link: all-routines
   - type: component.list
     options:

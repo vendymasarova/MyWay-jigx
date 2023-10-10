@@ -6,7 +6,7 @@ children:
         flex: 
           direction: row
         justifyContent: space-between
-        alignItems: flex-start
+        alignItems: center
       children:
         - type: component.view
           options:
