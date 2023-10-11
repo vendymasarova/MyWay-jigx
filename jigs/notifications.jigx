@@ -2,10 +2,6 @@ title: Reminders
 type: jig.default
 
 onRefresh: 
-  # type: action.set-state
-  # options:
-  #   state: =@ctx.solution.state.checklist
-  #   value: 0
   type: action.action-list
   options:
     isSequential: true
@@ -20,36 +16,32 @@ onRefresh:
           value: 0
 
 datasources:
-  notifications:
-    type: datasource.static
-    options:
-      data:
-        - id: 1
-          title: You should take your meds in
-          value: Daily meds
-          image: https://t14345253.p.clickup-attachments.com/t14345253/b0ea69f5-4d28-4188-8036-2c286b5009cc/pills.png?view=open      
-          time: 13 min
-          isDone: false
-          message: 2 x 10 mg
-          icon: checkbox
-          color: color9
-          isCheckable: true
-          
   checklist:
-    type: datasource.static
+    type: datasource.sqlite
     options:
-      data:
-        - id: 1
-          title: Dont forget to leave the house in
-          value: See your checklist
-          image: https://t14345253.p.clickup-attachments.com/t14345253/67638b68-4c84-4c2d-887a-d335db8164d0/School.png?view=open
-          time: 18 min
-          isDone: false
-          message: you are prepared!
-          icon: arrow-right
-          color: color3
-          isCheckable: false
-          routine_id: 1
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/routines
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.image',
+          '$.isDone',
+          '$.type',
+          '$.time',
+          '$.routine_id',
+          '$.isCheckable',
+          '$.reminder-title',
+          '$.reminder-time',
+          '$.routine-subject',
+          '$.routine-description',
+          '$.isReminiscent',
+          '$.has-detail'
+        FROM [default/routines] 
+        WHERE '$.isReminiscent' = true
 
 children:
   - type: component.list
@@ -60,11 +52,3 @@ children:
         componentId: reminder-card-component-checklist
         inputs:
           checklist: =@ctx.current.item
-  - type: component.list
-    options:
-      data: =@ctx.datasources.notifications
-      item: 
-        type: component.custom-component
-        componentId: reminder-card-component-todo
-        inputs:
-          notifications: =@ctx.current.item

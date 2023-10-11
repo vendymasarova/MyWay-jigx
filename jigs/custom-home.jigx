@@ -43,10 +43,11 @@ datasources:
           '$.reminder-time',
           '$.routine-subject',
           '$.routine-description',
-          '$.isReminiscent'
+          '$.isReminiscent',
+          '$.has-detail'
         FROM [default/routines] 
         WHERE '$.isReminiscent' = true
-        AND '$.routine_id' = @todoRoutineId
+        # AND '$.routine_id' = @todoRoutineId
       queryParameters:
         todoRoutineId: =@ctx.jig.inputs.routine
           
@@ -70,8 +71,7 @@ datasources:
           '$.isCheckable'
         FROM [default/routines] 
         WHERE '$.isCheckable' = true
-      queryParameters:
-        myParam: value
+
   todos:
     type: datasource.sqlite
     options:
@@ -89,9 +89,6 @@ datasources:
           '$.isChecked',
           '$.routine_id'
         FROM [default/todos] 
-        WHERE '$.routine_id' = @todoRoutineId
-      queryParameters:
-        todoRoutineId: =@ctx.jig.inputs.routine
   
   create-new:
     type: datasource.static

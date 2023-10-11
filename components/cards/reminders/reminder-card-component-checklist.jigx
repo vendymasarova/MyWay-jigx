@@ -15,6 +15,7 @@ children:
       children:
         - type: component.card
           options:
+            direction: column
             color: =@ctx.inputs.checklist.type = 'school' ? 'color3':@ctx.inputs.checklist.type = 'personal' ? 'color8':'color2'
             children:
               - type: component.view
@@ -51,12 +52,12 @@ children:
                             isSequential: false
                             actions:
                               - type: action.set-state
-                                when: =@ctx.inputs.checklist.isCheckable = true ? true:false
+                                when: =@ctx.inputs.checklist.has-detail = 0 ? true:false
                                 options:
                                   state: =@ctx.solution.state.meds
                                   value: =@ctx.solution.state.meds + 1 
                               - type: action.go-to
-                                when: =@ctx.inputs.checklist.isCheckable = false ? true:false
+                                when: =@ctx.inputs.checklist.has-detail = 1 ? true:false
                                 options:
                                   linkTo: checklist-composite
                                   parameters:
@@ -102,13 +103,13 @@ children:
                                   options:
                                     value: =@ctx.inputs.checklist.routine-description
                           - type: component.icon
-                            when: =@ctx.inputs.checklist.isCheckable = false ? true:false
+                            when: =@ctx.inputs.checklist.isCheckable = 1 ? true:false
                             options:
                               # icon: arrow-right
-                              icon: checkbox-unchecked
-                          # - type: component.icon
-                          #   when: =@ctx.inputs.checklist.isCheckable = false ? true:false
-                          #   options:
-                          #     icon: =@ctx.solution.state.meds = 0 ? 'checkbox-unchecked':'checkbox-checked'
+                              icon: arrow-right
+                          - type: component.icon
+                            when: =@ctx.inputs.checklist.isCheckable = 0 ? true:false
+                            options:
+                              icon: =@ctx.solution.state.meds = 0 ? 'checkbox-unchecked':'checkbox-checked'
                     
                                     
