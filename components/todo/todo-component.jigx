@@ -32,7 +32,7 @@ children:
               alignItems: center
               
               background:
-                color: color14
+                color: color13
               radius: small
             children:
               - type: component.view

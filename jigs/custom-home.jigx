@@ -134,6 +134,15 @@ children:
       isClickable: true 
       linkTo: weekly-plan-composite
   - type: component.custom-component
+    componentId: title
+    inputs:
+      title: Todays statistics
+      link: weekly-plan-composite
+  - type: component.custom-component
+    componentId: stats-card
+    inputs:
+      linkTo: rewards
+  - type: component.custom-component
     componentId: title-with-link
     inputs:
       title: Routines
@@ -154,4 +163,5 @@ children:
     componentId: create-new
     inputs:
       create-new: =@ctx.datasources.create-new
-    
+  - type: component.custom-component
+    componentId: emotions-card

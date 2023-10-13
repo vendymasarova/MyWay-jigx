@@ -1,0 +1,7 @@
+type: component.default
+children:
+  - type: component.text
+    options:
+      value: =@ctx.inputs.title
+      size: extra-large
+      weight: semi-bold

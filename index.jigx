@@ -23,7 +23,7 @@ assets:
   theme:
     palette:
       light:
-        color14: 
+        color13: 
           background: '#FFFFFF'
           onBackground: '#000000'
         color2:

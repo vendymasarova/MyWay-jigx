@@ -1,0 +1,234 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        flex: 
+          grow: 1
+        height: 
+          # min: 600
+        justifyContent: space-between
+        
+      children:
+        - type: component.view
+          options:
+            style:
+              margin: 
+                top: large
+            children:
+              - type: component.text
+                options:
+                  value: How do you feel right now?
+                  size: large
+            
+        - type: component.view
+          options:
+            style:
+              flex:
+                shrink: 1
+              margin: 
+                top: large
+              justifyContent: center
+              alignItems: center
+            children:
+              - type: component.image
+                when: =@ctx.solution.state.mood = 'Bad' ? true:false
+                options:
+                  size:
+                    width: 200
+                    height: 200
+                  source:
+                    uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
+              - type: component.image
+                when: =@ctx.solution.state.mood = 'Neutral' ? true:false
+                options:
+                  size:
+                    width: 200
+                    height: 200
+                  source:
+                    uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
+              - type: component.image
+                when: =@ctx.solution.state.mood = 'Quite Good' ? true:false
+                options:
+                  size:
+                    width: 200
+                    height: 200
+                  source:
+                    uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
+              - type: component.image
+                when: =@ctx.solution.state.mood = 'Happy' ? true:false
+                options:
+                  size:
+                    width: 200
+                    height: 200
+                  source:
+                    uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
+        # - type: component.view
+        #   options:
+        #     style:
+        #       flex: 
+        #         shrink: 1
+        #       height: 
+        #         min: 200
+        #     children:
+        #       - type: component.card
+        #         options:
+        #           children:
+        #             - type: component.text
+        #               options:
+        #                 value: bad
+        #       - type: component.card
+        #         options:
+        #           children:
+        #             - ty
+        - type: component.view
+          options:
+            style:
+              flex:
+                shrink: 1
+                direction: row
+              height:
+                min: 200
+              margin: 
+                vertical: large
+              gap: small
+            children:
+              - type: component.view
+                options:
+                  style:
+                    flex:
+                      grow: 1
+                    gap: small
+                    height:
+                      min: 200
+                  children:
+                    - type: component.card
+                      options:
+                        onPress: 
+                          type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.mood
+                            value: Bad
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                justifyContent: center
+                                alignItems: center
+                                gap: small
+                                height: 
+                                  max: 100
+                              children:
+                                - type: component.image
+                                  options:
+                                    size:
+                                      height: 50
+                                      width: 50
+                                    source:
+                                      uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
+                                - type: component.text
+                                  options:
+                                    value: Bad
+                    - type: component.card
+                      options:
+                        onPress: 
+                          type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.mood
+                            value: Neutral
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                justifyContent: center
+                                alignItems: center
+                                gap: small
+                              children:
+                                - type: component.image
+                                  options:
+                                    size:
+                                      height: 50
+                                      width: 50
+                                    source:
+                                      uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
+                                - type: component.text
+                                  options:
+                                    value: Neutral
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      grow: 1
+                    gap: small
+                    height: 
+                      min: 200
+                  children:
+                    - type: component.card
+                      options:
+                        onPress: 
+                          type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.mood
+                            value: Quite Good
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                justifyContent: center
+                                alignItems: center
+                                gap: small
+                              children:
+                                - type: component.image
+                                  options:
+                                    size:
+                                      height: 50
+                                      width: 50
+                                    source:
+                                      uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
+                                - type: component.text
+                                  options:
+                                    value: Quite Good
+                    - type: component.card
+                      options:
+                        onPress: 
+                          type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.mood
+                            value: Happy
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                justifyContent: center
+                                alignItems: center
+                                gap: small
+                              children:
+                                - type: component.image
+                                  options:
+                                    size:
+                                      height: 50
+                                      width: 50
+                                    source:
+                                      uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open
+                                - type: component.text
+                                  options:
+                                    value: Happy
+    
+        - type: component.view
+          options:
+            style:
+              flex:
+                grow: 1
+              margin:
+                top: large
+            children:
+              - type: component.button
+                options:
+                  title: Tell us more
+                  type: primary
+                  icon: arrow-right
+                  onPress: 
+                    type: action.go-to
+                    options:
+                      linkTo: emotions-second-step
+              

@@ -1,0 +1,162 @@
+type: component.default
+children:
+  - type: component.card
+    options:
+      color: color3
+      children:
+        - type: component.view
+          options:
+            style:
+              flex: 
+                direction: row
+              gap: small
+            children:
+              - type: component.card
+                options:
+                  onPress: 
+                    type: action.go-to
+                    options:
+                      linkTo: weekly-plan-composite
+                  children:
+                    - type: component.view
+                      options:
+                        style:
+                          
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                padding:
+                                  bottom: medium
+                              children:
+                                - type: component.image
+                                  options:
+                                    size: 
+                                      width: 70
+                                      height: 50
+                                    resizeMode: contain
+                                    source:
+                                      uri: https://t14345253.p.clickup-attachments.com/t14345253/260ac9bb-c1a9-4538-a5fc-c33e45f3ca62/Thumb%20Up.png?view=open
+                          - type: component.view
+                            options:
+                              style:
+                                flex:
+                                  grow: 1
+                                padding:
+                                  bottom: medium
+                                justifyContent: center
+                                alignItems: center
+                              children:
+                                - type: component.text
+                                  options:
+                                    value: '2'
+                                    size: large
+                                    emphasis: high
+                                    weight: semi-bold
+                          - type: component.text
+                            options:
+                              value: Done
+                              weight: semi-bold
+                              align: center
+                              emphasis: high
+              - type: component.card
+                options:  
+                  onPress: 
+                    type: action.go-to
+                    options:
+                      linkTo: weekly-plan-composite  
+                  children:
+                    - type: component.view
+                      options:
+                        style:
+                          
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                padding:
+                                  bottom: medium
+                              children:
+                                - type: component.image
+                                  options:
+                                    size: 
+                                      width: 70
+                                      height: 50
+                                    resizeMode: contain
+                                    source:
+                                      uri: https://t14345253.p.clickup-attachments.com/t14345253/a4dbb16e-f7bd-4caa-929b-ce5b15dfb07a/Progress.png?view=open
+                          - type: component.view
+                            options:
+                              style:
+                                flex:
+                                  grow: 1  
+                                padding:
+                                  bottom: medium  
+                                justifyContent: center
+                                alignItems: center
+                              children:
+                                - type: component.text
+                                  options:
+                                    value: '2'
+                                    size: large
+                                    emphasis: high
+                                    weight: semi-bold
+                          - type: component.text
+                            options:
+                              value: To go
+                              weight: semi-bold
+                              align: center
+                              emphasis: high
+        - type: component.view
+          options:
+            style:
+              flex: 
+                direction: row
+              alignItems: center
+              justifyContent: space-between
+            children:
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      direction: column
+                    gap: minimal
+                  children:
+                    - type: component.text
+                      options:
+                        value: "You have 22% left to get your reward:"
+                        align: left
+                        size: small  
+                    - type: component.text
+                      options:
+                        value: "Star achiever"
+                        align: left
+                        weight: bold
+                        size: regular
+              - type: component.icon
+                when: =@ctx.inputs.linkTo != null ? true:false
+                options:
+                  icon: arrow-right
+                  # color: color9
+                  shape: circle
+                  # type: duotone
+                  size: small
+                  onPress: 
+                    type: action.go-to
+                    options:
+                      linkTo: =@ctx.inputs.linkTo
+        - type: component.view
+          options:
+            style:
+              # padding:
+              #   top: minimal
+            children:
+              - type: component.image
+                options:
+                  size: 
+                    height: 60
+                    width: 60
+                  # resizeMode: contain
+                  source:
+                    uri: https://t14345253.p.clickup-attachments.com/t14345253/b1d16757-ab6d-469d-861f-b593a05a3a7b/reward1.png
+                    

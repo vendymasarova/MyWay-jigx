@@ -38,6 +38,7 @@ datasources:
     options:
       data:
         - id: Suprised
+          text: '👨‍👩‍👧'
           icon: smiley-surprised
         - id: Tired
           icon: emoji-tired-face
@@ -181,7 +182,7 @@ component:
                     value: =@ctx.current.item.id
                     leftElement: 
                       element: icon
-                      icon: =@ctx.current.item.icon
+                      icon: =@ctx.current.item.text
 
           nextStep:
             type: action.go-to-next-step

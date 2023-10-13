@@ -1,0 +1,36 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        flex: 
+          grow: 1
+          shrink: 1
+        justifyContent: center
+        alignContent: center
+      children:
+        - type: component.card
+          options:
+            children:
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      shrink: 1
+                    # width: 100
+                    # height: 200
+                    justifyContent: center
+                    alignItems: center
+                  onPress: 
+                    type: action.go-to
+                    options:
+                      linkTo: mood-analytics
+                  children:
+                    - type: component.image
+                      options:
+                        size: 
+                          width: 60
+                          height: 60
+                        source:
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
+                          
