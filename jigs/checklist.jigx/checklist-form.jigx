@@ -6,6 +6,7 @@ type: jig.default
 actions:
   - children:
       - type: action.submit-form
+        when: =@ctx.solution.state.add-todo = true ? true:false
         options:
           formId: new-todo-routine-form
           provider: DATA_PROVIDER_DYNAMIC
@@ -16,12 +17,14 @@ actions:
           onSuccess: 
             type: action.reset-state
             options:
-              state: =@ctx.solution.state.new-todo
+              state: =@ctx.solution.state.add-todo
               
             # type: action.set-state
             # options:
             #   state: =@ctx.solution.state.new-todo
             #   value: =@ctx.components.checkbox.state.value
+  
+  
 
 datasources:
   images: 
@@ -91,25 +94,28 @@ datasources:
         yourRoutineId: =@ctx.jig.inputs.routineId
         
 children:
-  - type: component.form
-    instanceId: new-todo-checkbox
-    options:
-      isDiscardChangesAlertEnabled: false
-      children:
-        - type: component.checkbox
-          instanceId: checkbox
-          options:
-            label: Add new todo
-            isOptionalLabelHidden: true
-            isRequired: false
-            onChange: 
-              type: action.set-state
-              options:
-                state: =@ctx.solution.state.new-todo
-                value: =@ctx.components.checkbox.state.value
+  - type: component.custom-component  
+    componentId: plus-btn
+        
+  # - type: component.form
+  #   instanceId: new-todo-checkbox
+  #   options:
+  #     isDiscardChangesAlertEnabled: false
+  #     children:
+  #       - type: component.checkbox
+  #         instanceId: checkbox
+  #         options:
+  #           label: Add new todo
+  #           isOptionalLabelHidden: true
+  #           isRequired: false
+  #           onChange: 
+  #             type: action.set-state
+  #             options:
+  #               state: =@ctx.solution.state.new-todo
+  #               value: =@ctx.components.checkbox.state.value
                 
   - type: component.form
-    when: =@ctx.solution.state.new-todo = true ? true:false
+    when: =@ctx.solution.state.add-todo = 1
     instanceId: new-todo-routine-form
     options:
       children:

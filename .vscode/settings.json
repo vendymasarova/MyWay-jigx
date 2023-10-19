@@ -5,5 +5,6 @@
         "deviceName": "iPhone",
         "deviceAddress": "device/F0F81889-AF48-4F04-9A1E-80588162EEEC",
         "sessionKey": "ddfcdd31-09f3-45b6-9cf4-3dc0574c9287"
-    }
+    },
+    "jigx.disablePublishWarning": true
 }

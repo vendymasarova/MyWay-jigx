@@ -59,7 +59,7 @@ datasources:
           '$.routine_id'
         FROM [default/todos] 
         WHERE '$.routine_id' = @todoRoutineId
-        ORDER BY '$.isChecked'
+        ORDER BY '$.isChecked' AND '$.name' desc
       queryParameters:
         todoRoutineId: =@ctx.jig.inputs.routineId
  

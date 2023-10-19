@@ -2,28 +2,29 @@ type: component.default
 children:
   - type: component.view
     options:
-      style:
-        
+      style:   {}
       children:
-        - type: component.form
-          instanceId: 
+        - type: component.icon
           options:
-            children:
-              - type: component.checkbox
-                instanceId: sdfa
-                options:
-                  label: ''
-                
-      # - type: component.icon
-      #   options:
-      #     icon: plus
-      #     color: color9
-      #     type: duotone
-      #     shape: circle
-      #     size: large
-      #     onPress: 
-      #       type: action.set-state
-      #       options:
-      #         state: =@ctx.solution.state.new-item
-      #         value: 
+            icon: =@ctx.solution.state.add-todo = 1 ? 'minus':'plus'
+            color: color9
+            type: duotone
+            shape: circle
+            size: large
+            onPress: 
+              type: action.action-list
+              options:
+                isSequential: false
+                actions:
+                  - type: action.set-state
+                    when: =@ctx.solution.state.add-todo = 1 ? true:false
+                    options:
+                      state: =@ctx.solution.state.add-todo
+                      value: 0
+                  - type: action.set-state
+                    when: =@ctx.solution.state.add-todo = 0 ? true:false
+                    options:
+                      state: =@ctx.solution.state.add-todo
+                      value: 1
+          
       

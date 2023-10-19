@@ -41,7 +41,6 @@ children:
                         align: center
                         weight: semi-bold
                         size: large
-                        # emphasis: high
                     - type: component.view
                       options:
                         style:
@@ -51,10 +50,13 @@ children:
                           - type: component.text
                             options:
                               value: 'Today is:'
+                              weight: bold
+                              size: small
                           - type: component.text
                             options:
                               value: =@ctx.inputs.date
-                              emphasis: medium
+                              # emphasis: medium
+                              size: small
         # - type: component.view
         #   options:
         #     style:

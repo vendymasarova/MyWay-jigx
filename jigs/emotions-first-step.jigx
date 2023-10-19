@@ -1,0 +1,10 @@
+title: Name
+description: Description of your Jig
+type: jig.default
+
+datasources:
+  mydata: 
+
+children:
+  - type: component.custom-component
+    componentId: emotions-first-step-full-screen

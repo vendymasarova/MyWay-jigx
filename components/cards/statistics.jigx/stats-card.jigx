@@ -50,7 +50,7 @@ children:
                                 - type: component.text
                                   options:
                                     value: '2'
-                                    size: large
+                                    size: medium
                                     emphasis: high
                                     weight: semi-bold
                           - type: component.text
@@ -58,7 +58,7 @@ children:
                               value: Done
                               weight: semi-bold
                               align: center
-                              emphasis: high
+                              # emphasis: high
               - type: component.card
                 options:  
                   onPress: 
@@ -98,7 +98,7 @@ children:
                                 - type: component.text
                                   options:
                                     value: '2'
-                                    size: large
+                                    size: medium
                                     emphasis: high
                                     weight: semi-bold
                           - type: component.text
@@ -106,57 +106,44 @@ children:
                               value: To go
                               weight: semi-bold
                               align: center
-                              emphasis: high
+                              # emphasis: high
         - type: component.view
           options:
             style:
-              flex: 
-                direction: row
-              alignItems: center
-              justifyContent: space-between
+              padding: 
+                top: medium
+              
             children:
-              - type: component.view
+              - type: component.progress-bar
                 options:
-                  style:
-                    flex: 
-                      direction: column
-                    gap: minimal
-                  children:
-                    - type: component.text
-                      options:
-                        value: "You have 22% left to get your reward:"
-                        align: left
-                        size: small  
-                    - type: component.text
-                      options:
-                        value: "Star achiever"
-                        align: left
-                        weight: bold
-                        size: regular
-              - type: component.icon
-                when: =@ctx.inputs.linkTo != null ? true:false
-                options:
-                  icon: arrow-right
-                  # color: color9
-                  shape: circle
-                  # type: duotone
-                  size: small
-                  onPress: 
-                    type: action.go-to
-                    options:
-                      linkTo: =@ctx.inputs.linkTo
+                  value:
+                    current: 50
+                    max: 100
+                  size: tiny
+                  subtitle: 
+                    value: "You have 22% left to get your reward:"
+                    position: bottom
+            # title:
+            #   value: "You have 22% left to get your reward:"
+            # subtitle:
+              # value: Your current progress subtitle
+                                    
+                      
         - type: component.view
           options:
             style:
-              # padding:
-              #   top: minimal
             children:
+              - type: component.text
+                options:
+                  value: "Star achiever"
+                  align: left
+                  weight: bold
+                  size: regular
               - type: component.image
                 options:
                   size: 
                     height: 60
                     width: 60
-                  # resizeMode: contain
                   source:
                     uri: https://t14345253.p.clickup-attachments.com/t14345253/b1d16757-ab6d-469d-861f-b593a05a3a7b/reward1.png
                     

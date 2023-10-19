@@ -24,7 +24,7 @@ children:
                   onPress: 
                     type: action.go-to
                     options:
-                      linkTo: mood-analytics
+                      linkTo: emotions-first-step
                   children:
                     - type: component.image
                       options:

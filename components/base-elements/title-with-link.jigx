@@ -15,7 +15,7 @@ children:
         - type: component.text
           options:
             size: medium
-            weight: extra-bold
+            weight: semi-bold
             value: =@ctx.inputs.title
             emphasis: high
         - type: component.icon
