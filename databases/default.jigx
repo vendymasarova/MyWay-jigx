@@ -2,3 +2,6 @@ tables:
   tasks:
   todos:
   routines:
+  mood-stats:
+  mood-reasons: 
+  mood-feelings:

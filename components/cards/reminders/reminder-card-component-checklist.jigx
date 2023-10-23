@@ -43,7 +43,8 @@ children:
                             options:
                               value: =@ctx.inputs.checklist.reminder-time
                               weight: bold
-                              align: left                        
+                              align: left        
+                              size: small                
                     - type: component.view
                       options: 
                         onPress: 
@@ -97,11 +98,12 @@ children:
                                     value: =@ctx.inputs.checklist.routine-subject != null ? @ctx.inputs.checklist.routine-subject:'See your checklist'
                                     # Daily meds
                                     weight: bold
-                                    align: left   
+                                    align: left  
                                 - type: component.text
                                   when: =@ctx.inputs.checklist.routine-description != null ? true:false
                                   options:
                                     value: =@ctx.inputs.checklist.routine-description
+                                    size: small
                           - type: component.icon
                             when: =@ctx.inputs.checklist.isCheckable = 1 ? true:false
                             options:

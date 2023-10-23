@@ -4,10 +4,22 @@ type: jig.default
 
 actions:
   - children:
-      - type: action.go-to
+      - type: action.action-list
         options:
           title: Next
-          linkTo: emotions-second-step
+          isSequential: false
+          actions:
+            - type: action.execute-entity
+              options:
+                provider: DATA_PROVIDER_DYNAMIC
+                entity: default/mood-stats
+                method: create
+                goBack: stay
+                data:
+                  mood: =@ctx.solution.state.mood
+            - type: action.go-to
+              options:
+                linkTo: emotions-second-step
 
 children:
   - type: component.custom-component

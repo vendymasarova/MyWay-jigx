@@ -44,7 +44,14 @@ children:
                                     value: =@ctx.inputs.tasks.category
                           - type: component.icon
                             options:
-                              icon: three-dots
+                              icon: arrow-right
+                              shape: circle
+                              type: duotone
+                              color: color9
+                              onPress: 
+                                type: action.go-to
+                                options:
+                                  linkTo: task-detail
                     - type: component.view
                       options:
                         style:

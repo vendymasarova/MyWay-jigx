@@ -32,7 +32,8 @@ children:
                 options:
                   value: =@ctx.inputs.notifications.time
                   weight: bold
-                  align: left                        
+                  align: left
+                  size: small                    
         - type: component.view
           options: 
             onPress: 
@@ -97,6 +98,7 @@ children:
                         # Daily meds
                         weight: bold
                         align: left   
+                        size: small
                     - type: component.text
                       options:
                         value: =@ctx.inputs.notifications.message

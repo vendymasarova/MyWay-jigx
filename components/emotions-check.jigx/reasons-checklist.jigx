@@ -7,37 +7,7 @@ children:
           grow: 1
           shrink: 1
           direction: row
-        radius: medium
-      onPress: 
-        # type: action.execute-entity
-        # options:
-        #   provider: DATA_PROVIDER_DYNAMIC
-        #   entity: default/todos
-        #   method: delete
-        #   goBack: stay
-        #   data:
-        #     id: =@ctx.inputs.todos.id
-
-        type: action.confirm
-        when: =@ctx.inputs.todos.hasEmoji = 0 ? true:false
-        options:
-          isConfirmedAutomatically: false
-          onConfirmed: 
-            type: action.execute-entities
-            options: 
-              provider: DATA_PROVIDER_DYNAMIC
-              entity: default/todos
-              method: delete
-              goBack: stay
-              data: 
-                id: =@ctx.inputs.todos.id
-          modal:
-            title: Delete todo
-            description: Are you sure you want to delete this todo?
-            confirm: 'Delete'
-            cancel: 'Cancel'
-
-         
+        radius: medium         
       children:
         - type: component.view
           options:
@@ -73,21 +43,11 @@ children:
                     padding: small
                     radius: small
                     background:
-                      color: =@ctx.inputs.todos.type = 'school' ? 'color3':@ctx.inputs.todos.type = 'personal' ? 'color8':'color14'
+                      color: =@ctx.inputs.reasons.type = 'school' ? 'color3':@ctx.inputs.reasons.type = 'personal' ? 'color8':'color14'
                   children:
-                    - type: component.image
-                      when: =@ctx.inputs.todos.hasEmoji = 0 ? true:@ctx.inputs.todos.hasEmoji = null ? true:false
-                      options:
-                        size:
-                          height: 45
-                          width: 45
-                        resizeMode: contain
-                        source:
-                          uri:  =@ctx.inputs.todos.image
                     - type: component.text
-                      when: =@ctx.inputs.todos.hasEmoji = true ? true:false
                       options:
-                        value: =@ctx.inputs.todos.emoji
+                        value: =@ctx.inputs.reasons.emoji
                         size: large
               - type: component.view
                 options:
@@ -99,7 +59,7 @@ children:
                   children:
                     - type: component.text
                       options:
-                        value: =@ctx.inputs.todos.name
+                        value: =@ctx.inputs.reasons.name
                         weight: semi-bold
                         
               - type: component.view
@@ -115,23 +75,38 @@ children:
                         isDiscardChangesAlertEnabled: false
                         children:
                           - type: component.checkbox
-                            instanceId: todo
+                            instanceId: reason
                             options:
                               nextProperty: undefined
                               label: ''
                               isRequired: false
-                              value: =@ctx.inputs.todos.isChecked
+                              value: =@ctx.inputs.reasons.isChecked
                               isOptionalLabelHidden: true
                               style:
                                 isPositive: true
                               onChange: 
-                                type: action.execute-entity
+                                type: action.action-list
                                 options:
-                                  provider: DATA_PROVIDER_DYNAMIC
-                                  entity: default/todos
-                                  method: update
-                                  goBack: stay
-                                  data:
-                                    id: =@ctx.inputs.todos.id
-                                    isChecked: =@ctx.components.todo.state.value
-                  
+                                  isSequential: true
+                                  actions:
+                                    - type: action.execute-entity
+                                      options:
+                                        provider: DATA_PROVIDER_DYNAMIC
+                                        entity: default/mood-stats
+                                        method: create
+                                        goBack: stay
+                                        data:
+                                          id: =@ctx.inputs.reasons.id
+                                          name: =@ctx.inputs.reasons.name
+                                          emoji: =@ctx.inputs.reasons.emoji
+                                          # isChecked: =@ctx.components.reason.state.value
+                                    - type: action.execute-entity
+                                      options:
+                                        provider: DATA_PROVIDER_DYNAMIC
+                                        entity: default/mood-stats
+                                        method: update
+                                        goBack: stay
+                                        data:
+                                          id: =@ctx.inputs.reasons.id
+                                          isChecked: =@ctx.components.reason.state.value
+                        

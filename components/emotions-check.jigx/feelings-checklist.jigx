@@ -1,0 +1,131 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        flex: 
+          grow: 1
+          shrink: 1
+          direction: row
+        radius: medium         
+      children:
+        - type: component.view
+          options:
+            style:
+              flex: 
+                grow: 1
+                # shrink: 1
+                direction: row
+              gap: medium
+              height: 
+                min: 60
+              margin: 
+                bottom: small
+              position: relative
+              alignItems: center
+              
+              background:
+                color: color13
+              radius: small
+            children:
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      grow: 1
+                      shrink: 1
+                    justifyContent: center
+                    alignItems: center
+                    height: 60
+                    width: 
+                      min: 60
+                      
+                    padding: small
+                    radius: small
+                    background:
+                      color: =@ctx.inputs.feelings.type = 'school' ? 'color3':@ctx.inputs.feelings.type = 'personal' ? 'color8':'color14'
+                  children:
+                    - type: component.text
+                      options:
+                        value: =@ctx.inputs.feelings.emoji
+                        size: large
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      grow: 1
+                    width:
+                      max: 150
+                  children:
+                    - type: component.text
+                      options:
+                        value: =@ctx.inputs.feelings.name
+                        weight: semi-bold
+                        
+              - type: component.view
+                options:
+                  style:
+                    position: absolute
+                    right: minimal
+                    bottom: minimal
+                  children:
+                    - type: component.form
+                      instanceId: checkbox
+                      options:
+                        isDiscardChangesAlertEnabled: false
+                        children:
+                          - type: component.checkbox
+                            instanceId: reason
+                            options:
+                              nextProperty: undefined
+                              label: ''
+                              isRequired: false
+                              value: =@ctx.inputs.feelings.isChecked
+                              isOptionalLabelHidden: true
+                              style:
+                                isPositive: true
+                              onChange: 
+                                type: action.action-list
+                                options:
+                                  isSequential: true
+                                  actions:
+                                    - type: action.execute-entity
+                                      options:
+                                        provider: DATA_PROVIDER_DYNAMIC
+                                        entity: default/mood-stats
+                                        method: create
+                                        goBack: stay
+                                        data:
+                                          id: =@ctx.inputs.feelings.id
+                                          reasons: =@ctx.inputs.feelings
+                                          # isChecked: =@ctx.components.reason.state.value
+                                    - type: action.execute-entity
+                                      options:
+                                        provider: DATA_PROVIDER_DYNAMIC
+                                        entity: default/mood-stats
+                                        method: create
+                                        goBack: stay
+                                        data:
+                                          id: =@ctx.inputs.feelings.id
+                                          name: =@ctx.inputs.feelings.name
+                                          # isChecked: =@ctx.components.reason.state.value
+                                    - type: action.execute-entity
+                                      options:
+                                        provider: DATA_PROVIDER_DYNAMIC
+                                        entity: default/mood-stats
+                                        method: create
+                                        goBack: stay
+                                        data:
+                                          id: =@ctx.inputs.feelings.id
+                                          emoji: =@ctx.inputs.feelings.emoji
+                                          # isChecked: =@ctx.components.reason.state.value
+                                    - type: action.execute-entity
+                                      options:
+                                        provider: DATA_PROVIDER_DYNAMIC
+                                        entity: default/mood-stats
+                                        method: update
+                                        goBack: stay
+                                        data:
+                                          id: =@ctx.inputs.feelings.id
+                                          isChecked: =@ctx.components.reason.state.value
+                        

@@ -11,79 +11,20 @@ actions:
 
 datasources:
   reasons:
-    type: datasource.static
+    type: datasource.sqlite
     options:
-      data:
-        - id: '1'
-          name: Family
-          emoji: 👨‍👩‍👦 
-          isChecked: false
-          hasEmoji: true
-        - id: '2'
-          name: Partner
-          emoji: 💞 
-          isChecked: false
-          hasEmoji: true
-        - id: '3'
-          name: Education
-          emoji: 🎓 
-          isChecked: false
-          hasEmoji: true
-        - id: '4'
-          name: Vacation
-          emoji: 🏝️
-          isChecked: false
-          hasEmoji: true
-        - id: '5'
-          name: Food
-          emoji: 🍔
-          isChecked: false
-          hasEmoji: true
-        - id: '6' 
-          name: Social media
-          emoji: 📲
-          isChecked: false
-          hasEmoji: true
-        - id: '7'
-          name: Friends
-          emoji: 👫
-          isChecked: false
-          hasEmoji: true 
-        - id: '8'
-          name: Health
-          emoji: 🫀
-          isChecked: false
-          hasEmoji: true 
-        - id: '9'
-          name: Sleep
-          emoji: 💤
-          isChecked: false
-          hasEmoji: true 
-        - id: '10'
-          name: Music
-          emoji: 🎶
-          isChecked: false
-          hasEmoji: true 
-        - id: '11'
-          name: Hobbies
-          emoji: 🎭
-          isChecked: false
-          hasEmoji: true 
-        - id: '12'
-          name: Nature
-          emoji: 🏔️
-          isChecked: false
-          hasEmoji: true 
-        - id: '13'
-          name: Gaming
-          emoji: 🎮
-          isChecked: false
-          hasEmoji: true 
-        - id: '14'
-          name: Shopping
-          emoji: 🛒
-          isChecked: false
-          hasEmoji: true 
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/mood-reasons
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.emoji',
+          '$.isChecked'
+        FROM [default/mood-reasons]
 
 children:
   - type: component.list
@@ -92,6 +33,6 @@ children:
       maximumItemsToRender: 100
       item: 
         type: component.custom-component
-        componentId: todo-component
+        componentId: reasons-checklist
         inputs: 
-          todos: =@ctx.current.item
+          reasons: =@ctx.current.item

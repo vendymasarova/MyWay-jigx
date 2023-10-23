@@ -57,29 +57,3 @@ children:
                               value: =@ctx.inputs.date
                               # emphasis: medium
                               size: small
-        # - type: component.view
-        #   options:
-        #     style:
-        #       flex:
-        #         direction: row
-        #       gap: minimal
-        #       alignItems: center
-        #     onPress: 
-        #       type: action.go-to
-        #       options:
-        #         linkTo: notifications
-        #     children:
-        #       - type: component.icon
-        #         options:
-        #           icon: alarm-bell
-        #           color: color9
-        #           shape: circle
-        #           type: duotone
-        #           size: small
-        #       - type: component.text
-        #         options:
-        #           value: '2'
-        #           color: color9
-        #           weight: semi-bold
-                  
-                
