@@ -1,0 +1,51 @@
+title: Why do you feel like that
+description: ='What made you feel' & ' ' & @ctx.solution.state.mood
+type: jig.list
+icon: contact
+
+datasources:
+  reasons:
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          name: Family
+          emoji: 👨‍👩‍👦 
+          isChecked: false
+        - id: 2
+          name: Partner
+          emoji: 💞 
+          isChecked: false
+        - id: 3
+          name: Education
+          emoji: 🎓 
+          isChecked: false
+        - id: 4
+          name: Vacation
+          emoji: 🏝️
+          isChecked: false
+        - id: 5
+          name: Food
+          emoji: 🍔
+          isChecked: false
+        - id: 6 
+          name: Social media
+          emoji: 📲
+          isChecked: false
+        - id: 6
+          name: Friends
+          emoji: 👫
+          isChecked: false
+
+data: =@ctx.datasources.reasons
+item:
+  type: component.list-item
+  options:
+    title: =@ctx.current.item.title
+    leftElement: 
+      element: avatar
+      text: =@ctx.current.item.emoji
+      uri: =@ctx.current.item.emoji
+    rightElement: 
+      element: checkbox
+      value: false

@@ -9,23 +9,46 @@ children:
           direction: row
         radius: medium
       onPress: 
-        type: action.execute-entity
+        # type: action.execute-entity
+        # options:
+        #   provider: DATA_PROVIDER_DYNAMIC
+        #   entity: default/todos
+        #   method: delete
+        #   goBack: stay
+        #   data:
+        #     id: =@ctx.inputs.todos.id
+
+        type: action.confirm
+        when: =@ctx.inputs.todos.hasEmoji = 0 ? true:false
         options:
-          provider: DATA_PROVIDER_DYNAMIC
-          entity: default/todos
-          method: delete
-          goBack: stay
-          data:
-            id: =@ctx.inputs.todos.id
+          isConfirmedAutomatically: false
+          onConfirmed: 
+            type: action.execute-entities
+            options: 
+              provider: DATA_PROVIDER_DYNAMIC
+              entity: default/todos
+              method: delete
+              goBack: stay
+              data: 
+                id: =@ctx.inputs.todos.id
+          modal:
+            title: Delete todo
+            description: Are you sure you want to delete this todo?
+            confirm: 'Delete'
+            cancel: 'Cancel'
+
+         
       children:
         - type: component.view
           options:
             style:
               flex: 
                 grow: 1
-                shrink: 1
+                # shrink: 1
                 direction: row
               gap: medium
+              height: 
+                min: 60
               margin: 
                 bottom: small
               position: relative
@@ -38,14 +61,22 @@ children:
               - type: component.view
                 options:
                   style:
-                    # flex: 
-                    #   shrink: 1
+                    flex: 
+                      grow: 1
+                      shrink: 1
+                    justifyContent: center
+                    alignItems: center
+                    height: 60
+                    width: 
+                      min: 60
+                      
                     padding: small
                     radius: small
                     background:
-                      color: =@ctx.inputs.todos.type = 'school' ? 'color3':@ctx.inputs.todos.type = 'personal' ? 'color8':'color2'
+                      color: =@ctx.inputs.todos.type = 'school' ? 'color3':@ctx.inputs.todos.type = 'personal' ? 'color8':'color14'
                   children:
                     - type: component.image
+                      when: =@ctx.inputs.todos.hasEmoji = 0 ? true:@ctx.inputs.todos.hasEmoji = null ? true:false
                       options:
                         size:
                           height: 45
@@ -53,6 +84,11 @@ children:
                         resizeMode: contain
                         source:
                           uri:  =@ctx.inputs.todos.image
+                    - type: component.text
+                      when: =@ctx.inputs.todos.hasEmoji = true ? true:false
+                      options:
+                        value: =@ctx.inputs.todos.emoji
+                        size: large
               - type: component.view
                 options:
                   style:
@@ -74,7 +110,7 @@ children:
                     bottom: minimal
                   children:
                     - type: component.form
-                      instanceId: sdfa
+                      instanceId: checkbox
                       options:
                         isDiscardChangesAlertEnabled: false
                         children:

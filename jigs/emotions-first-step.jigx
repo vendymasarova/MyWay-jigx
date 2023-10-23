@@ -1,9 +1,13 @@
-title: Name
-description: Description of your Jig
+title: Tell us how do you feel
+description: ''
 type: jig.default
 
-datasources:
-  mydata: 
+actions:
+  - children:
+      - type: action.go-to
+        options:
+          title: Next
+          linkTo: emotions-second-step
 
 children:
   - type: component.custom-component

@@ -1,7 +1,0 @@
-title: Full screen
-type: jig.full-screen
-
-component: 
-  type: component.custom-component
-  componentId: emotions-first-step
- 

@@ -6,25 +6,13 @@ type: jig.default
 actions:
   - children:
       - type: action.submit-form
-        when: =@ctx.solution.state.add-todo = true ? true:false
         options:
           formId: new-todo-routine-form
           provider: DATA_PROVIDER_DYNAMIC
           title: Create new Todo
           entity: default/todos
           method: save
-          goBack: stay
-          onSuccess: 
-            type: action.reset-state
-            options:
-              state: =@ctx.solution.state.add-todo
-              
-            # type: action.set-state
-            # options:
-            #   state: =@ctx.solution.state.new-todo
-            #   value: =@ctx.components.checkbox.state.value
-  
-  
+          goBack: stay  
 
 datasources:
   images: 

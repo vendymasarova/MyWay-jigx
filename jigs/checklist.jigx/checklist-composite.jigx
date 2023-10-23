@@ -39,7 +39,7 @@ children:
     inputs:
       routineId: =@ctx.datasources.routines.routine_id
     isTitleHidden: true
-  - jigId: checklist-form
-    inputs:
-      routineId: =@ctx.datasources.routines.routine_id
-    isTitleHidden: true
+  # - jigId: checklist-form
+  #   inputs:
+  #     routineId: =@ctx.datasources.routines.routine_id
+  #   isTitleHidden: true

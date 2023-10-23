@@ -58,10 +58,11 @@ datasources:
           '$.isChecked',
           '$.day_id',
           '$.image',
+          '$.hasEmoji',
           '$.day'
         FROM [default/todos] 
         WHERE '$.day' = @day
-        ORDER BY '$.isChecked'
+        ORDER BY '$.isChecked' AND '$.name' desc
       queryParameters:
         day: =@ctx.jig.inputs.day
 

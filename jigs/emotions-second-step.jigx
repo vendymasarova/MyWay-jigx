@@ -1,46 +1,97 @@
-title: Why do you feel like that
-description: Description of your Jig
-type: jig.list
-icon: contact
+title: Why do you feel like that?
+description: ='What made you feel' & ' ' & @ctx.solution.state.mood
+type: jig.default
+
+actions:
+  - children:
+      - type: action.go-to
+        options:
+          title: Next
+          linkTo: emotions-third-step
 
 datasources:
   reasons:
     type: datasource.static
     options:
       data:
-        - id: 1
-          title: Family
-          image: 👨‍👩‍👦 
-        - id: 2
-          title: Partner
-          image: 💞 
-        - id: 3
-          title: Education
-          image: 🎓 
-        - id: 4
-          title: Vacation
-          image: 🏝️
-        - id: 5
-          title: Food
-          image: 🍔
-        - id: 6 
-          title: Social media
-          image: 📲
-        - id: 6
-          title: Friends
-          image: '👫'  
+        - id: '1'
+          name: Family
+          emoji: 👨‍👩‍👦 
+          isChecked: false
+          hasEmoji: true
+        - id: '2'
+          name: Partner
+          emoji: 💞 
+          isChecked: false
+          hasEmoji: true
+        - id: '3'
+          name: Education
+          emoji: 🎓 
+          isChecked: false
+          hasEmoji: true
+        - id: '4'
+          name: Vacation
+          emoji: 🏝️
+          isChecked: false
+          hasEmoji: true
+        - id: '5'
+          name: Food
+          emoji: 🍔
+          isChecked: false
+          hasEmoji: true
+        - id: '6' 
+          name: Social media
+          emoji: 📲
+          isChecked: false
+          hasEmoji: true
+        - id: '7'
+          name: Friends
+          emoji: 👫
+          isChecked: false
+          hasEmoji: true 
+        - id: '8'
+          name: Health
+          emoji: 🫀
+          isChecked: false
+          hasEmoji: true 
+        - id: '9'
+          name: Sleep
+          emoji: 💤
+          isChecked: false
+          hasEmoji: true 
+        - id: '10'
+          name: Music
+          emoji: 🎶
+          isChecked: false
+          hasEmoji: true 
+        - id: '11'
+          name: Hobbies
+          emoji: 🎭
+          isChecked: false
+          hasEmoji: true 
+        - id: '12'
+          name: Nature
+          emoji: 🏔️
+          isChecked: false
+          hasEmoji: true 
+        - id: '13'
+          name: Gaming
+          emoji: 🎮
+          isChecked: false
+          hasEmoji: true 
+        - id: '14'
+          name: Shopping
+          emoji: 🛒
+          isChecked: false
+          hasEmoji: true 
 
-data: =@ctx.datasources.reasons
-item:
-  type: component.list-item
-  options:
-    title: =@ctx.current.item.title
-    leftElement: 
-      element: avatar
-      text: =@ctx.current.item.image
-      uri: =@ctx.current.item.image
-      
-    rightElement: 
-      element: checkbox
-      value: false
-      
+children:
+  - type: component.list
+    options:
+      data: =@ctx.datasources.reasons
+      maximumItemsToRender: 100
+      item: 
+        type: component.custom-component
+        componentId: todo-component
+        inputs: 
+          todos: =@ctx.current.item

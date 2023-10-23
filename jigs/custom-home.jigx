@@ -87,7 +87,8 @@ datasources:
           '$.name',
           '$.image',
           '$.isChecked',
-          '$.routine_id'
+          '$.routine_id',
+          '$.hasEmoji'
         FROM [default/todos] 
   
   create-new:

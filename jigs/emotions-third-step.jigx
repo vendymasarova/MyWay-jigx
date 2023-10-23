@@ -1,0 +1,92 @@
+title: How exactly do yo feel?
+# description: Description of your Jig
+type: jig.default
+
+actions:
+  - children:
+      - type: action.go-to
+        options:
+          title: Next
+          linkTo: emotions-fourth-step
+
+datasources:
+  feelings:
+    type: datasource.static
+    options:
+      data:
+        - id: '1'
+          name: Suprised
+          emoji: 😮
+          isChecked: false
+          hasEmoji: true
+        - id: '2'
+          name: Calm
+          emoji: 😌
+          isChecked: false
+          hasEmoji: true
+        - id: '3'
+          name: Satisfied
+          emoji: ☺️
+          isChecked: false
+          hasEmoji: true
+        - id: '4'
+          name: Happy
+          emoji: 😊
+          isChecked: false
+          hasEmoji: true
+        - id: '5'
+          name: Relaxed
+          emoji: 🧘‍♂️
+          isChecked: false
+          hasEmoji: true
+        - id: '6' 
+          name: Easy
+          emoji: 🙂
+          isChecked: false
+          hasEmoji: true
+        - id: '7'
+          name: Passionate
+          emoji: 🫶
+          isChecked: false
+          hasEmoji: true
+        - id: '8'
+          name: Excited
+          emoji: 🤩
+          isChecked: false
+          hasEmoji: true
+        - id: '9'
+          name: Tired
+          emoji: 🥱
+          isChecked: false
+          hasEmoji: true
+        - id: '10'
+          name: Sad
+          emoji: 😔
+          isChecked: false
+          hasEmoji: true
+        - id: '11'
+          name: Stressed
+          emoji: 😓
+          isChecked: false
+          hasEmoji: true
+        - id: '12'
+          name: Nervous
+          emoji: 😰
+          isChecked: false
+          hasEmoji: true
+        - id: '13'
+          name: Disgusted
+          emoji: 🤮
+          isChecked: false
+          hasEmoji: true
+
+children:
+  - type: component.list
+    options:
+      data: =@ctx.datasources.feelings
+      maximumItemsToRender: 100
+      item: 
+        type: component.custom-component
+        componentId: todo-component
+        inputs: 
+          todos: =@ctx.current.item
