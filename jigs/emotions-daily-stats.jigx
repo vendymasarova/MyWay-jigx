@@ -74,21 +74,3 @@ children:
           options:
             label: Note of the day
             value: =@ctx.datasources.emotions-daily-stats.description
-  # - type: component.form
-  #   instanceId: description
-  #   options:
-  #     children:
-  #       - type: component.media-field
-  #         instanceId: image
-  #         options:
-  #           label: Picture of the day
-  #           mediaType: image
-  #           initialValue: =@ctx.datasources.emotions-daily-stats.image
-  #       - type: component.field-row
-  #         options:
-  #           children:
-  #             - type: component.text-field
-  #               instanceId: note
-  #               options:
-  #                 label: Note of the day
-  #                 isMultiline: true

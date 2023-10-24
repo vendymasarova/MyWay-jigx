@@ -89,18 +89,27 @@ children:
                                 options:
                                   isSequential: true
                                   actions:
-                                    - type: action.execute-entity
+                                    - type: action.execute-entities
                                       when: =@ctx.components.feeling.state.value = true
                                       options:
                                         provider: DATA_PROVIDER_DYNAMIC
                                         entity: default/mood-stats
-                                        method: save
+                                        method: update
                                         goBack: stay
                                         data:
                                           step: step3
                                           id: =@ctx.inputs.feelings.id
                                           name: =@ctx.inputs.feelings.name
                                           emoji: =@ctx.inputs.feelings.emoji
+                                          isChecked: =@ctx.components.feeling.state.value
+                                    - type: action.execute-entity
+                                      options:
+                                        provider: DATA_PROVIDER_DYNAMIC
+                                        entity: default/mood-feelings
+                                        method: update
+                                        goBack: stay
+                                        data:
+                                          id: =@ctx.inputs.feelings.id
                                           isChecked: =@ctx.components.feeling.state.value
                           
                         

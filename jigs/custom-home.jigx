@@ -22,6 +22,15 @@ onRefresh:
         options:
           state: =@ctx.solution.state.moodStatsDone
           value: false
+      - type: action.execute-entities
+        options: 
+          provider: DATA_PROVIDER_DYNAMIC
+          entity: default/routines
+          method: update
+          goBack: stay
+          data:
+            id: 'c20c2c99-1b80-4f21-aced-1f340735fe3a'
+            isDone: false
           
     
 datasources:
@@ -48,9 +57,13 @@ datasources:
           '$.routine-subject',
           '$.routine-description',
           '$.isReminiscent',
-          '$.has-detail'
+          '$.has-detail',
+          '$.priority',
+          '$.linkTo'
         FROM [default/routines] 
         WHERE '$.isReminiscent' = true
+        AND '$.isDone' = false
+        ORDER BY '$.priority'
         # AND '$.routine_id' = @todoRoutineId
       queryParameters:
         todoRoutineId: =@ctx.jig.inputs.routine
@@ -129,7 +142,7 @@ children:
         type: component.custom-component
         componentId: reminder-card-component
         inputs:
-          checklist: =@ctx.current.item
+          reminder: =@ctx.current.item
   # - type: component.custom-component
   #   componentId: reminder-card-component-checklist
   #   inputs:
@@ -166,9 +179,9 @@ children:
         inputs:
           routines: =@ctx.current.item
           number: 3/5
-  - type: component.custom-component
-    componentId: create-new
-    inputs:
-      create-new: =@ctx.datasources.create-new
+  # - type: component.custom-component
+  #   componentId: create-new
+  #   inputs:
+  #     create-new: =@ctx.datasources.create-new
   - type: component.custom-component
     componentId: emotions-card

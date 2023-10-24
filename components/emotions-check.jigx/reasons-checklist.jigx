@@ -89,18 +89,31 @@ children:
                                 options:
                                   isSequential: true
                                   actions:
-                                    - type: action.execute-entity
-                                      when: =@ctx.components.reason.state.value = true
+                                    - type: action.action-list
                                       options:
-                                        provider: DATA_PROVIDER_DYNAMIC
-                                        entity: default/mood-stats
-                                        method: save
-                                        goBack: stay
-                                        data:
-                                          step: step2
-                                          id: =@ctx.inputs.reasons.id
-                                          name: =@ctx.inputs.reasons.name
-                                          emoji: =@ctx.inputs.reasons.emoji
-                                          isChecked: =@ctx.components.reason.state.value
+                                        isSequential: true
+                                        actions:
+                                          - type: action.execute-entities
+                                            when: =@ctx.components.reason.state.value = true
+                                            options:
+                                              provider: DATA_PROVIDER_DYNAMIC
+                                              entity: default/mood-stats
+                                              method: update
+                                              goBack: stay
+                                              data:
+                                                step: step2
+                                                id: =@ctx.inputs.reasons.id
+                                                name: =@ctx.inputs.reasons.name
+                                                emoji: =@ctx.inputs.reasons.emoji
+                                                isChecked: =@ctx.components.reason.state.value
+                                          - type: action.execute-entity
+                                            options:
+                                              provider: DATA_PROVIDER_DYNAMIC
+                                              entity: default/mood-reasons
+                                              method: update
+                                              goBack: stay
+                                              data:
+                                                id: =@ctx.inputs.reasons.id
+                                                isChecked: =@ctx.components.reason.state.value
                         
                         

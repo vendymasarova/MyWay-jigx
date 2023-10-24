@@ -9,20 +9,21 @@ actions:
           title: Save mood
           isSequential: true
           actions:
-            - type: action.execute-entity
+            - type: action.execute-entities
               options:
                 provider: DATA_PROVIDER_DYNAMIC
                 entity: default/mood-notes
                 method: save
-                goBack: home
+                # goBack: homek
                 data:
-                  step: step4
                   image: =@ctx.components.image.state.value
-                  date: =@ctx.solution.state.date
+                  date: =@ctx.components.date.state.value
                   reasons: =@ctx.datasources.reasons
                   feelings: =@ctx.datasources.feelings
+                  mood: =@ctx.solution.state.mood
+                  note: =@ctx.components.note.state.value
                 onSuccess: 
-                  title: Succesfully saved
+                  title: Successfully saved
                   description: Your record was saved
             - type: action.execute-entities
               options: 
@@ -30,14 +31,29 @@ actions:
                 entity: default/mood-stats
                 method: delete
                 data: =@ctx.datasources.mood_stats.{"id" :id}[]
-                goBack: home
             - type: action.execute-entities
-              when: =@ctx.datasources.mood_stats.id != null
+              # when: =@ctx.datasources.mood_stats.id != null
               options: 
                 provider: DATA_PROVIDER_DYNAMIC
-                entity: default/mood-stats
+                entity: default/mood-feelings
                 method: update
-                data: =@ctx.datasources.mood_stats.{"id" :id, "isChecked" :false}[]
+                data: =@ctx.datasources.feelings.{"id" :id, "isChecked" :false}[]
+            - type: action.execute-entities
+              # when: =@ctx.datasources.mood_stats.id != null
+              options: 
+                provider: DATA_PROVIDER_DYNAMIC
+                entity: default/mood-reasons
+                method: update
+                data: =@ctx.datasources.reasons.{"id" :id, "isChecked" :false}[]
+            - type: action.execute-entities
+              options: 
+                provider: DATA_PROVIDER_DYNAMIC
+                entity: default/routines
+                method: update
+                goBack: home
+                data:
+                  id: 'c20c2c99-1b80-4f21-aced-1f340735fe3a'
+                  isDone: true
             - type: action.set-state
               options:
                 state: =@ctx.solution.state.moodStatsDone
@@ -48,6 +64,20 @@ actions:
 
                   
 datasources:
+  routines:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/routines
+  
+      query: 
+        SELECT 
+          id, 
+          '$.isDone'
+        FROM [default/routines] 
+        
   mood_stats:
     type: datasource.sqlite
     options:
@@ -71,7 +101,7 @@ datasources:
       provider: DATA_PROVIDER_DYNAMIC
     
       entities:
-        - default/mood-stats
+        - default/mood-reasons
     
       query: 
         SELECT 
@@ -80,8 +110,8 @@ datasources:
           '$.name',
           '$.step',
           '$.isChecked'
-        FROM [default/mood-stats]
-        WHERE '$.step' = 'step2' AND '$.isChecked' = true
+        FROM [default/mood-reasons]
+        WHERE '$.isChecked' = true
           
   feelings: 
     type: datasource.sqlite
@@ -89,7 +119,7 @@ datasources:
       provider: DATA_PROVIDER_DYNAMIC
     
       entities:
-        - default/mood-stats
+        - default/mood-feelings
     
       query: 
         SELECT 
@@ -98,8 +128,8 @@ datasources:
           '$.name',
           '$.step',
           '$.isChecked'
-        FROM [default/mood-stats]
-        WHERE '$.step' = 'step3' AND '$.isChecked' = true
+        FROM [default/mood-feelings]
+        WHERE '$.isChecked' = true
         
   images:
     type: datasource.sqlite
@@ -175,3 +205,9 @@ children:
                 options:
                   label: Note of the day
                   isMultiline: true
+        - type: component.date-picker
+          instanceId: date
+          options:
+            isHidden: true
+            label: date
+            initialValue: =$now()

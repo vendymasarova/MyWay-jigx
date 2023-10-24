@@ -1,6 +1,7 @@
 type: component.default
 children:
   - type: component.view
+    # when: =@ctx.solution.state.moodStatsDone = true ? false:true
     options:
       style:
         flex: 
@@ -25,7 +26,7 @@ children:
                   onPress: 
                     type: action.go-to
                     options:
-                      linkTo: =@ctx.solution.state.moodStatsDone = true ? 'emotions-daily-stats':'emotions-first-step'
+                      linkTo: emotions-daily-stats
                       # linkTo: emotions-first-step
                   children:
                     - type: component.view

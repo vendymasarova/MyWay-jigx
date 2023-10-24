@@ -16,7 +16,7 @@ onRefresh:
           value: 0
 
 datasources:
-  checklist:
+  reminders:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
@@ -39,16 +39,19 @@ datasources:
           '$.routine-subject',
           '$.routine-description',
           '$.isReminiscent',
-          '$.has-detail'
+          '$.has-detail',
+          '$.linkTo',
+          '$.priority'
         FROM [default/routines] 
         WHERE '$.isReminiscent' = true
+        AND '$.isDone' = false
 
 children:
   - type: component.list
     options:
-      data: =@ctx.datasources.checklist
+      data: =@ctx.datasources.reminders
       item: 
         type: component.custom-component
         componentId: reminder-card-component
         inputs:
-          checklist: =@ctx.current.item
+          reminder: =@ctx.current.item

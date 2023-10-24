@@ -38,6 +38,7 @@ datasources:
           '$.emoji',
           '$.isChecked'
         FROM [default/mood-reasons]
+        ORDER BY '$.name' asc
 
 children:
   - type: component.list

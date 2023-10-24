@@ -144,6 +144,7 @@ children:
                                   grow: 1
                                 justifyContent: center
                                 alignItems: center
+                                padding: small
                                 gap: small
                                 height: 
                                   max: 100
@@ -158,6 +159,7 @@ children:
                                 - type: component.text
                                   options:
                                     value: Bad
+                                    weight: semi-bold
                     - type: component.card
                       options:
                         color: =@ctx.solution.state.mood = 'Neutral' ? 'color9':''
@@ -172,6 +174,7 @@ children:
                               style:
                                 flex: 
                                   grow: 1
+                                padding: small
                                 justifyContent: center
                                 alignItems: center
                                 gap: small
@@ -186,6 +189,7 @@ children:
                                 - type: component.text
                                   options:
                                     value: Neutral
+                                    weight: semi-bold
               - type: component.view
                 options:
                   style:
@@ -210,6 +214,7 @@ children:
                               style:
                                 flex: 
                                   grow: 1
+                                padding: small
                                 justifyContent: center
                                 alignItems: center
                                 gap: small
@@ -224,6 +229,7 @@ children:
                                 - type: component.text
                                   options:
                                     value: Quite Good
+                                    weight: semi-bold
                     - type: component.card
                       options:
                         color: =@ctx.solution.state.mood = 'Happy' ? 'color9':''
@@ -238,6 +244,7 @@ children:
                               style:
                                 flex: 
                                   grow: 1
+                                padding: small
                                 justifyContent: center
                                 alignItems: center
                                 gap: small
@@ -252,3 +259,4 @@ children:
                                 - type: component.text
                                   options:
                                     value: Happy
+                                    weight: semi-bold
