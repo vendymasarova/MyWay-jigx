@@ -3,5 +3,6 @@ tables:
   todos:
   routines:
   mood-stats:
+  mood-notes:
   mood-reasons: 
   mood-feelings:

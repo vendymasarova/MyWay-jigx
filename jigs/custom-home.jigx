@@ -18,10 +18,14 @@ onRefresh:
         options:
           state: =@ctx.solution.state.meds
           value: 0
+      - type: action.set-state
+        options:
+          state: =@ctx.solution.state.moodStatsDone
+          value: false
           
     
 datasources:
-  checklist:
+  reminders:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
@@ -114,15 +118,16 @@ children:
     inputs:
       title: Reminders
       link: notifications
+      icon: arrow-right
   - type: component.list
     options:
-      data: =@ctx.datasources.checklist
+      data: =@ctx.datasources.reminders
       maximumItemsToRender: 8
       isHorizontal: true
       isHorizontalScrollIndicatorHidden: true
       item: 
         type: component.custom-component
-        componentId: reminder-card-component-checklist
+        componentId: reminder-card-component
         inputs:
           checklist: =@ctx.current.item
   # - type: component.custom-component
@@ -148,6 +153,7 @@ children:
     inputs:
       title: Routines
       link: all-routines
+      icon: arrow-right
   - type: component.list
     options:
       data: =@ctx.datasources.routines

@@ -72,33 +72,38 @@ children:
               # margin: 
               #   top: small
             children:
-              - type: component.form
-                instanceId: day-form
-                options:
-                  children:
-                    - type: component.date-picker
-                      instanceId: date-picker
-                      options:
-                        label: Day
-                        initialValue: =$now()
-                        isOptionalLabelHidden: true
-                        style:
-                          flex: 0
-                        format: L
-                        color: 
-                          - when: =1 > 0 = true ? true:false
-                            color: color9
-                        maximum: =$now()
+              # - type: component.form
+              #   instanceId: day-form
+              #   options:
+              #     children:
+              #       - type: component.date-picker
+              #         instanceId: date-picker
+              #         options:
+              #           label: Day
+              #           initialValue: =$now()
+              #           isOptionalLabelHidden: true
+              #           style:
+              #             flex: 0
+              #           format: L
+              #           color: 
+              #             - when: =1 > 0 = true ? true:false
+              #               color: color9
+              #           maximum: =$now()
+              #           onChange: 
+              #             type: action.set-state
+              #             options:
+              #               state: =@ctx.solution.state.date
+              #               value: =@ctx.components.date-picker.state.value
         - type: component.view
           options:
             style:
-              # margin: 
-              #   top: small
+              flex: 
+                direction: column
             children:
               - type: component.text
                 options:
-                  value: ='I feel:' & ' ' & @ctx.solution.state.mood
-                  size: medium
+                  value: =@ctx.solution.state.mood = true ? 'I feel...':'I feel' & ' ' & @ctx.solution.state.mood
+                  size: large
                   align: center
                   emphasis: high
         - type: component.view
@@ -118,12 +123,14 @@ children:
                   style:
                     flex:
                       grow: 1
+                      basis: 1
                     gap: small
                     height:
                       min: 180
                   children:
                     - type: component.card
                       options:
+                        color: =@ctx.solution.state.mood = 'Bad' ? 'color9':''
                         onPress: 
                           type: action.set-state
                           options:
@@ -153,6 +160,7 @@ children:
                                     value: Bad
                     - type: component.card
                       options:
+                        color: =@ctx.solution.state.mood = 'Neutral' ? 'color9':''
                         onPress: 
                           type: action.set-state
                           options:
@@ -182,13 +190,15 @@ children:
                 options:
                   style:
                     flex: 
-                      grow: 1
+                      grow: 1  
+                      basis: 1
                     gap: small
                     height: 
                       min: 180
                   children:
                     - type: component.card
                       options:
+                        color: =@ctx.solution.state.mood = 'Quite Good' ? 'color9':''
                         onPress: 
                           type: action.set-state
                           options:
@@ -216,6 +226,7 @@ children:
                                     value: Quite Good
                     - type: component.card
                       options:
+                        color: =@ctx.solution.state.mood = 'Happy' ? 'color9':''
                         onPress: 
                           type: action.set-state
                           options:

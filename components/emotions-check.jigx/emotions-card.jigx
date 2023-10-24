@@ -17,20 +17,66 @@ children:
                   style:
                     flex: 
                       shrink: 1
+                      direction: row
                     # width: 100
                     # height: 200
-                    justifyContent: center
+                    justifyContent: space-between
                     alignItems: center
                   onPress: 
                     type: action.go-to
                     options:
-                      linkTo: emotions-first-step
+                      linkTo: =@ctx.solution.state.moodStatsDone = true ? 'emotions-daily-stats':'emotions-first-step'
+                      # linkTo: emotions-first-step
                   children:
-                    - type: component.image
+                    - type: component.view
                       options:
-                        size: 
-                          width: 60
-                          height: 60
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
+                        style:
+                          flex:
+                            direction: row
+                          gap: medium
+                          alignItems: center
+                        children:
+                          - type: component.image
+                            when: =@ctx.solution.state.mood = 'Bad' ? true:false
+                            options:
+                              size:
+                                width: 60
+                                height: 60
+                              source:
+                                uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
+                          - type: component.image
+                            when: =@ctx.solution.state.mood = 'Neutral' ? true:false
+                            options:
+                              size:
+                                width: 60
+                                height: 60
+                              source:
+                                uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
+                          - type: component.image
+                            when: =@ctx.solution.state.mood = 'Quite Good' ? true:false
+                            options:
+                              size:
+                                width: 60
+                                height: 60
+                              source:
+                                uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
+                          - type: component.image
+                            when: =@ctx.solution.state.mood = 'Happy' ? true:false
+                            options:
+                              size:
+                                width: 60
+                                height: 60
+                              source:
+                                uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
+                          - type: component.text
+                            options:
+                              value: =@ctx.solution.state.moodStatsDone = true ? 'I feel' & ' ' & @ctx.solution.state.mood:'How do you feel?'
+                              weight: bold
+                    - type: component.icon
+                      options:
+                        icon: =@ctx.solution.state.moodStatsDone = true ? 'check':'arrow-right'
+                        shape: circle
+                        type: =@ctx.solution.state.moodStatsDone = true ? 'contained':'duotone'
+                        size: regular
+                        color: =@ctx.solution.state.moodStatsDone = true ? 'color2':'color9'
                           

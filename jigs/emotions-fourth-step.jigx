@@ -1,9 +1,177 @@
-title: Name
+title: Mood statistic
 description: Description of your Jig
 type: jig.default
 
+actions:
+  - children:
+      - type: action.action-list
+        options:
+          title: Save mood
+          isSequential: true
+          actions:
+            - type: action.execute-entity
+              options:
+                provider: DATA_PROVIDER_DYNAMIC
+                entity: default/mood-notes
+                method: save
+                goBack: home
+                data:
+                  step: step4
+                  image: =@ctx.components.image.state.value
+                  date: =@ctx.solution.state.date
+                  reasons: =@ctx.datasources.reasons
+                  feelings: =@ctx.datasources.feelings
+                onSuccess: 
+                  title: Succesfully saved
+                  description: Your record was saved
+            - type: action.execute-entities
+              options: 
+                provider: DATA_PROVIDER_DYNAMIC
+                entity: default/mood-stats
+                method: delete
+                data: =@ctx.datasources.mood_stats.{"id" :id}[]
+                goBack: home
+            - type: action.execute-entities
+              when: =@ctx.datasources.mood_stats.id != null
+              options: 
+                provider: DATA_PROVIDER_DYNAMIC
+                entity: default/mood-stats
+                method: update
+                data: =@ctx.datasources.mood_stats.{"id" :id, "isChecked" :false}[]
+            - type: action.set-state
+              options:
+                state: =@ctx.solution.state.moodStatsDone
+                value: true
+            - type: action.go-to
+              options:
+                linkTo: custom-home
+
+                  
 datasources:
-  mydata: 
+  mood_stats:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/mood-stats
+    
+      query: 
+        SELECT 
+          id, 
+          '$.emoji', 
+          '$.name',
+          '$.step',
+          '$.isChecked'
+        FROM [default/mood-stats]
+          
+  reasons: 
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/mood-stats
+    
+      query: 
+        SELECT 
+          id, 
+          '$.emoji', 
+          '$.name',
+          '$.step',
+          '$.isChecked'
+        FROM [default/mood-stats]
+        WHERE '$.step' = 'step2' AND '$.isChecked' = true
+          
+  feelings: 
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/mood-stats
+    
+      query: 
+        SELECT 
+          id, 
+          '$.emoji', 
+          '$.name',
+          '$.step',
+          '$.isChecked'
+        FROM [default/mood-stats]
+        WHERE '$.step' = 'step3' AND '$.isChecked' = true
+        
+  images:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/mood-stats
+    
+      query: 
+        SELECT 
+          id, 
+          '$.image' 
+        FROM [default/mood-stats]
+        WHERE '$.step' = 'step4'
 
 children:
-  - 
+  - type: component.custom-component
+    componentId: title-with-link
+    inputs:
+      title: ='Why do you feel' & ' ' & @ctx.solution.state.mood
+      link: emotions-second-step
+      icon: pencil
+  - type: component.list
+    options:
+      data: =@ctx.datasources.reasons
+      maximumItemsToRender: 8
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      item: 
+        type: component.custom-component
+        componentId: chips
+        inputs:
+          title: =@ctx.current.item.name
+          emoji: =@ctx.current.item.emoji
+  - type: component.custom-component
+    componentId: title-with-link
+    inputs:
+      title: How exactly do you feel?
+      link: emotions-third-step
+      icon: pencil
+  - type: component.list
+    options:
+      data: =@ctx.datasources.feelings
+      maximumItemsToRender: 8
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      item: 
+        type: component.custom-component
+        componentId: chips
+        inputs:
+          title: =@ctx.current.item.name
+          emoji: =@ctx.current.item.emoji
+  - type: component.custom-component
+    componentId: title
+    inputs:
+      title: Do you want to add notes or images?
+  - type: component.form
+    instanceId: description
+    options:
+      children:
+        - type: component.media-field
+          instanceId: image
+          options:
+            label: Picture of the day
+            mediaType: image
+            initialValue: =@ctx.datasources.images.image
+        - type: component.field-row
+          options:
+            children:
+              - type: component.text-field
+                instanceId: note
+                options:
+                  label: Note of the day
+                  isMultiline: true

@@ -5,8 +5,13 @@ category: health
 onRefresh: 
   type: action.set-state
   options:
-    state: =@ctx.solution.state.checklist
-    value: 0
+    state: =@ctx.solution.state.moodStatsDone
+    value: false
+onLoad:
+  type: action.set-state
+  options:
+    state: =@ctx.solution.state.moodStatsDone
+    value: false
     
 widgets:
   - size: 1x1
@@ -15,6 +20,8 @@ widgets:
     jigId: weekly-plan-composite
   - size: 1x1
     jigId: survey-test
+  - size: 1x1
+    jigId: emotions-second-step-list
 home:
   - instanceId: home
     jigId: custom-home
@@ -46,6 +53,7 @@ assets:
     - mood-moody # auto-generated
     - mood-question # auto-generated
     - notes # auto-generated
+    - pencil # auto-generated
     - plus # auto-generated
     - sadness-emotions-1 # auto-generated
     - school-building # auto-generated

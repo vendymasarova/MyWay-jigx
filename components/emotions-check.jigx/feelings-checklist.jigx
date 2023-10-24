@@ -43,7 +43,7 @@ children:
                     padding: small
                     radius: small
                     background:
-                      color: =@ctx.inputs.feelings.type = 'school' ? 'color3':@ctx.inputs.feelings.type = 'personal' ? 'color8':'color14'
+                      color: =@ctx.components.feeling.state.value = true ? 'color9':'color14'
                   children:
                     - type: component.text
                       options:
@@ -75,7 +75,7 @@ children:
                         isDiscardChangesAlertEnabled: false
                         children:
                           - type: component.checkbox
-                            instanceId: reason
+                            instanceId: feeling
                             options:
                               nextProperty: undefined
                               label: ''
@@ -90,42 +90,17 @@ children:
                                   isSequential: true
                                   actions:
                                     - type: action.execute-entity
+                                      when: =@ctx.components.feeling.state.value = true
                                       options:
                                         provider: DATA_PROVIDER_DYNAMIC
                                         entity: default/mood-stats
-                                        method: create
+                                        method: save
                                         goBack: stay
                                         data:
-                                          id: =@ctx.inputs.feelings.id
-                                          reasons: =@ctx.inputs.feelings
-                                          # isChecked: =@ctx.components.reason.state.value
-                                    - type: action.execute-entity
-                                      options:
-                                        provider: DATA_PROVIDER_DYNAMIC
-                                        entity: default/mood-stats
-                                        method: create
-                                        goBack: stay
-                                        data:
+                                          step: step3
                                           id: =@ctx.inputs.feelings.id
                                           name: =@ctx.inputs.feelings.name
-                                          # isChecked: =@ctx.components.reason.state.value
-                                    - type: action.execute-entity
-                                      options:
-                                        provider: DATA_PROVIDER_DYNAMIC
-                                        entity: default/mood-stats
-                                        method: create
-                                        goBack: stay
-                                        data:
-                                          id: =@ctx.inputs.feelings.id
                                           emoji: =@ctx.inputs.feelings.emoji
-                                          # isChecked: =@ctx.components.reason.state.value
-                                    - type: action.execute-entity
-                                      options:
-                                        provider: DATA_PROVIDER_DYNAMIC
-                                        entity: default/mood-stats
-                                        method: update
-                                        goBack: stay
-                                        data:
-                                          id: =@ctx.inputs.feelings.id
-                                          isChecked: =@ctx.components.reason.state.value
+                                          isChecked: =@ctx.components.feeling.state.value
+                          
                         

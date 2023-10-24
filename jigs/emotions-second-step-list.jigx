@@ -32,16 +32,16 @@ datasources:
           name: Social media
           emoji: 📲
           isChecked: false
-        - id: 6
+        - id: 7
           name: Friends
           emoji: 👫
-          isChecked: false
+          isChecked: true
 
 data: =@ctx.datasources.reasons
 item:
   type: component.list-item
   options:
-    title: =@ctx.current.item.title
+    title: =@ctx.current.item.name
     leftElement: 
       element: avatar
       text: =@ctx.current.item.emoji
@@ -49,3 +49,9 @@ item:
     rightElement: 
       element: checkbox
       value: false
+    color:
+      - when: =1 > 0 ? true:false
+        color: color9
+    style:
+      isPositive: =@ctx.current.item.isChecked = true ? true:false
+      isHighlighted: =@ctx.current.item.isChecked = true ? true:false

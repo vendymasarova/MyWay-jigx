@@ -2,12 +2,17 @@ title: Tell us how do you feel
 description: ''
 type: jig.default
 
+# onFocus: 
+#   type: action.reset-state
+#   options:
+#     state: =@ctx.solution.state.mood
+
 actions:
   - children:
       - type: action.action-list
         options:
           title: Next
-          isSequential: false
+          isSequential: true
           actions:
             - type: action.execute-entity
               options:
@@ -16,7 +21,9 @@ actions:
                 method: create
                 goBack: stay
                 data:
-                  mood: =@ctx.solution.state.mood
+                  step: step1
+                  answer: =@ctx.solution.state.mood
+                  date: =@ctx.solution.state.date
             - type: action.go-to
               options:
                 linkTo: emotions-second-step

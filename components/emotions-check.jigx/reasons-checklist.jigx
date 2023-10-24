@@ -43,7 +43,7 @@ children:
                     padding: small
                     radius: small
                     background:
-                      color: =@ctx.inputs.reasons.type = 'school' ? 'color3':@ctx.inputs.reasons.type = 'personal' ? 'color8':'color14'
+                      color: =@ctx.components.reason.state.value = true ? 'color9':'color14'
                   children:
                     - type: component.text
                       options:
@@ -90,23 +90,17 @@ children:
                                   isSequential: true
                                   actions:
                                     - type: action.execute-entity
+                                      when: =@ctx.components.reason.state.value = true
                                       options:
                                         provider: DATA_PROVIDER_DYNAMIC
                                         entity: default/mood-stats
-                                        method: create
+                                        method: save
                                         goBack: stay
                                         data:
+                                          step: step2
                                           id: =@ctx.inputs.reasons.id
                                           name: =@ctx.inputs.reasons.name
                                           emoji: =@ctx.inputs.reasons.emoji
-                                          # isChecked: =@ctx.components.reason.state.value
-                                    - type: action.execute-entity
-                                      options:
-                                        provider: DATA_PROVIDER_DYNAMIC
-                                        entity: default/mood-stats
-                                        method: update
-                                        goBack: stay
-                                        data:
-                                          id: =@ctx.inputs.reasons.id
                                           isChecked: =@ctx.components.reason.state.value
+                        
                         

@@ -49,6 +49,6 @@ children:
       data: =@ctx.datasources.checklist
       item: 
         type: component.custom-component
-        componentId: reminder-card-component-checklist
+        componentId: reminder-card-component
         inputs:
           checklist: =@ctx.current.item

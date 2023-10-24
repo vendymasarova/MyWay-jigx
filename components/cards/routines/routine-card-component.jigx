@@ -45,8 +45,8 @@ children:
                           - type: component.image
                             options:
                               size:
-                                height: 50
-                                width: 50
+                                height: 40
+                                width: 40
                               resizeMode: contain
                               # title: =@ctx.inputs.routines.name
                               source:
@@ -58,6 +58,7 @@ children:
                             # grow: 1
                           margin:
                             top: medium
+                            bottom: large
                           gap: small
                         children:
                           - type: component.view
@@ -65,39 +66,21 @@ children:
                               style:
                                 flex:
                                   grow: 1
-                                height: 
-                                  min: 70
+                                # height: 
+                                #   min: 70
                               children:
                                 - type: component.text
                                   options:
                                     value: =@ctx.inputs.routines.name
                                     weight: semi-bold
-                                    size: medium
-                          # - type: component.view
-                          #   options:
-                          #     style:
-                          #       flex:
-                          #         direction: row
-                          #         # grow: 1
-                          #       gap: small
-                                # justifyContent: flex-end
-                              # children:
+                                    # size: medium
                     - type: component.progress-bar
                       options:
+                        steps: 5
+                        size: small
                         value:
                           current: 3
                           max: 5
                         subtitle:
                           value: '3/5'
                         color: =@ctx.inputs.routines.type = 'school' ? 'color3':@ctx.inputs.routines.type = 'personal' ? 'color8':'color2'
- 
-                                # - type: component.icon
-                                #   options:
-                                #     icon: checklist
-                                #     emphasis: medium
-                                # - type: component.text
-                                #   options:
-                                #     value: =@ctx.inputs.number
-                                #     emphasis: high
-                              # space for progressbar
-                            
