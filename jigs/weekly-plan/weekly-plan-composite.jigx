@@ -8,4 +8,4 @@ children:
     #   recordid: =@ctx.jig.inputs.parameter
   - jigId: weekly-plan-detail
     inputs:
-      day: =@ctx.solution.state.day
+      day: =@ctx.jig.inputs.date

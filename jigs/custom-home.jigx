@@ -179,6 +179,11 @@ children:
         inputs:
           routines: =@ctx.current.item
           number: 3/5
+  - type: component.custom-component
+    componentId: weekly-plan
+    inputs:
+      isClickable: true 
+      linkTo: weekly-emotions-composite
   # - type: component.custom-component
   #   componentId: create-new
   #   inputs:

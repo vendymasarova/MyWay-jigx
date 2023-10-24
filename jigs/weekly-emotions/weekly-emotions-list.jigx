@@ -1,0 +1,33 @@
+title:  =@ctx.datasources.emotions.mood[0]
+description: Description of your Jig
+type: jig.default
+
+datasources:
+  emotions:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/mood-notes
+  
+      query: 
+        SELECT 
+          id, 
+          '$.mood'
+        FROM [default/mood-notes]
+
+children:
+  - type: component.entity
+    options:
+      children:
+        - type: component.entity-field
+          options:
+            label: =@ctx.datasources.emotions.mood[0]
+            value:  =$eval(@ctx.datasources.emotions.mood).[0]
+  - type: component.custom-component
+    componentId: weekly-emotions
+    inputs:
+      isClickable: true
+      monday: =$eval(@ctx.datasources.emotions.mood).[0]
+      
