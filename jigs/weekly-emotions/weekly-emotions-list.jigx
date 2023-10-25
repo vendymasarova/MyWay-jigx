@@ -76,7 +76,7 @@ children:
       isHorizontalScrollIndicatorHidden: true
       item: 
         type: component.custom-component
-        componentId: weekly-emotions
+        componentId: daily-emotions-stats-card
         inputs:
           day: =@ctx.current.item.day
           date: =@ctx.current.item.date

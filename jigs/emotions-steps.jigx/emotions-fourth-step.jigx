@@ -197,14 +197,19 @@ children:
             label: Picture of the day
             mediaType: image
             initialValue: =@ctx.datasources.images.image
-        - type: component.field-row
+        # - type: component.field-row
+        #   options:
+        #     children:
+        #       - type: component.text-field
+        #         instanceId: note
+        #         options:
+        #           label: Note of the day
+        #           isMultiline: true
+        - type: component.text-field
+          instanceId: note
           options:
-            children:
-              - type: component.text-field
-                instanceId: note
-                options:
-                  label: Note of the day
-                  isMultiline: true
+            label: Note of the day
+            isMultiline: true
         - type: component.date-picker
           instanceId: date
           options:

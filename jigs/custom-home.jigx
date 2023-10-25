@@ -2,10 +2,6 @@ title: Name
 type: jig.default
 
 onRefresh: 
-  # type: action.set-state
-  # options:
-  #   state: =@ctx.solution.state.checklist
-  #   value: 0
   type: action.action-list
   options:
     isSequential: true
@@ -20,6 +16,10 @@ onRefresh:
           value: 0
       - type: action.set-state
         options:
+          state: =@ctx.solution.state.mood
+          value: 0
+      - type: action.set-state
+        options:
           state: =@ctx.solution.state.moodStatsDone
           value: false
       - type: action.execute-entities
@@ -31,6 +31,20 @@ onRefresh:
           data:
             id: 'c20c2c99-1b80-4f21-aced-1f340735fe3a'
             isDone: false
+      - type: action.execute-entities
+        # when: =@ctx.datasources.mood_stats.id != null
+        options: 
+          provider: DATA_PROVIDER_DYNAMIC
+          entity: default/mood-feelings
+          method: update
+          data: =@ctx.datasources.feelings.{"id" :id, "isChecked" :false}[]
+      - type: action.execute-entities
+        # when: =@ctx.datasources.mood_stats.id != null
+        options: 
+          provider: DATA_PROVIDER_DYNAMIC
+          entity: default/mood-reasons
+          method: update
+          data: =@ctx.datasources.reasons.{"id" :id, "isChecked" :false}[]
     
 datasources:
   reminders:
@@ -63,7 +77,6 @@ datasources:
         WHERE '$.isReminiscent' = true
         AND '$.isDone' = false
         ORDER BY '$.priority'
-        # AND '$.routine_id' = @todoRoutineId
       queryParameters:
         todoRoutineId: =@ctx.jig.inputs.routine
           
@@ -106,36 +119,6 @@ datasources:
           '$.routine_id',
           '$.hasEmoji'
         FROM [default/todos] 
-        
-  mood-selection:
-    type: datasource.sqlite
-    options:
-      provider: DATA_PROVIDER_DYNAMIC
-  
-      entities:
-        - default/mood-notes
-  
-      query: 
-        SELECT 
-          id, 
-          '$.date'
-        FROM [default/mood-notes] 
-        
-  mood: 
-    type: datasource.sqlite
-    options:
-      provider: DATA_PROVIDER_DYNAMIC
-    
-      entities:
-        - default/mood-notes
-    
-      query: 
-        SELECT 
-          id, 
-          '$.date', 
-          '$.mood' 
-        FROM [default/mood-notes] 
-        ORDER BY '$.date'
   
   mood-stats:
     type: datasource.sqlite
@@ -156,6 +139,34 @@ datasources:
         FROM [default/dates] a
         LEFT JOIN [default/mood-notes] b ON STRFTIME('%d.%m', json_extract(a.data, '$.date')) = STRFTIME('%d.%m', json_extract(b.data, '$.date'))
         ORDER BY date
+        
+  feelings: 
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/mood-feelings
+    
+      query: 
+        SELECT 
+          id, 
+          '$.isChecked'
+        FROM [default/mood-feelings]
+        
+  reasons: 
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/mood-reasons
+    
+      query: 
+        SELECT 
+          id, 
+          '$.isChecked'
+        FROM [default/mood-reasons]
 
 children:
   - type: component.custom-component
@@ -236,17 +247,10 @@ children:
       isHorizontalScrollIndicatorHidden: true
       item: 
         type: component.custom-component
-        componentId: weekly-emotions
+        componentId: daily-emotions-stats-card
         inputs:
           day: =@ctx.current.item.day
           date: =@ctx.current.item.date
           dates: =@ctx.current.item
           dayDate: =@ctx.current.item.dayDate
-  
-  # - type: component.custom-component
-  #   componentId: create-new
-  #   inputs:
-  #     create-new: =@ctx.datasources.create-new
-  # - type: component.custom-component
-  #   when: =$fromMillis($toMillis($now()), '[D]. [M]. [Y]') = $fromMillis($toMillis($now()), '[D]. [M]. [Y]')
-  #   componentId: emotions-card
+          goTo: true

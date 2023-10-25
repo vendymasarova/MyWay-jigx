@@ -9,16 +9,24 @@ children:
         - type: component.card
           options:
             onPress: 
-              type: action.set-state
+              type: action.action-list
               options:
-                state: =@ctx.solution.state.emotion-day
-                value: =@ctx.inputs.date
+                isSequential: true
+                actions:
+                  - type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.emotion-day
+                      value: =@ctx.inputs.date
+                  - type: action.go-to
+                    when: =@ctx.inputs.goTo = true ? true:false
+                    options:
+                      linkTo: weekly-emotions-composite
             children:
               - type: component.view
                 options:
                   style:
                     flex: 
-                      basis: 7
+                      basis: 1
                     padding: small
                     gap: medium
                     alignItems: center
@@ -93,3 +101,5 @@ children:
                           height: 25
                         source:
                           uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
+                                    
+                                

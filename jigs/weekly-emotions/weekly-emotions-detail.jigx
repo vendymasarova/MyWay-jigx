@@ -1,5 +1,9 @@
 title: =$fromMillis($toMillis(@ctx.solution.state.emotion-day), '[D]. [M].')
 type: jig.default
+placeholders:
+  - title: No data to display
+    when: =$type(@ctx.datasources.emotions-daily-stats.mood) != null ? false:true
+    icon: missing-data
 
 datasources:
   emotions-daily-stats: 
@@ -27,13 +31,13 @@ datasources:
         
 children:
   - type: component.custom-component
-    when: =@ctx.datasources.emotions-daily-stats != 'null' ? true:false
+    when: =$type(@ctx.datasources.emotions-daily-stats.mood) != 'null' ? true:false
     componentId: title
     inputs:
       size: small
       title: ='Why did you feel' & ' ' & @ctx.datasources.emotions-daily-stats.mood
   - type: component.list
-    # when: =@ctx.datasources.emotions-daily-stats = true ? true:false
+    when: =$type(@ctx.datasources.emotions-daily-stats.mood) != 'null' ? true:false
     options:
       data: =$eval(@ctx.datasources.emotions-daily-stats.reasons)
       maximumItemsToRender: 8
@@ -46,13 +50,13 @@ children:
           title: =@ctx.current.item.name
           emoji: =@ctx.current.item.emoji
   - type: component.custom-component
-    # when: =@ctx.datasources.emotions-daily-stats = true ? true:false
+    when: =$type(@ctx.datasources.emotions-daily-stats.mood) != 'null' ? true:false
     componentId: title
     inputs:
       size: small
       title: How exactly did you feel?
   - type: component.list
-    # when: =@ctx.datasources.emotions-daily-stats = true ? true:false
+    when: =$type(@ctx.datasources.emotions-daily-stats.mood) != 'null' ? true:false
     options:
       data: =$eval(@ctx.datasources.emotions-daily-stats.feelings)
       maximumItemsToRender: 8
@@ -65,24 +69,24 @@ children:
           title: =@ctx.current.item.name
           emoji: =@ctx.current.item.emoji
   - type: component.custom-component
-    when: =@ctx.datasources.emotions-daily-stats.image
+    when: =@ctx.datasources.emotions-daily-stats.image and $type(@ctx.datasources.emotions-daily-stats.mood) != 'null' ? true:false
     componentId: title
     inputs:
       size: small
       title: Pic of the day
   - type: component.image
-    when: =@ctx.datasources.emotions-daily-stats.image
+    when: =@ctx.datasources.emotions-daily-stats.image and $type(@ctx.datasources.emotions-daily-stats.mood) != 'null' ? true:false
     options:
       source:
         uri: =@ctx.datasources.emotions-daily-stats.image
   - type: component.custom-component
-    when: =@ctx.datasources.emotions-daily-stats.note
+    when: =@ctx.datasources.emotions-daily-stats.note and $type(@ctx.datasources.emotions-daily-stats.mood) != 'null' ? true:false
     componentId: title
     inputs:
       size: small
       title: Note of the day
   - type: component.entity
-    when: =@ctx.datasources.emotions-daily-stats.note
+    when: =@ctx.datasources.emotions-daily-stats.note and $type(@ctx.datasources.emotions-daily-stats.mood) != 'null' ? true:false
     options:
       children:
         - type: component.entity-field

@@ -27,8 +27,6 @@ widgets:
   - size: 1x1
     jigId: weekly-plan-composite
   - size: 1x1
-    jigId: survey-test
-  - size: 1x1
     jigId: emotions-second-step-list
 home:
   - instanceId: home
@@ -45,30 +43,13 @@ assets:
           background: '#B4E5BC'
           onBackground: '#000000'
   icons:
-    - anger-emotions-1 # auto-generated
     - arrow-right # auto-generated
-    - beach-palm # auto-generated
     - calendar # auto-generated
     - checkbox-unchecked # auto-generated
     - checklist # auto-generated
     - circle # auto-generated
     - contact # auto-generated
-    - emoji-tired-face # auto-generated
-    - family-heart # auto-generated
-    - fast-food-pizza # auto-generated
-    - happiness-emotions-1 # auto-generated
-    - love-cloud # auto-generated
-    - mood-happy # auto-generated
-    - mood-moody # auto-generated
-    - mood-question # auto-generated
     - notes # auto-generated
     - pencil # auto-generated
-    - sadness-emotions-1 # auto-generated
-    - school-building # auto-generated
-    - smiley-surprised # auto-generated
-    - stress-1 # auto-generated
     - time-clock-circle # auto-generated
-    - user-friends-1 # auto-generated
-    - weather # auto-generated
-    - yoga # auto-generated
     

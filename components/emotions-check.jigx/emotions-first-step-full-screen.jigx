@@ -47,53 +47,12 @@ children:
                     height: 180
                   source:
                     uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
- 
-              # - type: component.button
-              #   options:
-              #     title: Now
-              #     type: primary
-              #     icon:
-              #       left: calendar
-              #       right: arrow-down
-              #     isCompact: false
         - type: component.view
           options:
             style:
               justifyContent: center
               alignItems: center
-              # position: absolute
-              # overflow: hidden
-              # left: large
-              # right: large
-              # top: small
-              # bottom: small
-              # emphasis: extra-low
-              # width: 20
-              # margin: 
-              #   top: small
             children:
-              # - type: component.form
-              #   instanceId: day-form
-              #   options:
-              #     children:
-              #       - type: component.date-picker
-              #         instanceId: date-picker
-              #         options:
-              #           label: Day
-              #           initialValue: =$now()
-              #           isOptionalLabelHidden: true
-              #           style:
-              #             flex: 0
-              #           format: L
-              #           color: 
-              #             - when: =1 > 0 = true ? true:false
-              #               color: color9
-              #           maximum: =$now()
-              #           onChange: 
-              #             type: action.set-state
-              #             options:
-              #               state: =@ctx.solution.state.date
-              #               value: =@ctx.components.date-picker.state.value
         - type: component.view
           options:
             style:
@@ -102,7 +61,7 @@ children:
             children:
               - type: component.text
                 options:
-                  value: =@ctx.solution.state.mood = true ? 'I feel...':'I feel' & ' ' & @ctx.solution.state.mood
+                  value: =@ctx.solution.state.mood = 0 ? 'I feel...':'I feel' & ' ' & @ctx.solution.state.mood
                   size: large
                   align: center
                   emphasis: high
