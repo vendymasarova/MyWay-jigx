@@ -16,9 +16,9 @@ children:
             onPress: 
               type: action.go-to
               options:
-                linkTo: checklist-composite
+                linkTo: checklist-detail
                 parameters:
-                  routine: =@ctx.inputs.routines.routine_id
+                  routineId: =@ctx.inputs.routines.routine_id
             children:
               - type: component.view
                 options:

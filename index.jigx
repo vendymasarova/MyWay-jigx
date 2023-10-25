@@ -8,10 +8,18 @@ onRefresh:
     state: =@ctx.solution.state.moodStatsDone
     value: false
 onLoad:
-  type: action.set-state
+  type: action.action-list
   options:
-    state: =@ctx.solution.state.moodStatsDone
-    value: false
+    isSequential: true
+    actions:
+    - type: action.set-state
+      options:
+        state: =@ctx.solution.state.moodStatsDone
+        value: false
+    - type: action.set-state
+      options:
+        state: =@ctx.solution.state.todaysDate
+        value: =$fromMillis($toMillis($now()), '[D]. [M]. [Y].')
     
 widgets:
   - size: 1x1
@@ -43,6 +51,7 @@ assets:
     - calendar # auto-generated
     - checkbox-unchecked # auto-generated
     - checklist # auto-generated
+    - circle # auto-generated
     - contact # auto-generated
     - emoji-tired-face # auto-generated
     - family-heart # auto-generated

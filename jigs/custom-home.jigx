@@ -31,7 +31,6 @@ onRefresh:
           data:
             id: 'c20c2c99-1b80-4f21-aced-1f340735fe3a'
             isDone: false
-          
     
 datasources:
   reminders:
@@ -138,15 +137,25 @@ datasources:
         FROM [default/mood-notes] 
         ORDER BY '$.date'
   
-  # create-new:
-  #   type: datasource.static
-  #   options:
-  #     data:
-  #       - id: 1
-  #         goTo: new-task-composite
-  #         icon: plus
-  #         iconColor: color9
-  #         title: Create new task
+  mood-stats:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_LOCAL
+
+      entities:
+        - entity: default/mood-notes
+        - entity: default/dates
+
+      query: |
+        SELECT
+          a.id AS id,
+            STRFTIME('%d.%m', json_extract(a.data, '$.date')) AS date,
+            STRFTIME('%d', json_extract(a.data, '$.date')) AS day,
+            json_extract(b.data, '$.mood') AS mood,
+            json_extract(a.data, '$.date') AS dayDate
+        FROM [default/dates] a
+        LEFT JOIN [default/mood-notes] b ON STRFTIME('%d.%m', json_extract(a.data, '$.date')) = STRFTIME('%d.%m', json_extract(b.data, '$.date'))
+        ORDER BY date
 
 children:
   - type: component.custom-component
@@ -221,15 +230,18 @@ children:
       subtitle: 23. - 29. 10. 2023
   - type: component.list
     options:
-      data: =@ctx.datasources.mood
-      maximumItemsToRender: 8
+      data: =@ctx.datasources.mood-stats
+      maximumItemsToRender: 100
       isHorizontal: true
       isHorizontalScrollIndicatorHidden: true
       item: 
         type: component.custom-component
         componentId: weekly-emotions
         inputs:
+          day: =@ctx.current.item.day
+          date: =@ctx.current.item.date
           dates: =@ctx.current.item
+          dayDate: =@ctx.current.item.dayDate
   
   # - type: component.custom-component
   #   componentId: create-new

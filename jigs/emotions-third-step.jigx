@@ -1,4 +1,4 @@
-title: How exactly do yo feel?
+title: How exactly do you feel?
 # description: Description of your Jig
 type: jig.default
 
@@ -9,15 +9,6 @@ actions:
           title: Next
           isSequential: false
           actions:
-            # - type: action.execute-entity
-            #   options:
-            #     provider: DATA_PROVIDER_DYNAMIC
-            #     entity: default/mood-stats
-            #     method: create
-            #     goBack: stay
-            #     data:
-            #       step: step3
-            #       answer: =@ctx.datasources.feelings
             - type: action.go-to
               options:
                 linkTo: emotions-fourth-step

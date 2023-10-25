@@ -1,5 +1,4 @@
-title: Why do you feel like that?
-description: ='What made you feel' & ' ' & @ctx.solution.state.mood
+title: ='Why do you feel' & ' ' & @ctx.solution.state.mood & '?'
 type: jig.default
 
 actions:

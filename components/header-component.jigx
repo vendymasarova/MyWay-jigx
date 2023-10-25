@@ -3,57 +3,49 @@ children:
   - type: component.view
     options:
       style:
-        flex: 
+        flex:
           direction: row
-        justifyContent: space-between
-        alignItems: center
+        gap: small
+        # alignItems: center 
+      onPress: 
+        type: action.go-to
+        options:
+          linkTo: user-data
       children:
+        # Avatar
+        - type: component.avatar
+          options:
+            title: =@ctx.inputs.name
+            uri: =@ctx.inputs.avatar
+            size: large
+            # align: left
+        # Text
         - type: component.view
           options:
             style:
-              flex:
-                direction: row
+              # justifyContent: space-between
+              # alignItems: center
               gap: small
-              # alignItems: center 
-            onPress: 
-              type: action.go-to
-              options:
-                linkTo: user-data
             children:
-              # Avatar
-              - type: component.avatar
+              - type: component.text
                 options:
-                  title: =@ctx.inputs.name
-                  uri: =@ctx.inputs.avatar
+                  value: =@ctx.inputs.welcomeMessage
+                  align: center
+                  weight: semi-bold
                   size: large
-                  align: left
-              # Text
               - type: component.view
                 options:
                   style:
-                    # justifyContent: space-between
+                    justifyContent: center
                     # alignItems: center
-                    gap: small
                   children:
                     - type: component.text
                       options:
-                        value: =@ctx.inputs.welcomeMessage
-                        align: center
-                        weight: semi-bold
-                        size: large
-                    - type: component.view
+                        value: 'Today is:'
+                        weight: bold
+                        size: small
+                    - type: component.text
                       options:
-                        style:
-                          justifyContent: center
-                          # alignItems: center
-                        children:
-                          - type: component.text
-                            options:
-                              value: 'Today is:'
-                              weight: bold
-                              size: small
-                          - type: component.text
-                            options:
-                              value: =@ctx.inputs.date
-                              # emphasis: medium
-                              size: small
+                        value: =@ctx.inputs.date
+                        # emphasis: medium
+                        size: small

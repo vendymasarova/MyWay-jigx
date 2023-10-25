@@ -18,19 +18,22 @@ datasources:
           '$.reasons',
           '$.image',
           '$.step',
-          '$.note'
+          '$.note',
+          '$.mood'
         FROM [default/mood-notes]
-        WHERE '$.date' = @date
+        WHERE STRFTIME('%d.%m', json_extract(data, '$.date')) = @date
       queryParameters:
         date: =@ctx.solution.state.emotion-day
         
 children:
   - type: component.custom-component
+    when: =@ctx.datasources.emotions-daily-stats != 'null' ? true:false
     componentId: title
     inputs:
       size: small
-      title: ='Why did you feel' & ' ' & @ctx.solution.state.mood
+      title: ='Why did you feel' & ' ' & @ctx.datasources.emotions-daily-stats.mood
   - type: component.list
+    # when: =@ctx.datasources.emotions-daily-stats = true ? true:false
     options:
       data: =$eval(@ctx.datasources.emotions-daily-stats.reasons)
       maximumItemsToRender: 8
@@ -43,11 +46,13 @@ children:
           title: =@ctx.current.item.name
           emoji: =@ctx.current.item.emoji
   - type: component.custom-component
+    # when: =@ctx.datasources.emotions-daily-stats = true ? true:false
     componentId: title
     inputs:
       size: small
       title: How exactly did you feel?
   - type: component.list
+    # when: =@ctx.datasources.emotions-daily-stats = true ? true:false
     options:
       data: =$eval(@ctx.datasources.emotions-daily-stats.feelings)
       maximumItemsToRender: 8

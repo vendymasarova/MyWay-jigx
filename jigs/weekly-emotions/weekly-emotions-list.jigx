@@ -59,20 +59,15 @@ datasources:
       query: |
         SELECT
           a.id AS id,
-            json_extract(a.data, '$.date') AS date,
-            json_extract(b.data, '$.mood') AS mood
+            STRFTIME('%d.%m', json_extract(a.data, '$.date')) AS date,
+            STRFTIME('%d', json_extract(a.data, '$.date')) AS day,
+            json_extract(b.data, '$.mood') AS mood,
+            json_extract(a.data, '$.date') AS dayDate
         FROM [default/dates] a
         LEFT JOIN [default/mood-notes] b ON STRFTIME('%d.%m', json_extract(a.data, '$.date')) = STRFTIME('%d.%m', json_extract(b.data, '$.date'))
         ORDER BY date
         
 children:
-  # - type: component.entity
-  #   options:
-  #     children:
-  #       - type: component.entity-field
-  #         options:
-  #           label: =@ctx.datasources.dates.date
-  #           value: =@ctx.datasources.dates.date
   - type: component.list
     options:
       data: =@ctx.datasources.mood-stats
@@ -83,6 +78,9 @@ children:
         type: component.custom-component
         componentId: weekly-emotions
         inputs:
+          day: =@ctx.current.item.day
+          date: =@ctx.current.item.date
           dates: =@ctx.current.item
+          dayDate: =@ctx.current.item.dayDate
 
       

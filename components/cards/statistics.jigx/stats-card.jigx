@@ -21,13 +21,13 @@ children:
                     - type: component.view
                       options:
                         style:
-                          
                         children:
                           - type: component.view
                             options:
                               style:
                                 padding:
                                   bottom: medium
+                                alignItems: center
                               children:
                                 - type: component.image
                                   options:
@@ -43,22 +43,21 @@ children:
                                 flex:
                                   grow: 1
                                 padding:
-                                  bottom: medium
+                                  bottom: minimal
                                 justifyContent: center
                                 alignItems: center
                               children:
                                 - type: component.text
                                   options:
                                     value: '2'
-                                    size: medium
-                                    emphasis: high
+                                    size: large
                                     weight: semi-bold
                           - type: component.text
                             options:
                               value: Done
                               weight: semi-bold
                               align: center
-                              # emphasis: high
+                              emphasis: high
               - type: component.card
                 options:  
                   onPress: 
@@ -75,7 +74,8 @@ children:
                             options:
                               style:
                                 padding:
-                                  bottom: medium
+                                  bottom: small
+                                alignItems: center
                               children:
                                 - type: component.image
                                   options:
@@ -91,22 +91,21 @@ children:
                                 flex:
                                   grow: 1  
                                 padding:
-                                  bottom: medium  
+                                  bottom: minimal  
                                 justifyContent: center
                                 alignItems: center
                               children:
                                 - type: component.text
                                   options:
                                     value: '2'
-                                    size: medium
-                                    emphasis: high
+                                    size: large
                                     weight: semi-bold
                           - type: component.text
                             options:
                               value: To go
                               weight: semi-bold
                               align: center
-                              # emphasis: high
+                              emphasis: high
         - type: component.view
           options:
             style:

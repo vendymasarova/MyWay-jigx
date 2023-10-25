@@ -1,7 +1,12 @@
-title: =@ctx.datasources.todos.image
-description:  =@ctx.datasources.todos.image
+title: Routine
 type: jig.default
 icon: contact
+
+onFocus: 
+  type: action.set-state
+  options:
+    state: =@ctx.solution.state.add-todo
+    value: 0
           
 actions:
   - children:

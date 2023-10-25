@@ -63,7 +63,7 @@ children:
                                 options:
                                   linkTo: =@ctx.inputs.reminder.linkTo
                                   parameters:
-                                    routine: =@ctx.inputs.reminder.routine_id
+                                    routineId: =@ctx.inputs.reminder.routine_id
                         style:
                           flex: 
                             direction: row

@@ -4,7 +4,7 @@ children:
     options:
       style:
         margin:
-          right: minimal
+          right: small
       children:
         - type: component.card
           options:
@@ -12,7 +12,7 @@ children:
               type: action.set-state
               options:
                 state: =@ctx.solution.state.emotion-day
-                value: =@ctx.inputs.dates.date
+                value: =@ctx.inputs.date
             children:
               - type: component.view
                 options:
@@ -24,13 +24,37 @@ children:
                     alignItems: center
                     justifyContent: space-between
                   children:
-                    - type: component.text
+                    - type: component.view
                       options:
-                        value: =$fromMillis($toMillis(@ctx.inputs.dates.date), '[D]')
-                        align: center
-                        weight: semi-bold
+                        style:
+                          
+                        children:
+                          - type: component.text
+                            options:
+                              value: =$fromMillis($toMillis(@ctx.inputs.dayDate), '[D]')
+                              align: center
+                              weight: semi-bold
+                          - type: component.text
+                            options:
+                              value: =$substring($fromMillis($toMillis(@ctx.inputs.dayDate), '[FNn]'), 0, 3)
+                              align: center
+                              size: small
+                              emphasis: medium
+                    - type: component.icon
+                      when: =$number(@ctx.inputs.day) > $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      options:
+                        icon: circle
+                        size: 25
+                    # - type: component.image
+                    #   # when: =$number(@ctx.inputs.day) > $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                    #   options:
+                    #     size:
+                    #       width: 25
+                    #       height: 25
+                    #     source:
+                    #       uri: https://t14345253.p.clickup-attachments.com/t14345253/a66d0dc7-6f38-4267-af7f-504e948fa3c8/Ellipse%201.png?view=open
                     - type: component.image
-                      when: =$type(@ctx.inputs.dates.mood) = 'null' ? true:false
+                      when: =$number(@ctx.inputs.day) < $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
                       options:
                         size:
                           width: 25
@@ -69,8 +93,3 @@ children:
                           height: 25
                         source:
                           uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
-                    # - type: component.text
-                    #   options:
-                    #     value: =$fromMillis($toMillis(@ctx.inputs.dates.date), '[D]')
-                    #     align: center
-                    #     weight: semi-bold

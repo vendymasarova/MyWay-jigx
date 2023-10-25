@@ -22,12 +22,13 @@ children:
                   size: medium
                   weight: semi-bold
                   value: =@ctx.inputs.title
-                  emphasis: high
+                  # emphasis: none
               - type: component.text
                 when: =@ctx.inputs.subtitle != null
                 options:
                   value: =@ctx.inputs.subtitle
                   size: small
+                  emphasis: high
         - type: component.icon
           when: =@ctx.inputs.link
           options:
