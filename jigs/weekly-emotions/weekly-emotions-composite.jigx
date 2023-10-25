@@ -7,3 +7,4 @@ children:
     inputs:
       recordid: =@ctx.jig.inputs.parameter
   - jigId: weekly-emotions-detail
+    isTitleHidden: true

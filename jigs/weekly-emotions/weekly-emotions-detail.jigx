@@ -1,4 +1,5 @@
-title: =$fromMillis($toMillis(@ctx.solution.state.emotion-day), '[D]. [M].')
+title: =$substring(@ctx.solution.state.emotion-day, 0,2)
+# title: =$substring(str, start[, length])(@ctx.solution.state.emotion-day), 0,2
 type: jig.default
 placeholders:
   - title: No data to display

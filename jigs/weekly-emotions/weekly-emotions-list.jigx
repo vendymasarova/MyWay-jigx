@@ -82,5 +82,6 @@ children:
           date: =@ctx.current.item.date
           dates: =@ctx.current.item
           dayDate: =@ctx.current.item.dayDate
+          goTo: false
 
       

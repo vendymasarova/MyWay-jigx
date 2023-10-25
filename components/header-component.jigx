@@ -6,7 +6,7 @@ children:
         flex:
           direction: row
         gap: small
-        # alignItems: center 
+        alignItems: center 
       onPress: 
         type: action.go-to
         options:
@@ -23,14 +23,12 @@ children:
         - type: component.view
           options:
             style:
-              # justifyContent: space-between
-              # alignItems: center
               gap: small
             children:
               - type: component.text
                 options:
                   value: =@ctx.inputs.welcomeMessage
-                  align: center
+                  # align: center
                   weight: semi-bold
                   size: large
               - type: component.view
@@ -39,13 +37,13 @@ children:
                     justifyContent: center
                     # alignItems: center
                   children:
+                    # - type: component.text
+                    #   options:
+                    #     value: ='Today is:' & ' ' & @ctx.inputs.date
+                    #     weight: bold
+                    #     size: small
                     - type: component.text
                       options:
-                        value: 'Today is:'
-                        weight: bold
-                        size: small
-                    - type: component.text
-                      options:
-                        value: =@ctx.inputs.date
+                        value: ="It's" & ' ' & @ctx.inputs.date
                         # emphasis: medium
-                        size: small
+                        size: small 

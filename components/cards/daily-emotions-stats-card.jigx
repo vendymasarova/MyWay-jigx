@@ -8,6 +8,7 @@ children:
       children:
         - type: component.card
           options:
+            color: =@ctx.inputs.day = $fromMillis($toMillis($now()), '[D]') ? 'color9':''
             onPress: 
               type: action.action-list
               options:
@@ -41,7 +42,8 @@ children:
                             options:
                               value: =$fromMillis($toMillis(@ctx.inputs.dayDate), '[D]')
                               align: center
-                              weight: semi-bold
+                              weight: =$fromMillis($toMillis(@ctx.inputs.dayDate), '[D]') = $substring(@ctx.solution.state.emotion-day, 0,2) and @ctx.inputs.goTo = false ? 'bold':'semi-bold'
+                              color: =$fromMillis($toMillis(@ctx.inputs.dayDate), '[D]') = $substring(@ctx.solution.state.emotion-day, 0,2) and @ctx.inputs.goTo = false ? 'color8':''
                           - type: component.text
                             options:
                               value: =$substring($fromMillis($toMillis(@ctx.inputs.dayDate), '[FNn]'), 0, 3)
