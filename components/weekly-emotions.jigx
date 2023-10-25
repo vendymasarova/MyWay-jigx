@@ -1,86 +1,44 @@
 type: component.default
 children:
-  - type: component.card
-    
+  - type: component.view
     options:
+      style:
+        margin:
+          right: minimal
       children:
-        
-        # FIRST ROW
-        - type: component.view
+        - type: component.card
           options:
-            style:
-              flex: 
-                direction: row
-              alignItems: center
-              justifyContent: space-between
+            onPress: 
+              type: action.set-state
+              options:
+                state: =@ctx.solution.state.emotion-day
+                value: =@ctx.inputs.dates.date
             children:
               - type: component.view
                 options:
                   style:
                     flex: 
-                      direction: column
-                    gap: minimal
-                  children:
-                    - type: component.text
-                      options:
-                        value: "Your weekly plan:"
-                        align: left
-                        size: small  
-                    - type: component.text
-                      options:
-                        value: "20 - 26. 05. 2023"
-                        align: left
-                        weight: bold
-                        size: small  
-              - type: component.icon
-                when: =@ctx.inputs.linkTo != null ? true:false
-                options:
-                  icon: arrow-right
-                  color: color9
-                  shape: circle
-                  type: duotone
-                  size: small
-                  onPress: 
-                    type: action.go-to
-                    options:
-                      linkTo: =@ctx.inputs.linkTo
-        # CONTENT 
-        - type: component.view
-          options:
-            style:
-              flex: 
-                grow: 1
-                basis: 1
-                direction: row
-              alignItems: flex-end
-              justifyContent: space-around
-
-            children:
-              # MONDAY
-              - type: component.view
-                options:
-                  style:
-                    flex: 
-                      direction: column
-                      grow: 1
-                      shrink: 1
-                    gap: small
-                    radius: medium
-                    padding: medium
+                      basis: 7
+                    padding: small
+                    gap: medium
+                    alignItems: center
                     justifyContent: space-between
-                  onPress: 
-                    when: =@ctx.inputs.isClickable = true ? true:false
-                    type: action.action-list
-                    options:
-                      isSequential: true
-                      actions:
-                        - type: action.set-state
-                          options:
-                            state: =@ctx.solution.state.day
-                            value: Monday
                   children:
+                    - type: component.text
+                      options:
+                        value: =$fromMillis($toMillis(@ctx.inputs.dates.date), '[D]')
+                        align: center
+                        weight: semi-bold
                     - type: component.image
-                      when: =@ctx.inputs.monday = 'Bad' ? true:false
+                      when: =$type(@ctx.inputs.dates.mood) = 'null' ? true:false
+                      options:
+                        size:
+                          width: 25
+                          height: 25
+                        source:
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/e92873e3-0548-4a72-82e7-11e449d0a3fa/water%20drop.png?view=open
+                    - type: component.image
+                      when: =@ctx.inputs.dates.mood = 'Bad' ? true:false
                       options:
                         size:
                           width: 25
@@ -88,7 +46,7 @@ children:
                         source:
                           uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
                     - type: component.image
-                      when: =@ctx.inputs.monday = 'Neutral' ? true:false
+                      when: =@ctx.inputs.dates.mood = 'Neutral' ? true:false
                       options:
                         size:
                           width: 25
@@ -96,7 +54,7 @@ children:
                         source:
                           uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
                     - type: component.image
-                      when: =@ctx.inputs.monday = 'Quite Good' ? true:false
+                      when: =@ctx.inputs.dates.mood = 'Quite Good' ? true:false
                       options:
                         size:
                           width: 25
@@ -104,380 +62,15 @@ children:
                         source:
                           uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
                     - type: component.image
-                      when: =@ctx.inputs.monday = 'Happy' ? true:false
+                      when: =@ctx.inputs.dates.mood = 'Happy' ? true:false
                       options:
                         size:
                           width: 25
                           height: 25
                         source:
                           uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
-                    - type: component.text
-                      options:
-                        value: Mon
-                        align: center
-                        emphasis: high
-                        size: tiny  
-
-              # TUESDAY
-              - type: component.view
-                options:
-                  style:
-                    flex: 
-                      direction: column
-                      grow: 1
-                      shrink: 1
-                    gap: small
-                    # border:
-                    #   color: primary
-                    #   style: solid
-                    # background:
-                    #   color: color9
-                    radius: medium
-                    padding: medium
-                    justifyContent: space-between
-                  onPress: 
-                    when: =@ctx.inputs.isClickable = true ? true:false
-                    type: action.set-state
-                    options:
-                      state: =@ctx.solution.state.day
-                      value: Tuesday
-                  children:
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Bad' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Neutral' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Quite Good' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Happy' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
-                    - type: component.text
-                      options:
-                        value: Tue
-                        align: center
-                        emphasis: high
-                        size: tiny                           
-
-              # WEDNESDAY
-              - type: component.view
-                options:
-                  style:
-                    flex: 
-                      direction: column
-                      grow: 1
-                      shrink: 1
-                    gap: small
-                    # background:
-                    #   color: primary
-                    radius: medium
-                    padding: medium
-                    justifyContent: space-between
-                  onPress: 
-                    when: =@ctx.inputs.isClickable = true ? true:false
-                    type: action.set-state
-                    options:
-                      state: =@ctx.solution.state.day
-                      value: Wednesday
-                  children:
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Bad' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Neutral' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Quite Good' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Happy' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
-                    - type: component.text
-                      options:
-                        value: We
-                        align: center
-                        emphasis: high
-                        size: tiny                         
-
-              # THURSDAY
-              - type: component.view
-                options:
-                  style:
-                    flex: 
-                      direction: column
-                      grow: 1
-                      shrink: 1
-                    gap: small
-                    # background:
-                    #   color: primary
-                    radius: medium
-                    padding: medium
-                    justifyContent: space-between
-                  onPress: 
-                    when: =@ctx.inputs.isClickable = true ? true:false
-                    type: action.set-state
-                    options:
-                      state: =@ctx.solution.state.day
-                      value: Thursday
-                  children:
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Bad' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Neutral' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Quite Good' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Happy' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
-                    - type: component.text
-                      options:
-                        value: Thu
-                        align: center
-                        emphasis: high
-                        size: tiny   
-    
-              # FRIDAY
-              - type: component.view
-                options:
-                  style:
-                    flex: 
-                      direction: column
-                      grow: 1
-                      shrink: 1
-                    gap: small
-                    background:
-                      color: color9
-                    radius: medium
-                    padding: medium
-                    justifyContent: space-between
-                  onPress: 
-                    when: =@ctx.inputs.isClickable = true ? true:false
-                    type: action.set-state
-                    options:
-                      state: =@ctx.solution.state.day
-                      value: Friday
-                  children:
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Bad' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Neutral' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Quite Good' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Happy' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
-                    - type: component.text
-                      options:
-                        value: Fri
-                        align: center
-                        emphasis: high
-                        size: tiny       
-    
-              # SATURDAY
-              - type: component.view
-                options:
-                  style:
-                    flex: 
-                      direction: column
-                      grow: 1
-                      shrink: 1
-                    gap: small
-                    # background:
-                    #   color: primary
-                    radius: medium
-                    padding: medium
-                    justifyContent: space-between
-                  onPress: 
-                    when: =@ctx.inputs.isClickable = true ? true:false
-                    type: action.set-state
-                    options:
-                      state: =@ctx.solution.state.day
-                      value: Saturday
-                  children:
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Bad' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Neutral' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Quite Good' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Happy' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
-                    - type: component.text
-                      options:
-                        value: Sat
-                        align: center
-                        emphasis: high
-                        size: tiny   
-
-              # SUNDAY
-              - type: component.view
-                options:
-                  style:
-                    flex: 
-                      direction: column
-                      grow: 1
-                      shrink: 1
-                    gap: small
-                    # background:
-                    #   color: primary
-                    radius: medium
-                    padding: medium
-                    justifyContent: space-between
-                  onPress: 
-                    when: =@ctx.inputs.isClickable = true ? true:false
-                    type: action.set-state
-                    options:
-                      state: =@ctx.solution.state.day
-                      value: Sunday
-                  children:
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Bad' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/0aa270ac-8c8c-4b15-a106-ac6bf4302288/Emoticon.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Neutral' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/fc9f900c-bfd0-4512-8f38-4cad794c7ca3/Nodding.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Quite Good' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/6779f0a2-510a-48cb-ba28-561546c80ea1/Emoticons.png?view=open
-                    - type: component.image
-                      when: =@ctx.inputs.mood = 'Happy' ? true:false
-                      options:
-                        size:
-                          width: 25
-                          height: 25
-                        source:
-                          uri: https://t14345253.p.clickup-attachments.com/t14345253/5e7da50e-945b-47c3-89dc-a5f3d9f351b0/Nodding-1.png?view=open 
-                    - type: component.text
-                      options:
-                        value: Sun
-                        align: center
-                        emphasis: high
-                        size: tiny 
-        
+                    # - type: component.text
+                    #   options:
+                    #     value: =$fromMillis($toMillis(@ctx.inputs.dates.date), '[D]')
+                    #     align: center
+                    #     weight: semi-bold

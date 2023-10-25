@@ -12,10 +12,10 @@ children:
         margin: 
           top: medium     
       children:    
-      
+        
         - type: component.text
           options:
-            size: medium
+            size: =@ctx.inputs.size = 'small' ? 'small':'medium'
             weight: semi-bold
             value: =@ctx.inputs.title
             emphasis: high

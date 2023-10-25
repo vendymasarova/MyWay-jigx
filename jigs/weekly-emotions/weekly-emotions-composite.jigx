@@ -1,9 +1,9 @@
-title: Name
-description: Description of your Jig
+title: Emotions daily checkins
 type: jig.composite
 
 children:
   - jigId: weekly-emotions-list
+    isTitleHidden: true
     inputs:
       recordid: =@ctx.jig.inputs.parameter
   - jigId: weekly-emotions-detail

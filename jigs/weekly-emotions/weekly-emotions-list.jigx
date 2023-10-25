@@ -1,5 +1,4 @@
 title:  =@ctx.datasources.emotions.mood[0]
-description: Description of your Jig
 type: jig.default
 
 datasources:
@@ -17,17 +16,73 @@ datasources:
           '$.mood'
         FROM [default/mood-notes]
 
-children:
-  - type: component.entity
+  mood: 
+    type: datasource.sqlite
     options:
-      children:
-        - type: component.entity-field
-          options:
-            label: =@ctx.datasources.emotions.mood[0]
-            value:  =$eval(@ctx.datasources.emotions.mood).[0]
-  - type: component.custom-component
-    componentId: weekly-emotions
-    inputs:
-      isClickable: true
-      monday: =$eval(@ctx.datasources.emotions.mood).[0]
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/mood-notes
+    
+      query: 
+        SELECT 
+          id, 
+          '$.date', 
+          '$.mood' 
+        FROM [default/mood-notes] 
+        ORDER BY '$.date'
+        
+  dates: 
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/dates
+    
+      query: 
+        SELECT 
+          id, 
+          '$.date'
+        FROM [default/dates] 
+        ORDER BY '$.date'
+        
+  mood-stats:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_LOCAL
+
+      entities:
+        - entity: default/mood-notes
+        - entity: default/dates
+
+      query: |
+        SELECT
+          a.id AS id,
+            json_extract(a.data, '$.date') AS date,
+            json_extract(b.data, '$.mood') AS mood
+        FROM [default/dates] a
+        LEFT JOIN [default/mood-notes] b ON STRFTIME('%d.%m', json_extract(a.data, '$.date')) = STRFTIME('%d.%m', json_extract(b.data, '$.date'))
+        ORDER BY date
+        
+children:
+  # - type: component.entity
+  #   options:
+  #     children:
+  #       - type: component.entity-field
+  #         options:
+  #           label: =@ctx.datasources.dates.date
+  #           value: =@ctx.datasources.dates.date
+  - type: component.list
+    options:
+      data: =@ctx.datasources.mood-stats
+      maximumItemsToRender: 8
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      item: 
+        type: component.custom-component
+        componentId: weekly-emotions
+        inputs:
+          dates: =@ctx.current.item
+
       

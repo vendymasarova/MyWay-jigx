@@ -5,45 +5,45 @@ children:
     options:
       children:
         
-        # FIRST ROW
-        - type: component.view
-          options:
-            style:
-              flex: 
-                direction: row
-              alignItems: center
-              justifyContent: space-between
-            children:
-              - type: component.view
-                options:
-                  style:
-                    flex: 
-                      direction: column
-                    gap: minimal
-                  children:
-                    - type: component.text
-                      options:
-                        value: "Your weekly plan:"
-                        align: left
-                        size: small  
-                    - type: component.text
-                      options:
-                        value: "20 - 26. 05. 2023"
-                        align: left
-                        weight: bold
-                        size: small  
-              - type: component.icon
-                when: =@ctx.inputs.linkTo != null ? true:false
-                options:
-                  icon: arrow-right
-                  color: color9
-                  shape: circle
-                  type: duotone
-                  size: small
-                  onPress: 
-                    type: action.go-to
-                    options:
-                      linkTo: =@ctx.inputs.linkTo
+        # # FIRST ROW
+        # - type: component.view
+        #   options:
+        #     style:
+        #       flex: 
+        #         direction: row
+        #       alignItems: center
+        #       justifyContent: space-between
+        #     children:
+        #       - type: component.view
+        #         options:
+        #           style:
+        #             flex: 
+        #               direction: column
+        #             gap: minimal
+        #           children:
+        #             - type: component.text
+        #               options:
+        #                 value: "Your weekly plan:"
+        #                 align: left
+        #                 size: small  
+        #             - type: component.text
+        #               options:
+        #                 value: "20 - 26. 05. 2023"
+        #                 align: left
+        #                 weight: bold
+        #                 size: small  
+        #       - type: component.icon
+        #         when: =@ctx.inputs.linkTo != null ? true:false
+        #         options:
+        #           icon: arrow-right
+        #           color: color9
+        #           shape: circle
+        #           type: duotone
+        #           size: small
+        #           onPress: 
+        #             type: action.go-to
+        #             options:
+        #               linkTo: =@ctx.inputs.linkTo
         # CONTENT 
         - type: component.view
           options:

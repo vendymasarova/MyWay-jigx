@@ -80,7 +80,7 @@ children:
   - type: component.section
     # when: =@ctx.datasources.todos.day != @ctx.solution.state.day ? false:true
     options:
-      title: To Do
+      title: TO DO
       children:
         - type: component.list
           instanceId: todos-category

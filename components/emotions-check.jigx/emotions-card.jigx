@@ -26,7 +26,7 @@ children:
                   onPress: 
                     type: action.go-to
                     options:
-                      linkTo: emotions-daily-stats
+                      linkTo: weekly-emotions-composite
                       # linkTo: emotions-first-step
                   children:
                     - type: component.view

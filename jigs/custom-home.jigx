@@ -107,16 +107,46 @@ datasources:
           '$.routine_id',
           '$.hasEmoji'
         FROM [default/todos] 
-  
-  create-new:
-    type: datasource.static
+        
+  mood-selection:
+    type: datasource.sqlite
     options:
-      data:
-        - id: 1
-          goTo: new-task-composite
-          icon: plus
-          iconColor: color9
-          title: Create new task
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/mood-notes
+  
+      query: 
+        SELECT 
+          id, 
+          '$.date'
+        FROM [default/mood-notes] 
+        
+  mood: 
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+    
+      entities:
+        - default/mood-notes
+    
+      query: 
+        SELECT 
+          id, 
+          '$.date', 
+          '$.mood' 
+        FROM [default/mood-notes] 
+        ORDER BY '$.date'
+  
+  # create-new:
+  #   type: datasource.static
+  #   options:
+  #     data:
+  #       - id: 1
+  #         goTo: new-task-composite
+  #         icon: plus
+  #         iconColor: color9
+  #         title: Create new task
 
 children:
   - type: component.custom-component
@@ -143,10 +173,13 @@ children:
         componentId: reminder-card-component
         inputs:
           reminder: =@ctx.current.item
-  # - type: component.custom-component
-  #   componentId: reminder-card-component-checklist
-  #   inputs:
-  #     checklist: =@ctx.datasources.checklist
+  - type: component.custom-component
+    componentId: title-with-link
+    inputs:
+      title: Weekly plan
+      link: weekly-plan-composite
+      icon: arrow-right
+      subtitle: 23. - 29. 10. 2023
   - type: component.custom-component
     componentId: weekly-plan
     inputs:
@@ -180,13 +213,28 @@ children:
           routines: =@ctx.current.item
           number: 3/5
   - type: component.custom-component
-    componentId: weekly-plan
+    componentId: title-with-link
     inputs:
-      isClickable: true 
-      linkTo: weekly-emotions-composite
+      title: Mood checkins
+      link: weekly-emotions-composite
+      icon: arrow-right
+      subtitle: 23. - 29. 10. 2023
+  - type: component.list
+    options:
+      data: =@ctx.datasources.mood
+      maximumItemsToRender: 8
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      item: 
+        type: component.custom-component
+        componentId: weekly-emotions
+        inputs:
+          dates: =@ctx.current.item
+  
   # - type: component.custom-component
   #   componentId: create-new
   #   inputs:
   #     create-new: =@ctx.datasources.create-new
-  - type: component.custom-component
-    componentId: emotions-card
+  # - type: component.custom-component
+  #   when: =$fromMillis($toMillis($now()), '[D]. [M]. [Y]') = $fromMillis($toMillis($now()), '[D]. [M]. [Y]')
+  #   componentId: emotions-card

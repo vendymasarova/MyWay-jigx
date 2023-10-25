@@ -210,4 +210,5 @@ children:
           options:
             isHidden: true
             label: date
+            format: L
             initialValue: =$now()

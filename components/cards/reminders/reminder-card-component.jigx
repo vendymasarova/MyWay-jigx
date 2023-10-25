@@ -11,7 +11,7 @@ children:
         gap: small
         margin:
           right: small 
-          bottom: small
+          # bottom: small
       children:
         - type: component.card
           options:
