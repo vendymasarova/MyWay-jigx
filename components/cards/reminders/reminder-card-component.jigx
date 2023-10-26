@@ -33,6 +33,7 @@ children:
                             direction: row
                           gap: small
                           justifyContent: space-between
+                          alignItems: center
                         children:         
                           - type: component.text
                             options:

@@ -1,0 +1,30 @@
+title: Name
+description: Description of your Jig
+type: jig.list
+icon: contact
+
+datasources:
+  categories:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/strategy-categories
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.image',
+          '$.category_id'
+        FROM [default/strategy-categories]
+
+data: =@ctx.datasources.categories
+isHorizontal: true
+isHorizontalScrollIndicatorHidden: true
+item:
+  type: component.custom-component
+  componentId: category-card
+  inputs:
+    categories: =@ctx.current.item

@@ -2,8 +2,11 @@ tables:
   tasks:
   todos:
   routines:
-  mood-stats:
+  # mood-stats:
   mood-notes:
   mood-reasons: 
   mood-feelings:
   dates:
+  strategy-categories:
+  strategies:
+  steps: 

@@ -45,6 +45,7 @@ assets:
   icons:
     - arrow-right # auto-generated
     - calendar # auto-generated
+    - check # auto-generated
     - checkbox-unchecked # auto-generated
     - checklist # auto-generated
     - circle # auto-generated

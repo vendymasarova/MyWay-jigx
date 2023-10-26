@@ -167,6 +167,21 @@ datasources:
           id, 
           '$.isChecked'
         FROM [default/mood-reasons]
+  
+  categories:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/strategy-categories
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.image' 
+        FROM [default/strategy-categories]
 
 children:
   - type: component.custom-component
@@ -254,3 +269,21 @@ children:
           dates: =@ctx.current.item
           dayDate: =@ctx.current.item.dayDate
           goTo: true
+  - type: component.custom-component
+    componentId: title-with-link
+    inputs:
+      title: Your strategies
+      link: strategies-composite
+      icon: arrow-right
+  - type: component.list
+    options:
+      data: =@ctx.datasources.categories
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      maximumItemsToRender: 8
+      item:
+        type: component.custom-component
+        componentId: category-card
+        inputs:
+          categories: =@ctx.current.item
+        

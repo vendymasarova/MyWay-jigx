@@ -1,0 +1,35 @@
+title: =@ctx.solution.state.strategyId
+description: Description of your Jig
+type: jig.list
+
+datasources:
+  strategies: 
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/strategies
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name',
+          '$.time',
+          '$.category_id',
+          '$.description',
+          '$.image',
+          '$.isDone',
+          '$.strategy_id',
+          json_array_length(json_extract(data, '$.steps')) AS numberOfSteps 
+        FROM [default/strategies] 
+        WHERE '$.category_id' = @categoryId
+      queryParameters:
+        categoryId: =@ctx.solution.state.categoryId
+
+data: =@ctx.datasources.strategies
+item: 
+  type: component.custom-component
+  componentId: strategy-card
+  inputs:
+    strategies: =@ctx.current.item

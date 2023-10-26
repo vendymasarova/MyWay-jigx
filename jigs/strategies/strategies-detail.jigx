@@ -1,0 +1,76 @@
+title: Name
+description: Description of your Jig
+type: jig.default
+
+datasources:
+  strategies: 
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/strategies
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name',
+          '$.time',
+          '$.category_id',
+          '$.description',
+          '$.image',
+          '$.isDone',
+          '$.strategy_id',
+          '$.steps',
+          json_array_length(json_extract(data, '$.steps')) AS numberOfSteps 
+        FROM [default/strategies] 
+        WHERE '$.strategy_id' = @strategyId
+      queryParameters:
+        strategyId: =@ctx.solution.state.strategyId 
+  
+  steps:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/steps
+  
+      query: 
+        SELECT 
+          id,
+          '$.title',
+          '$.step',
+          '$.step_id',
+          '$.isChecked'
+        FROM [default/steps] 
+        WHERE '$.strategy_id' = @strategyId
+        ORDER BY '$.step'
+      queryParameters:
+        strategyId: =@ctx.solution.state.strategyId 
+
+children:
+  - type: component.custom-component
+    componentId: strategy-card
+    inputs:
+      strategies: =@ctx.datasources.strategies
+  - type: component.list
+    options:
+      data: =@ctx.datasources.steps
+      item: 
+        type: component.custom-component
+        componentId: strategy-steps-card
+        inputs:
+          todos: =@ctx.current.item
+          title: =@ctx.current.item.title
+          step: =@ctx.current.item.step_id
+          isChecked: =@ctx.current.item.isChecked
+  # - type: component.list
+  #   options:
+  #     data: =$eval(@ctx.datasources.strategies.steps)
+  #     maximumItemsToRender: 8
+  #     item: 
+  #       type: component.list-item
+  #       options:
+  #         title: =@ctx.current.item.isChecked
+        
