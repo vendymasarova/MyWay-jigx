@@ -11,12 +11,20 @@ children:
       children:
         - type: component.card
           options:
-            color: =@ctx.solution.state.categoryId = @ctx.inputs.categories.category_id ? 'color9':'color3'
+            color: =@ctx.solution.state.categoryId = @ctx.inputs.categories.category_id and @ctx.inputs.goTo = false ? 'color9':'color3'
             onPress: 
-              type: action.set-state
+              type: action.action-list
               options:
-                state: =@ctx.solution.state.categoryId
-                value: =@ctx.inputs.categories.category_id
+                isSequential: true
+                actions:
+                  - type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.categoryId
+                      value: =@ctx.inputs.categories.category_id
+                  - type: action.go-to
+                    when: =@ctx.inputs.goTo
+                    options:
+                      linkTo: strategies-composite
             children:
               - type: component.view
                 options:

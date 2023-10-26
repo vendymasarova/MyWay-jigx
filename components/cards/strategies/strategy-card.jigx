@@ -89,7 +89,7 @@ children:
                                           weight: bold
                                           size: medium
                                       - type: component.view
-                                        when: =@ctx.inputs.strategies.isDone = 1 ? true:false
+                                        when: =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? true:false
                                         options:
                                           style:
                                             flex: 
@@ -134,14 +134,14 @@ children:
                         children:
                           - type: component.progress-bar
                             options:
-                              steps: =@ctx.inputs.strategies.numberOfSteps
+                              steps: =@ctx.inputs.numberOfSteps
                               size: small
                               value:
-                                current: 3
-                                max: =@ctx.inputs.strategies.numberOfSteps
+                                current: =@ctx.inputs.isDoneNumber
+                                max: =@ctx.inputs.numberOfSteps
                               subtitle:
-                                value: ='3/' & @ctx.inputs.strategies.numberOfSteps
-                              color: =@ctx.inputs.strategies.isDone = 1 ? 'color2':'color3'
+                                value: =@ctx.inputs.isDoneNumber & '/' & @ctx.inputs.numberOfSteps
+                              color:  =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? 'color2':'color3'
                   
                     
                               

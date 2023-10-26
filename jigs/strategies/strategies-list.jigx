@@ -28,3 +28,4 @@ item:
   componentId: category-card
   inputs:
     categories: =@ctx.current.item
+    goTo: false

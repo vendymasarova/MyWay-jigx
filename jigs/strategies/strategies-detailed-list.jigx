@@ -1,4 +1,4 @@
-title: =@ctx.solution.state.strategyId
+title: =@ctx.datasources.row_count.row_count
 description: Description of your Jig
 type: jig.list
 
@@ -26,6 +26,38 @@ datasources:
         WHERE '$.category_id' = @categoryId
       queryParameters:
         categoryId: =@ctx.solution.state.categoryId
+  
+  row_count:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/steps
+  
+      query: |
+        SELECT COUNT(*) AS row_count
+        FROM [default/steps] 
+        WHERE '$.strategy_id' = @strategyId
+        ORDER BY '$.step'
+      queryParameters:
+        strategyId: =@ctx.solution.state.strategyId 
+  
+  isDone_count:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/steps
+  
+      query: |
+        SELECT COUNT(*) AS isDone
+        FROM [default/steps] 
+        WHERE '$.strategy_id' = @strategyId
+        AND '$.isChecked' = 1
+      queryParameters:
+        strategyId: =@ctx.solution.state.strategyId 
 
 data: =@ctx.datasources.strategies
 item: 
@@ -33,3 +65,5 @@ item:
   componentId: strategy-card
   inputs:
     strategies: =@ctx.current.item
+    numberOfSteps: =@ctx.datasources.row_count.row_count
+    isDoneNumber: =@ctx.datasources.isDone_count.isDone

@@ -18,6 +18,7 @@ children:
                       direction: row
                     position: relative
                     alignItems: center
+                    justifyContent: space-between
                   children:
                     - type: component.view
                       options:
@@ -36,13 +37,13 @@ children:
                           - type: component.text
                             options:
                               value: =@ctx.inputs.title
-                              
+
                     - type: component.view
                       options:
                         style:
                           position: absolute
-                          right: minimal
-                          bottom: minimal
+                          top: none
+                          right: none
                         children:
                           - type: component.form
                             instanceId: checkbox
@@ -63,10 +64,10 @@ children:
                                       type: action.execute-entity
                                       options:
                                         provider: DATA_PROVIDER_DYNAMIC
-                                        entity: default/strategies
+                                        entity: default/steps
                                         method: update
                                         goBack: stay
                                         data:
-                                          id: =@ctx.inputs.step
-                                          isChecked: =@ctx.components.step.state.value
+                                          id: =@ctx.inputs.steps.id
+                                          isChecked: =@ctx.components.step.state.value            
                         
