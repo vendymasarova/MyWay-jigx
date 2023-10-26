@@ -1,7 +1,6 @@
 type: component.default
 children:
   - type: component.view
-    # when: =@ctx.solution.state.moodStatsDone = true ? false:true
     options:
       style:
         flex: 
@@ -19,15 +18,12 @@ children:
                     flex: 
                       shrink: 1
                       direction: row
-                    # width: 100
-                    # height: 200
                     justifyContent: space-between
                     alignItems: center
                   onPress: 
                     type: action.go-to
                     options:
                       linkTo: weekly-emotions-composite
-                      # linkTo: emotions-first-step
                   children:
                     - type: component.view
                       options:

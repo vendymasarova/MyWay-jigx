@@ -57,11 +57,6 @@ children:
               options:
                 title: =@ctx.current.item.name
                 value: =@ctx.current.item.image
-                # leftElement: 
-                #   element: image
-                #   text: ''
-                #   uri: =@ctx.current.item.image
-                #   resizeMode: contain
                 leftElement: 
                   element: avatar
                   text: =@ctx.current.item.name

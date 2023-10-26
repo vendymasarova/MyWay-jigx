@@ -123,12 +123,6 @@ children:
                   subtitle: 
                     value: "You have 22% left to get your reward:"
                     position: bottom
-            # title:
-            #   value: "You have 22% left to get your reward:"
-            # subtitle:
-              # value: Your current progress subtitle
-                                    
-                      
         - type: component.view
           options:
             style:

@@ -1,5 +1,4 @@
 title: Mood statistic
-description: Description of your Jig
 type: jig.default
 
 actions:
@@ -14,7 +13,6 @@ actions:
                 provider: DATA_PROVIDER_DYNAMIC
                 entity: default/mood-notes
                 method: save
-                # goBack: homek
                 data:
                   image: =@ctx.components.image.state.value
                   date: =@ctx.components.date.state.value
@@ -28,18 +26,10 @@ actions:
             - type: action.execute-entities
               options: 
                 provider: DATA_PROVIDER_DYNAMIC
-                entity: default/mood-stats
-                method: delete
-                data: =@ctx.datasources.mood_stats.{"id" :id}[]
-            - type: action.execute-entities
-              # when: =@ctx.datasources.mood_stats.id != null
-              options: 
-                provider: DATA_PROVIDER_DYNAMIC
                 entity: default/mood-feelings
                 method: update
                 data: =@ctx.datasources.feelings.{"id" :id, "isChecked" :false}[]
             - type: action.execute-entities
-              # when: =@ctx.datasources.mood_stats.id != null
               options: 
                 provider: DATA_PROVIDER_DYNAMIC
                 entity: default/mood-reasons
@@ -61,7 +51,6 @@ actions:
             - type: action.go-to
               options:
                 linkTo: custom-home
-
                   
 datasources:
   routines:
@@ -77,23 +66,6 @@ datasources:
           id, 
           '$.isDone'
         FROM [default/routines] 
-        
-  mood_stats:
-    type: datasource.sqlite
-    options:
-      provider: DATA_PROVIDER_DYNAMIC
-    
-      entities:
-        - default/mood-stats
-    
-      query: 
-        SELECT 
-          id, 
-          '$.emoji', 
-          '$.name',
-          '$.step',
-          '$.isChecked'
-        FROM [default/mood-stats]
           
   reasons: 
     type: datasource.sqlite
@@ -130,21 +102,6 @@ datasources:
           '$.isChecked'
         FROM [default/mood-feelings]
         WHERE '$.isChecked' = true
-        
-  images:
-    type: datasource.sqlite
-    options:
-      provider: DATA_PROVIDER_DYNAMIC
-    
-      entities:
-        - default/mood-stats
-    
-      query: 
-        SELECT 
-          id, 
-          '$.image' 
-        FROM [default/mood-stats]
-        WHERE '$.step' = 'step4'
 
 children:
   - type: component.custom-component
@@ -196,15 +153,6 @@ children:
           options:
             label: Picture of the day
             mediaType: image
-            initialValue: =@ctx.datasources.images.image
-        # - type: component.field-row
-        #   options:
-        #     children:
-        #       - type: component.text-field
-        #         instanceId: note
-        #         options:
-        #           label: Note of the day
-        #           isMultiline: true
         - type: component.text-field
           instanceId: note
           options:

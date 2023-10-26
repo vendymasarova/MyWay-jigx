@@ -51,18 +51,15 @@ children:
                               size: small
                               emphasis: medium
                     - type: component.icon
+                      when: =$number(@ctx.inputs.day) = $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      options:
+                        icon: circle
+                        size: 25
+                    - type: component.icon
                       when: =$number(@ctx.inputs.day) > $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
                       options:
                         icon: circle
                         size: 25
-                    # - type: component.image
-                    #   # when: =$number(@ctx.inputs.day) > $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
-                    #   options:
-                    #     size:
-                    #       width: 25
-                    #       height: 25
-                    #     source:
-                    #       uri: https://t14345253.p.clickup-attachments.com/t14345253/a66d0dc7-6f38-4267-af7f-504e948fa3c8/Ellipse%201.png?view=open
                     - type: component.image
                       when: =$number(@ctx.inputs.day) < $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
                       options:

@@ -32,14 +32,12 @@ onRefresh:
             id: 'c20c2c99-1b80-4f21-aced-1f340735fe3a'
             isDone: false
       - type: action.execute-entities
-        # when: =@ctx.datasources.mood_stats.id != null
         options: 
           provider: DATA_PROVIDER_DYNAMIC
           entity: default/mood-feelings
           method: update
           data: =@ctx.datasources.feelings.{"id" :id, "isChecked" :false}[]
       - type: action.execute-entities
-        # when: =@ctx.datasources.mood_stats.id != null
         options: 
           provider: DATA_PROVIDER_DYNAMIC
           entity: default/mood-reasons
@@ -97,9 +95,11 @@ datasources:
           '$.type',
           '$.time',
           '$.routine_id',
-          '$.isCheckable'
+          '$.isCheckable',
+          '$.hasChecklist'
         FROM [default/routines] 
-        WHERE '$.isCheckable' = true
+        WHERE '$.isCheckable' = false
+        AND '$.hasChecklist' = true
 
   todos:
     type: datasource.sqlite

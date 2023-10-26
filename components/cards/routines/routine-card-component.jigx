@@ -48,14 +48,12 @@ children:
                                 height: 40
                                 width: 40
                               resizeMode: contain
-                              # title: =@ctx.inputs.routines.name
                               source:
                                 uri:  =@ctx.inputs.routines.image
                     - type: component.view
                       options:
                         style:
                           flex:
-                            # grow: 1
                           margin:
                             top: medium
                             bottom: large
@@ -66,14 +64,11 @@ children:
                               style:
                                 flex:
                                   grow: 1
-                                # height: 
-                                #   min: 70
                               children:
                                 - type: component.text
                                   options:
                                     value: =@ctx.inputs.routines.name
                                     weight: semi-bold
-                                    # size: medium
                     - type: component.progress-bar
                       options:
                         steps: 5

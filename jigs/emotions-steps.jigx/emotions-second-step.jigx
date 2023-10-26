@@ -8,15 +8,6 @@ actions:
           title: Next
           isSequential: true
           actions:
-            # - type: action.execute-entity
-            #   options:
-            #     provider: DATA_PROVIDER_DYNAMIC
-            #     entity: default/mood-stats
-            #     method: create
-            #     goBack: stay
-            #     data:
-            #       step: step2
-            #       answer: =@ctx.solution.id
             - type: action.go-to
               options:
                 linkTo: emotions-third-step
