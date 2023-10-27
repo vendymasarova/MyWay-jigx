@@ -1,6 +1,6 @@
-title: Name
-description: Description of your Jig
+title: Strategy
 type: jig.default
+
 
 datasources:
   strategies: 

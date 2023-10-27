@@ -212,45 +212,6 @@ children:
   - type: component.custom-component
     componentId: title-with-link
     inputs:
-      title: Weekly plan
-      link: weekly-plan-composite
-      icon: arrow-right
-      subtitle: 23. - 29. 10. 2023
-  - type: component.custom-component
-    componentId: weekly-plan
-    inputs:
-      isClickable: true 
-      linkTo: weekly-plan-composite
-  - type: component.custom-component
-    componentId: title
-    inputs:
-      title: Todays statistics
-      link: weekly-plan-composite
-  - type: component.custom-component
-    componentId: stats-card
-    inputs:
-      linkTo: rewards
-  - type: component.custom-component
-    componentId: title-with-link
-    inputs:
-      title: Routines
-      link: all-routines
-      icon: arrow-right
-  - type: component.list
-    options:
-      data: =@ctx.datasources.routines
-      maximumItemsToRender: 8
-      isHorizontal: true
-      isHorizontalScrollIndicatorHidden: true
-      item: 
-        type: component.custom-component
-        componentId: routine-card-component
-        inputs:
-          routines: =@ctx.current.item
-          number: 3/5
-  - type: component.custom-component
-    componentId: title-with-link
-    inputs:
       title: Mood checkins
       link: weekly-emotions-composite
       icon: arrow-right
@@ -288,4 +249,43 @@ children:
         inputs:
           categories: =@ctx.current.item
           goTo: true
-        
+  - type: component.custom-component
+    componentId: title-with-link
+    inputs:
+      title: Weekly plan
+      link: weekly-plan-composite
+      icon: arrow-right
+      subtitle: 23. - 29. 10. 2023
+  - type: component.custom-component
+    componentId: weekly-plan
+    inputs:
+      isClickable: true 
+      linkTo: weekly-plan-composite
+  - type: component.custom-component
+    componentId: title
+    inputs:
+      title: Todays statistics
+      link: weekly-plan-composite
+  - type: component.custom-component
+    componentId: stats-card
+    inputs:
+      linkTo: rewards
+  - type: component.custom-component
+    componentId: title-with-link
+    inputs:
+      title: Routines
+      link: all-routines
+      icon: arrow-right
+  - type: component.list
+    options:
+      data: =@ctx.datasources.routines
+      maximumItemsToRender: 8
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      item: 
+        type: component.custom-component
+        componentId: routine-card-component
+        inputs:
+          routines: =@ctx.current.item
+          number: 3/5
+ 

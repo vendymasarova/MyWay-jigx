@@ -1,6 +1,10 @@
 title: =@ctx.datasources.row_count.row_count
 description: Description of your Jig
 type: jig.list
+placeholders:
+  - title: No strategies to display
+    when: =@ctx.datasources.strategies.name != null ? false:true
+    icon: missing-data
 
 datasources:
   strategies: 
