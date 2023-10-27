@@ -3,8 +3,6 @@ children:
   - type: component.view
     options:
       style:
-        margin: 
-          bottom: small
       children:
         - type: component.card
           options:
@@ -13,6 +11,8 @@ children:
               - type: component.view
                 options:
                   style:
+                    flex:
+                      basis: 1
                   children:
                     - type: component.view
                       options:

@@ -1,4 +1,4 @@
-title: Strategy
+title: =@ctx.datasources.strategies.category_name
 type: jig.default
 
 
@@ -17,6 +17,7 @@ datasources:
           '$.name',
           '$.time',
           '$.category_id',
+          '$.category_name',
           '$.description',
           '$.image',
           '$.isDone',
@@ -25,8 +26,10 @@ datasources:
           json_array_length(json_extract(data, '$.steps')) AS numberOfSteps 
         FROM [default/strategies] 
         WHERE '$.strategy_id' = @strategyId
+        # AND '$.strategy_id' = @reminderId
       queryParameters:
         strategyId: =@ctx.solution.state.strategyId 
+        # reminderId: =@ctx.jig.inputs.strategyId
   
   steps:
     type: datasource.sqlite

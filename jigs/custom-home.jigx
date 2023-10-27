@@ -183,6 +183,7 @@ datasources:
           '$.image',
           '$.category_id'
         FROM [default/strategy-categories]
+        ORDER BY '$.category_id' desc
 
 children:
   - type: component.custom-component
@@ -261,6 +262,28 @@ children:
     inputs:
       isClickable: true 
       linkTo: weekly-plan-composite
+  - type: component.custom-component
+    componentId: create-new
+    inputs: 
+      icon: plus
+      title: Create new assignment
+      goTo: new-task-composite
+    
+  # - type: component.list
+  #   options:
+  #     data: =@ctx.datasources.mood-stats
+  #     maximumItemsToRender: 100
+  #     isHorizontal: true
+  #     isHorizontalScrollIndicatorHidden: true
+  #     item: 
+  #       type: component.custom-component
+  #       componentId: weekly-plan-card
+  #       inputs:
+  #         day: =@ctx.current.item.day
+  #         date: =@ctx.current.item.date
+  #         dates: =@ctx.current.item
+  #         dayDate: =@ctx.current.item.dayDate
+  #         goTo: true
   - type: component.custom-component
     componentId: title
     inputs:

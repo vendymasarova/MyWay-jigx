@@ -2,7 +2,43 @@ title: Name
 description: Description of your Jig
 type: jig.default
 
+# datasources:
+#   mood-stats:
+#     type: datasource.sqlite
+#     options:
+#       provider: DATA_PROVIDER_LOCAL
+
+#       entities:
+#         - entity: default/tasks
+#         - entity: default/dates
+
+#       query: |
+#         SELECT
+#           a.id AS id,
+#             STRFTIME('%d.%m', json_extract(a.data, '$.date')) AS date,
+#             STRFTIME('%d', json_extract(a.data, '$.date')) AS day,
+#             json_extract(b.data, '$.mood') AS mood,
+#             json_extract(a.data, '$.date') AS dayDate
+#         FROM [default/dates] a
+#         LEFT JOIN [default/tasks] b ON STRFTIME('%d.%m', json_extract(a.data, '$.date')) = STRFTIME('%d.%m', json_extract(b.data, '$.date'))
+#         ORDER BY date
+
 children:
+#   - type: component.list
+#     options:
+#       data: =@ctx.datasources.mood-stats
+#       maximumItemsToRender: 100
+#       isHorizontal: true
+#       isHorizontalScrollIndicatorHidden: true
+#       item: 
+#         type: component.custom-component
+#         componentId: weekly-plan-card
+#         inputs:
+#           day: =@ctx.current.item.day
+#           date: =@ctx.current.item.date
+#           dates: =@ctx.current.item
+#           dayDate: =@ctx.current.item.dayDate
+#           goTo: true
   - type: component.custom-component
     componentId: weekly-plan
     inputs:

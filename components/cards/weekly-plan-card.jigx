@@ -1,0 +1,78 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        margin:
+          right: small
+      children:
+        - type: component.card
+          options:
+            color: =@ctx.inputs.day = $fromMillis($toMillis($now()), '[D]') ? 'color9':''
+            onPress: 
+              type: action.action-list
+              options:
+                isSequential: true
+                actions:
+                  - type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.emotion-day
+                      value: =@ctx.inputs.date
+                  - type: action.go-to
+                    when: =@ctx.inputs.goTo = true ? true:false
+                    options:
+                      linkTo: weekly-plan-composite
+            children:
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      basis: 1
+                    padding: small
+                    gap: medium
+                    alignItems: center
+                    justifyContent: space-between
+                  children:
+                    - type: component.view
+                      options:
+                        style:
+                        children:
+                          - type: component.text
+                            options:
+                              value: =$fromMillis($toMillis(@ctx.inputs.dayDate), '[D]')
+                              align: center
+                              weight: =$fromMillis($toMillis(@ctx.inputs.dayDate), '[D]') = $substring(@ctx.solution.state.emotion-day, 0,2) and @ctx.inputs.goTo = false ? 'bold':'semi-bold'
+                              color: =$fromMillis($toMillis(@ctx.inputs.dayDate), '[D]') = $substring(@ctx.solution.state.emotion-day, 0,2) and @ctx.inputs.goTo = false ? 'color8':''
+                          - type: component.text
+                            options:
+                              value: =$substring($fromMillis($toMillis(@ctx.inputs.dayDate), '[FNn]'), 0, 3)
+                              align: center
+                              size: small
+                              emphasis: medium
+                    - type: component.icon
+                      when: =$number(@ctx.inputs.day) = $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      options:
+                        icon: circle
+                        size: 25
+                    - type: component.icon
+                      when: =$number(@ctx.inputs.day) > $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      options:
+                        icon: circle
+                        size: 25
+                    - type: component.image
+                      when: =$number(@ctx.inputs.day) < $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      options:
+                        size:
+                          width: 25
+                          height: 25
+                        source:
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/e92873e3-0548-4a72-82e7-11e449d0a3fa/water%20drop.png?view=open
+                    - type: component.image
+                      when: =@ctx.inputs.dates.mood != null ? true:false
+                      options:
+                        size:
+                          width: 25
+                          height: 25
+                        source:
+                          uri: https://t14345253.p.clickup-attachments.com/t14345253/eec8ecbb-bcce-46e2-870c-27eae880c2fe/Fire.png?view=open
+                    

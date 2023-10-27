@@ -5,45 +5,44 @@ children:
       onPress: 
         type: action.go-to
         options:
-          linkTo: =@ctx.inputs.create-new.goTo
+          linkTo: =@ctx.inputs.goTo
       children:
         - type: component.view
           options:
             style:
+              height: 
+                min: 40
               flex: 
                 grow: 1
                 direction: row
               gap: medium
+              justifyContent: center
+              alignItems: center
             children:
               - type: component.icon
-                when: =@ctx.inputs.create-new.icon != null 
+                when: =@ctx.inputs.icon != null 
                 options:
-                  icon: =@ctx.inputs.create-new.icon
-                  color: =@ctx.inputs.create-new.iconColor
+                  icon: =@ctx.inputs.icon
+                  color: color9
                   type: duotone
                   shape: circle
+                  size: small
               - type: component.view
                 options:
                   style:
-                    height: 56
-                    gap: minimal
-                    flex: 
-                      grow: 1
-                      shrink: 1
-                    justifyContent: center
                   children:
                     - type: component.text
                       options:
-                        value: =@ctx.inputs.create-new.title != null ? @ctx.inputs.create-new.title:'Title required'
-                        weight: bold
+                        value: =@ctx.inputs.title != null ? @ctx.inputs.title:'Title required'
+                        # weight: bold
                         numberOfLines: 1
-              - type: component.view
-                when: =@ctx.inputs.create-new.goTo != null
-                options:
-                  style:
-                    justifyContent: center
-                  children:
-                    - type: component.icon
-                      options:
-                        icon: arrow-right
-                        emphasis: medium
+              # - type: component.view
+              #   when: =@ctx.inputs.goTo != null
+              #   options:
+              #     style:
+              #       justifyContent: center
+              #     children:
+              #       - type: component.icon
+              #         options:
+              #           icon: arrow-right
+              #           emphasis: medium

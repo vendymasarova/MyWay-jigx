@@ -1,0 +1,38 @@
+title: Name
+description: Description of your Jig
+type: jig.default
+
+datasources:
+  todos:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/todos
+  
+      query: 
+        SELECT 
+          id, 
+          '$.type', 
+          '$.name',
+          '$.image',
+          '$.isChecked',
+          '$.hasEmoji',
+          '$.routine_id'
+        FROM [default/todos] 
+        WHERE '$.routine_id' = @todoRoutineId
+        ORDER BY '$.isChecked' AND '$.name' desc
+      queryParameters:
+        todoRoutineId: =@ctx.jig.inputs.routineId
+
+children:
+  - type: component.list
+    options:
+      data: =@ctx.datasources.todos
+      maximumItemsToRender: 100
+      item: 
+        type: component.custom-component
+        componentId: todo-component
+        inputs:
+          todos: =@ctx.current.item
