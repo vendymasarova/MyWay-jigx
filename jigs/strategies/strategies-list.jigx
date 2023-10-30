@@ -28,4 +28,6 @@ item:
   componentId: category-card
   inputs:
     categories: =@ctx.current.item
-    goTo: false
+    # category_id: =@ctx.current.item.category_id
+    goTo: true
+    higlight: true

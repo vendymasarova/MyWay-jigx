@@ -133,12 +133,31 @@ datasources:
         SELECT
           a.id AS id,
             STRFTIME('%d.%m', json_extract(a.data, '$.date')) AS date,
+            json_extract(a.data, '$.day') AS numberOfDay,
             STRFTIME('%d', json_extract(a.data, '$.date')) AS day,
             json_extract(b.data, '$.mood') AS mood,
             json_extract(a.data, '$.date') AS dayDate
         FROM [default/dates] a
         LEFT JOIN [default/mood-notes] b ON STRFTIME('%d.%m', json_extract(a.data, '$.date')) = STRFTIME('%d.%m', json_extract(b.data, '$.date'))
-        ORDER BY date
+        ORDER BY numberOfDay
+        
+  actualDay:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/dates
+  
+      query: 
+        SELECT 
+        id, 
+        STRFTIME('%d', json_extract(data, '$.date')) AS date,
+        '$.day' 
+        FROM [default/dates]
+        WHERE date = @today
+      queryParameters:
+        today: =$fromMillis($toMillis($now()), '[D]')
         
   feelings: 
     type: datasource.sqlite
@@ -232,6 +251,8 @@ children:
           dates: =@ctx.current.item
           dayDate: =@ctx.current.item.dayDate
           goTo: true
+          numberOfDay: =@ctx.current.item.numberOfDay
+          numberOfActualDay: =@ctx.datasources.actualDay.day
   - type: component.custom-component
     componentId: title-with-link
     inputs:

@@ -11,7 +11,7 @@ children:
       children:
         - type: component.card
           options:
-            color: =@ctx.solution.state.categoryId = @ctx.inputs.categories.category_id and @ctx.inputs.goTo = false ? 'color9':'color3'
+            color: =@ctx.solution.state.categoryId = @ctx.inputs.categories.category_id and $type(@ctx.inputs.higlight) != null ? 'color9':'color3'
             onPress: 
               type: action.action-list
               options:
@@ -25,6 +25,8 @@ children:
                     when: =@ctx.inputs.goTo
                     options:
                       linkTo: strategies-composite
+                      parameters:
+                        categoryId: =@ctx.inputs.categories.category_id
             children:
               - type: component.view
                 options:

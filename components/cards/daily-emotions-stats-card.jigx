@@ -51,17 +51,18 @@ children:
                               size: small
                               emphasis: medium
                     - type: component.icon
-                      when: =$number(@ctx.inputs.day) = $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      when: =$number(@ctx.inputs.numberOfDay) = $number(@ctx.inputs.numberOfActualDay) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      # when: =$number(@ctx.inputs.day) = $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
                       options:
                         icon: circle
                         size: 25
                     - type: component.icon
-                      when: =$number(@ctx.inputs.day) > $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      when: =$number(@ctx.inputs.numberOfDay) > $number(@ctx.inputs.numberOfActualDay) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
                       options:
                         icon: circle
                         size: 25
                     - type: component.image
-                      when: =$number(@ctx.inputs.day) < $number($fromMillis($toMillis($now()), '[D]')) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
+                      when: =$number(@ctx.inputs.numberOfDay) < $number(@ctx.inputs.numberOfActualDay) and $type(@ctx.inputs.dates.mood) = 'null' ? true:false 
                       options:
                         size:
                           width: 25

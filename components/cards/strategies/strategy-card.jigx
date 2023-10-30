@@ -26,8 +26,8 @@ children:
                   - type: action.go-to
                     options:
                       linkTo: strategies-detail
-                      # parameters:
-                        # strategyId: =@ctx.inputs.strategies.strategy_id
+                      parameters:
+                        strategyId: =@ctx.inputs.strategies.strategy_id
             direction: column
             children:
               - type: component.view

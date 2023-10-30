@@ -1,4 +1,4 @@
-title: =@ctx.datasources.strategies.category_name
+title: ' '
 type: jig.default
 
 
@@ -28,8 +28,8 @@ datasources:
         WHERE '$.strategy_id' = @strategyId
         # AND '$.strategy_id' = @reminderId
       queryParameters:
-        strategyId: =@ctx.solution.state.strategyId 
-        # reminderId: =@ctx.jig.inputs.strategyId
+        # strategyId: =@ctx.solution.state.strategyId 
+        strategyId: =@ctx.jig.inputs.strategyId
   
   steps:
     type: datasource.sqlite
@@ -50,7 +50,7 @@ datasources:
         WHERE '$.strategy_id' = @strategyId
         ORDER BY '$.step'
       queryParameters:
-        strategyId: =@ctx.solution.state.strategyId 
+       strategyId: =@ctx.jig.inputs.strategyId
   
   row_count:
     type: datasource.sqlite
@@ -66,7 +66,7 @@ datasources:
         WHERE '$.strategy_id' = @strategyId
         ORDER BY '$.step'
       queryParameters:
-        strategyId: =@ctx.solution.state.strategyId 
+        strategyId: =@ctx.jig.inputs.strategyId
         
   isDone_count:
     type: datasource.sqlite
@@ -82,7 +82,7 @@ datasources:
         WHERE '$.strategy_id' = @strategyId
         AND '$.isChecked' = 1
       queryParameters:
-        strategyId: =@ctx.solution.state.strategyId 
+        strategyId: =@ctx.jig.inputs.strategyId
 
 children:
   - type: component.custom-component

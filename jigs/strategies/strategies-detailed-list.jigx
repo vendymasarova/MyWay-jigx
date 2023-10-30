@@ -1,4 +1,4 @@
-title: =@ctx.datasources.row_count.row_count
+title: =@ctx.datasources.categories.name
 description: Description of your Jig
 type: jig.list
 placeholders:
@@ -7,6 +7,23 @@ placeholders:
     icon: missing-data
 
 datasources:
+  categories:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_DYNAMIC
+  
+      entities:
+        - default/strategy-categories
+  
+      query: 
+        SELECT 
+          id, 
+          '$.name', 
+          '$.category_id'
+        FROM [default/strategy-categories] 
+        WHERE '$.category_id' = @categoryId
+      queryParameters:
+        categoryId: =@ctx.solution.state.categoryId
   strategies: 
     type: datasource.sqlite
     options:
@@ -45,7 +62,7 @@ datasources:
         WHERE '$.strategy_id' = @strategyId
         ORDER BY '$.step'
       queryParameters:
-        strategyId: =@ctx.solution.state.strategyId 
+        strategyId: =@ctx.jig.inputs.strategyId
   
   isDone_count:
     type: datasource.sqlite
@@ -61,13 +78,57 @@ datasources:
         WHERE '$.strategy_id' = @strategyId
         AND '$.isChecked' = 1
       queryParameters:
-        strategyId: =@ctx.solution.state.strategyId 
+        strategyId: =@ctx.jig.inputs.strategyId
+  
+  strategies-with-steps:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_LOCAL
 
-data: =@ctx.datasources.strategies
+      entities:
+        - entity: default/steps
+        - entity: default/strategies
+
+      query: |
+        SELECT
+          a.id AS id,
+          json_extract(a.data, '$.name') AS name,
+          json_extract(a.data, '$.time') AS time,
+          json_extract(a.data, '$.category_id') AS category_id,
+          json_extract(a.data, '$.description') AS description,
+          json_extract(a.data, '$.image') AS image,
+          json_extract(a.data, '$.isDone') AS isDone,
+          json_extract(a.data, '$.strategy_id') AS strategy_id,
+          json_extract(a.data, '$.isActive') AS isActive,
+          json_extract(b.data, '$.step') AS step_title,
+          json_extract(b.data, '$.step') AS step,
+          json_extract(b.data, '$.step_id') AS step_id,
+          json_extract(b.data, '$.isChecked') AS step_isChecked,
+          (
+          SELECT COUNT(*)
+          FROM [default/steps] s
+          WHERE json_extract(s.data, '$.strategy_id') = json_extract(a.data, '$.strategy_id')
+          ) AS total_steps,
+          (
+            SELECT COUNT(*)
+            FROM [default/steps] s
+            WHERE json_extract(s.data, '$.isChecked') = 1
+            AND json_extract(s.data, '$.strategy_id') = json_extract(a.data, '$.strategy_id')
+          ) AS isDoneNumber
+        FROM [default/strategies] a
+        LEFT JOIN [default/steps] b ON json_extract(a.data, '$.strategy_id') = json_extract(b.data, '$.strategy_id')
+        WHERE category_id = @categoryId
+        AND isActive = 1
+        GROUP BY strategy_id
+      queryParameters:
+        categoryId: =@ctx.jig.inputs.categoryId
+
+data: =@ctx.datasources.strategies-with-steps
 item: 
   type: component.custom-component
   componentId: strategy-card
   inputs:
     strategies: =@ctx.current.item
-    numberOfSteps: =@ctx.datasources.row_count.row_count
-    isDoneNumber: =@ctx.datasources.isDone_count.isDone
+    numberOfSteps: =@ctx.current.item.total_steps
+    isDoneNumber: =@ctx.current.item.isDoneNumber
+    goTo: true
