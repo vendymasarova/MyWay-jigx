@@ -1,0 +1,45 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        margin:
+          # top: small
+      children:
+        - type: component.button
+          options:
+            title: =@ctx.inputs.title
+            type: primary
+            onPress: 
+              type: action.action-list
+              options:
+                isSequential: false
+                actions:
+                  # - type: action.set-state
+                  #   when: =@ctx.solution.state.isActivityStarted = 0
+                  #   options:
+                  #     state: =@ctx.solution.state.isActivityStarted
+                  #     value: 1
+                  # - type: action.set-state
+                  #   when: =@ctx.solution.state.isActivityStarted = 0
+                  #   options:
+                  #     state: =@ctx.solution.state.strategyStart
+                  #     value: =$now()
+                  # - type: action.set-state
+                  #   when: =@ctx.solution.state.isActivityStarted = 1
+                  #   options:
+                  #     state: =@ctx.solution.state.isActivityStarted
+                  #     value: 0
+                  # - type: action.set-state
+                  #   when: =@ctx.solution.state.isActivityStarted = 1
+                  #   options:
+                  #     state: =@ctx.solution.state.strategyEnd
+                  #     value: =$now()
+                  - type: action.execute-entities
+                    # when: =@ctx.inputs.isActivityFinished = true
+                    options: 
+                      provider: DATA_PROVIDER_DYNAMIC
+                      entity: default/steps
+                      goBack: stay
+                      method: update
+                      data: =@ctx.inputs.action

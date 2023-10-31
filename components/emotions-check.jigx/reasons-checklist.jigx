@@ -89,18 +89,14 @@ children:
                                 options:
                                   isSequential: true
                                   actions:
-                                    - type: action.action-list
+                                    - type: action.execute-entity
                                       options:
-                                        isSequential: true
-                                        actions:
-                                          - type: action.execute-entity
-                                            options:
-                                              provider: DATA_PROVIDER_DYNAMIC
-                                              entity: default/mood-reasons
-                                              method: update
-                                              goBack: stay
-                                              data:
-                                                id: =@ctx.inputs.reasons.id
-                                                isChecked: =@ctx.components.reason.state.value
+                                        provider: DATA_PROVIDER_DYNAMIC
+                                        entity: default/mood-reasons
+                                        method: update
+                                        goBack: stay
+                                        data:
+                                          id: =@ctx.inputs.reasons.id
+                                          isChecked: =@ctx.components.reason.state.value
                         
                         

@@ -64,7 +64,7 @@ children:
                                       justifyContent: center
                                       alignItems: center
                                       background:
-                                        color: =@ctx.inputs.strategies.category_id = 1 ? 'color3':@ctx.inputs.strategies.category_id = 2 ? 'color8':'color2'
+                                        color: =@ctx.inputs.strategies.category_id = 1 ? 'color2':@ctx.inputs.strategies.category_id = 2 ? 'color8':'color3'
                                       radius: medium
                                     children:
                                       - type: component.image
@@ -103,7 +103,7 @@ children:
                                               vertical: minimal
                                               horizontal: small
                                             background:
-                                              color: color2
+                                              color: positive
                                             alignItems: center
                                             justifyContent: center
                                             radius: tiny
@@ -143,7 +143,7 @@ children:
                                 max: =@ctx.inputs.numberOfSteps
                               subtitle:
                                 value: =@ctx.inputs.isDoneNumber & '/' & @ctx.inputs.numberOfSteps
-                              color:  =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? 'color2':'color3'
+                              color:  =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? 'positive':'warning'
                   
                     
                               

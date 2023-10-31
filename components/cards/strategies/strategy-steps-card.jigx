@@ -31,12 +31,12 @@ children:
                         children:
                           - type: component.text
                             options:
-                              value: ='Step ' & @ctx.inputs.step
+                              value: ='Step ' & @ctx.inputs.steps.step
                               size: medium
                               weight: semi-bold
                           - type: component.text
                             options:
-                              value: =@ctx.inputs.title
+                              value: =@ctx.inputs.steps.title
 
                     - type: component.view
                       options:
@@ -46,28 +46,34 @@ children:
                           right: none
                         children:
                           - type: component.form
-                            instanceId: checkbox
+                            instanceId: stepsCheckbox
                             options:
                               isDiscardChangesAlertEnabled: false
                               children:
                                 - type: component.checkbox
                                   instanceId: step
                                   options:
-                                    nextProperty: undefined
                                     label: ''
                                     isRequired: false
-                                    value: =@ctx.inputs.isChecked
+                                    value: =@ctx.inputs.steps.isChecked
                                     isOptionalLabelHidden: true
                                     style:
                                       isPositive: true
                                     onChange: 
-                                      type: action.execute-entity
+                                      type: action.action-list
                                       options:
-                                        provider: DATA_PROVIDER_DYNAMIC
-                                        entity: default/steps
-                                        method: update
-                                        goBack: stay
-                                        data:
-                                          id: =@ctx.inputs.steps.id
-                                          isChecked: =@ctx.components.step.state.value            
-                        
+                                        isSequential: true
+                                        actions:
+                                          - type: action.execute-entity
+                                            options:
+                                              provider: DATA_PROVIDER_DYNAMIC
+                                              entity: default/steps
+                                              method: update
+                                              goBack: stay
+                                              data:
+                                                id: =@ctx.inputs.steps.id
+                                                isChecked: =@ctx.components.step.state.value          
+
+        
+        
+        

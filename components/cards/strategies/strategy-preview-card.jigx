@@ -1,0 +1,173 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        flex: 
+          grow: 1
+          shrink: 1
+          direction: row
+        margin:
+          right: small
+      children:
+        - type: component.card
+          options:
+            color: =@ctx.inputs.strategies.category_id = 1 ? 'color2':@ctx.inputs.strategies.category_id = 2 ? 'color8':'color3'
+            onPress: 
+              type: action.go-to
+              options:
+                linkTo: strategies-detail
+                parameters:
+                  strategyId: =@ctx.inputs.strategies.strategy_id
+            direction: row
+            children:
+              - type: component.view
+                options:
+                  style:
+                    flex: 
+                      grow: 1
+                      # shrink: 1
+                      direction: row
+                    width: 
+                      min: 320
+                    gap: small
+                  children:
+                    # image
+                    - type: component.view
+                      options:
+                        style:
+                          flex: 
+                            grow: 1
+                            basis: 2
+                            direction: column
+                          padding: small
+                          radius: small
+                          justifyContent: center
+                          # alignItems: center
+                          background:
+                            color: color13
+                            # color: =@ctx.inputs.strategies.category_id = 1 ? 'color2':@ctx.inputs.strategies.category_id = 2 ? 'color8':'color3'
+                        children:
+                          - type: component.image
+                            options:
+                              resizeMode: contain
+                              size: 
+                                height: 100
+                              source:
+                                uri: =@ctx.inputs.strategies.image
+                    - type: component.view
+                      options:
+                        style:
+                          flex: 
+                            grow: 2
+                            basis: 2
+                          justifyContent: space-between
+                        children:
+                          - type: component.view
+                            options:
+                              style:
+                                gap: medium
+                              children:
+                                - type: component.view
+                                  options:
+                                    style:
+                                      flex: 
+                                        direction: row
+                                      alignItems: center
+                                    children:
+                                      - type: component.view
+                                        options:
+                                          style:
+                                            flex: 
+                                              # grow: 0
+                                              shrink: 1
+                                            # justifyContent: flex-start
+                                            # alignItems: center
+                                            # alignSelf: flex-start
+                                          children:
+                                            - type: component.view
+                                              options:
+                                                style:
+                                                  gap: minimal
+                                                children:
+                                                  - type: component.text
+                                                    options:
+                                                      value: =@ctx.inputs.strategies.name
+                                                      align: left
+                                                      weight: bold
+                                                      size: medium
+                                                  - type: component.view
+                                                    options:
+                                                      style:
+                                                        flex: 
+                                                          grow: 0
+                                                          shrink: 1
+                                                          direction: row
+                                                        gap: small
+                                                        padding: 
+                                                          vertical: minimal
+                                                          horizontal: small
+                                                        background:
+                                                          color: color13
+                                                          # color: =@ctx.inputs.strategies.category_id = 1 ? 'color2':@ctx.inputs.strategies.category_id = 2 ? 'color8':'color3'
+                                                        alignItems: center
+                                                        justifyContent: center
+                                                        radius: tiny
+                                                        alignSelf: flex-start
+                                                      children:
+                                                        - type: component.text
+                                                          options:
+                                                            value: =@ctx.inputs.strategies.category_name
+                                                            size: tiny
+                                - type: component.text
+                                  options:
+                                    value: =@ctx.inputs.strategies.description
+                                    emphasis: high
+                                    numberOfLines: 2
+                          - type: component.view
+                            options:
+                              style:
+                              children:
+                                - type: component.view
+                                  when: =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? true:false
+                                  options:
+                                    style:
+                                      flex: 
+                                        grow: 0
+                                        shrink: 1
+                                        direction: row
+                                      gap: small
+                                      padding: 
+                                        vertical: minimal
+                                        horizontal: small
+                                      background:
+                                        color: positive
+                                      alignItems: center
+                                      justifyContent: center
+                                      radius: tiny
+                                      alignSelf: flex-start
+                                      margin: 
+                                        top: medium
+                                    children:
+                                      - type: component.text
+                                        options:
+                                          value: You are done
+                                      - type: component.icon
+                                        options:
+                                          icon: check
+                                          size: medium
+                                - type: component.progress-bar
+                                  options:
+                                    steps: =@ctx.inputs.numberOfSteps
+                                    size: small
+                                    value:
+                                      current: =@ctx.inputs.isDoneNumber
+                                      max: =@ctx.inputs.numberOfSteps
+                                    subtitle:
+                                      value: =@ctx.inputs.isDoneNumber & '/' & @ctx.inputs.numberOfSteps
+                                    color:  =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? 'positive':'warning'
+                    
+
+                          
+                                    
+                                

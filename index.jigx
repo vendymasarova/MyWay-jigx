@@ -38,10 +38,13 @@ assets:
       light:
         color13: 
           background: '#FFFFFF'
-          onBackground: '#000000'
+          onBackground: '#021F4D'
         color2:
           background: '#B4E5BC'
-          onBackground: '#000000'
+          onBackground: '#021F4D'
+        color11:
+          background: '#D9DDFF'
+          onBackground: '#021F4D'
   icons:
     - arrow-right # auto-generated
     - calendar # auto-generated

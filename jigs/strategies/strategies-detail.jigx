@@ -1,6 +1,5 @@
-title: ' '
+title: =@ctx.datasources.steps.isChecked
 type: jig.default
-
 
 datasources:
   strategies: 
@@ -26,10 +25,52 @@ datasources:
           json_array_length(json_extract(data, '$.steps')) AS numberOfSteps 
         FROM [default/strategies] 
         WHERE '$.strategy_id' = @strategyId
-        # AND '$.strategy_id' = @reminderId
       queryParameters:
-        # strategyId: =@ctx.solution.state.strategyId 
         strategyId: =@ctx.jig.inputs.strategyId
+  
+  strategies-with-steps:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_LOCAL
+
+      entities:
+        - entity: default/steps
+        - entity: default/strategies
+
+      query: |
+        SELECT
+          a.id AS id,
+          json_extract(a.data, '$.name') AS name,
+          json_extract(a.data, '$.time') AS time,
+          json_extract(a.data, '$.category_id') AS category_id,
+          json_extract(a.data, '$.description') AS description,
+          json_extract(a.data, '$.image') AS image,
+          json_extract(a.data, '$.isDone') AS isDone,
+          json_extract(a.data, '$.strategy_id') AS strategy_id,
+          json_extract(a.data, '$.isActive') AS isActive,
+          json_extract(b.data, '$.step') AS step_title,
+          json_extract(b.data, '$.step') AS step,
+          json_extract(b.data, '$.step_id') AS step_id,
+          json_extract(b.data, '$.isChecked') AS step_isChecked,
+          (
+          SELECT COUNT(*)
+          FROM [default/steps] s
+          WHERE json_extract(s.data, '$.strategy_id') = json_extract(a.data, '$.strategy_id')
+          ) AS total_steps,
+          (
+            SELECT COUNT(*)
+            FROM [default/steps] s
+            WHERE json_extract(s.data, '$.isChecked') = 1
+            AND json_extract(s.data, '$.strategy_id') = json_extract(a.data, '$.strategy_id')
+          ) AS isDoneNumber
+        FROM [default/strategies] a
+        LEFT JOIN [default/steps] b ON json_extract(a.data, '$.strategy_id') = json_extract(b.data, '$.strategy_id')
+        WHERE strategy_id = @strategyId
+        GROUP BY strategy_id
+        ORDER BY step
+        AND isActive = 1
+      queryParameters:
+       strategyId: =@ctx.jig.inputs.strategyId
   
   steps:
     type: datasource.sqlite
@@ -91,7 +132,14 @@ children:
       strategies: =@ctx.datasources.strategies
       numberOfSteps: =@ctx.datasources.row_count.row_count
       isDoneNumber: =@ctx.datasources.isDone_count.isDone
+  - type: component.custom-component
+    when: =@ctx.solution.state.isActivityStarted = 0
+    componentId: button
+    inputs:
+      title: Let's start
+      isActivityStarted: true
   - type: component.list
+    # when: =@ctx.solution.state.isActivityStarted = 1 
     options:
       data: =@ctx.datasources.steps
       item: 
@@ -99,7 +147,20 @@ children:
         componentId: strategy-steps-card
         inputs:
           steps: =@ctx.current.item
-          title: =@ctx.current.item.title
-          step: =@ctx.current.item.step_id
           isChecked: =@ctx.current.item.isChecked
+          stepsCount: =@ctx.datasources.row_count.row_count
+          isDoneCount: =@ctx.datasources.isDone_count.isDone
+  - type: component.image
+    when: =@ctx.datasources.row_count.row_count = @ctx.datasources.isDone_count.isDone
+    options:
+      height: 100
+      resizeMode: contain
+      source:
+        uri: https://t14345253.p.clickup-attachments.com/t14345253/ab7925cc-a8f7-4d17-9e51-961d0c5a00f0/Party.png?view=open
+  - type: component.custom-component
+    componentId: button
+    inputs: 
+      steps: =@ctx.datasources.steps
+      action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
+  
  
