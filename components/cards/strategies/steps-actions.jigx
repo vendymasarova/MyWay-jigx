@@ -1,0 +1,76 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        flex:
+          grow: 1
+          shrink: 1
+          basis: 1
+          direction: row
+        gap: small
+      children:
+        - type: component.view
+          options:
+            style:
+              flex: 
+                grow: 1
+                basis: 2
+            children:
+              - type: component.button
+                options:
+                  title: Restart
+                  type: secondary
+                  onPress: 
+                    type: action.action-list
+                    options:
+                      isSequential: true
+                      actions:
+                        - type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.activityIsFinished
+                            value: false
+                        - type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.isActivityStarted
+                            value: 0
+                        - type: action.execute-entities
+                          options: 
+                            provider: DATA_PROVIDER_DYNAMIC
+                            entity: default/steps
+                            goBack: stay
+                            method: update
+                            data: =@ctx.inputs.action
+                        - type: action.go-to
+                          options:
+                            linkTo: strategies-detail
+                            parameters:
+                              strategyId: =@ctx.inputs.strategyId
+                              id: =$number()
+        - type: component.view
+          when: =@ctx.solution.state.activityIsFinished = false
+          options:
+            style:
+              flex: 
+                grow: 1
+                basis: 1
+            children:
+              - type: component.button
+                options:
+                  title: Finish
+                  type: primary
+                  style:
+                    isDisabled: =@ctx.inputs.stepsCount != @ctx.inputs.isDoneCount
+                  onPress: 
+                    type: action.action-list
+                    options:
+                      isSequential: true
+                      actions:
+                        - type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.activityIsFinished
+                            value: true
+                        - type: action.set-state
+                          options:
+                            state: =@ctx.solution.state.activityFinishTime
+                            value: =$now()

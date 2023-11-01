@@ -161,7 +161,7 @@ datasources:
         FROM [default/dates]
         WHERE date = @today
       queryParameters:
-        today: =$fromMillis($toMillis($now()), '[D]')
+        today: =$fromMillis($toMillis($now()), '[D01]')
         
   feelings: 
     type: datasource.sqlite

@@ -8,7 +8,7 @@ children:
       children:
         - type: component.card
           options:
-            color: =@ctx.inputs.day = $fromMillis($toMillis($now()), '[D]') ? 'color9':''
+            color: =$number(@ctx.inputs.numberOfDay) = $number(@ctx.inputs.numberOfActualDay) ? 'color9':''
             onPress: 
               type: action.action-list
               options:

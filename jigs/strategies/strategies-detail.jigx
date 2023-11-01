@@ -139,7 +139,7 @@ children:
       title: Let's start
       isActivityStarted: true
   - type: component.list
-    # when: =@ctx.solution.state.isActivityStarted = 1 
+    when: =@ctx.solution.state.isActivityStarted = 1 
     options:
       data: =@ctx.datasources.steps
       item: 
@@ -150,17 +150,32 @@ children:
           isChecked: =@ctx.current.item.isChecked
           stepsCount: =@ctx.datasources.row_count.row_count
           isDoneCount: =@ctx.datasources.isDone_count.isDone
+  - type: component.custom-component
+    when: =@ctx.solution.state.isActivityStarted = 1
+    componentId: steps-actions
+    inputs: 
+      action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
+      stepsCount: =@ctx.datasources.row_count.row_count
+      isDoneCount: =@ctx.datasources.isDone_count.isDone
+      isDisabled: true
+      strategyId: =@ctx.jig.inputs.strategyId
   - type: component.image
-    when: =@ctx.datasources.row_count.row_count = @ctx.datasources.isDone_count.isDone
+    when: =@ctx.solution.state.activityIsFinished = true
     options:
       height: 100
       resizeMode: contain
       source:
         uri: https://t14345253.p.clickup-attachments.com/t14345253/ab7925cc-a8f7-4d17-9e51-961d0c5a00f0/Party.png?view=open
-  - type: component.custom-component
-    componentId: button
-    inputs: 
-      steps: =@ctx.datasources.steps
-      action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
-  
- 
+  # - type: component.custom-component
+  #   when: =@ctx.datasources.row_count.row_count = @ctx.datasources.isDone_count.isDone ? true:false
+  #   componentId: button
+  #   inputs: 
+  #     isActivityFinished: =@ctx.datasources.row_count.row_count = @ctx.datasources.isDone_count.isDone ? true:false
+  #     title: Finish Activity
+  # - type: component.custom-component
+  #   componentId: button
+  #   inputs: 
+  #     isActivityRestarted: true
+  #     title: Restart strategy
+  #     steps: =@ctx.datasources.steps
+  #     action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]

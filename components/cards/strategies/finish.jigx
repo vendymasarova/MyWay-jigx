@@ -1,0 +1,20 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        
+      children:
+        - type: component.text
+          options:
+            value: you are finished
+        - type: component.text
+          options:
+            value: =@ctx.inputs.startTime
+        - type: component.image
+          options:
+            size: 
+              height: 100
+            resizeMode: contain
+            source:
+              uri: https://t14345253.p.clickup-attachments.com/t14345253/ab7925cc-a8f7-4d17-9e51-961d0c5a00f0/Party.png?view=open

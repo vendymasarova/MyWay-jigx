@@ -15,31 +15,28 @@ children:
               options:
                 isSequential: false
                 actions:
+                  - type: action.set-state
+                    when: =@ctx.solution.state.isActivityStarted = 0
+                    options:
+                      state: =@ctx.solution.state.isActivityStarted
+                      value: 1
+                  - type: action.set-state
+                    when: =@ctx.solution.state.isActivityStarted = 0
+                    options:
+                      state: =@ctx.solution.state.strategyStart
+                      value: =$now()
+                  - type: action.set-state
+                    when: =@ctx.solution.state.isActivityStarted = 1
+                    options:
+                      state: =@ctx.solution.state.isActivityStarted
+                      value: 0
+                  - type: action.set-state
+                    when: =@ctx.solution.state.isActivityStarted = 1
+                    options:
+                      state: =@ctx.solution.state.strategyEnd
+                      value: =$now()
                   # - type: action.set-state
-                  #   when: =@ctx.solution.state.isActivityStarted = 0
+                  #   when: =@ctx.inputs.isActivityFinished = true
                   #   options:
-                  #     state: =@ctx.solution.state.isActivityStarted
-                  #     value: 1
-                  # - type: action.set-state
-                  #   when: =@ctx.solution.state.isActivityStarted = 0
-                  #   options:
-                  #     state: =@ctx.solution.state.strategyStart
-                  #     value: =$now()
-                  # - type: action.set-state
-                  #   when: =@ctx.solution.state.isActivityStarted = 1
-                  #   options:
-                  #     state: =@ctx.solution.state.isActivityStarted
-                  #     value: 0
-                  # - type: action.set-state
-                  #   when: =@ctx.solution.state.isActivityStarted = 1
-                  #   options:
-                  #     state: =@ctx.solution.state.strategyEnd
-                  #     value: =$now()
-                  - type: action.execute-entities
-                    # when: =@ctx.inputs.isActivityFinished = true
-                    options: 
-                      provider: DATA_PROVIDER_DYNAMIC
-                      entity: default/steps
-                      goBack: stay
-                      method: update
-                      data: =@ctx.inputs.action
+                  #     state: =@ctx.solution.state.activityFinished
+                  #     value: true

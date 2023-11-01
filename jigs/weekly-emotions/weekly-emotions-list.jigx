@@ -1,4 +1,4 @@
-title:  =@ctx.datasources.emotions.mood[0]
+title:  =$fromMillis($toMillis($now()), '[D01].[M]')
 type: jig.default
 
 datasources:
@@ -84,13 +84,13 @@ datasources:
         FROM [default/dates]
         WHERE date = @today
       queryParameters:
-        today: =$fromMillis($toMillis($now()), '[D]')
+        today: =$fromMillis($toMillis($now()), '[D01]')
         
 children:
   - type: component.list
     options:
       data: =@ctx.datasources.mood-stats
-      maximumItemsToRender: 8
+      maximumItemsToRender: 365
       isHorizontal: true
       isHorizontalScrollIndicatorHidden: true
       item: 
