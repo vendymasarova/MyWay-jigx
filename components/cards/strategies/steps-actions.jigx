@@ -19,7 +19,7 @@ children:
             children:
               - type: component.button
                 options:
-                  title: Restart
+                  title: Start over
                   type: secondary
                   onPress: 
                     type: action.action-list
@@ -34,6 +34,12 @@ children:
                           options:
                             state: =@ctx.solution.state.isActivityStarted
                             value: 0
+                        - type: action.reset-state
+                          options:
+                            state: =@ctx.solution.state.activityFinishTime
+                        - type: action.reset-state
+                          options:
+                            state: =@ctx.solution.state.activityStartTime
                         - type: action.execute-entities
                           options: 
                             provider: DATA_PROVIDER_DYNAMIC
@@ -46,7 +52,7 @@ children:
                             linkTo: strategies-detail
                             parameters:
                               strategyId: =@ctx.inputs.strategyId
-                              id: =$number()
+                              # id: =$number($random())
         - type: component.view
           when: =@ctx.solution.state.activityIsFinished = false
           options:
@@ -74,3 +80,11 @@ children:
                           options:
                             state: =@ctx.solution.state.activityFinishTime
                             value: =$now()
+                        - type: action.execute-entities
+                          options:
+                            provider: DATA_PROVIDER_DYNAMIC
+                            entity: default/strategies
+                            method: update
+                            goBack: stay
+                            data: =@ctx.inputs.setActivityAsDone
+                              

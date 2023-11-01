@@ -91,7 +91,7 @@ children:
                                           weight: bold
                                           size: medium
                                       - type: component.view
-                                        when: =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? true:false
+                                        when: =@ctx.inputs.strategies.isDone = true ? true:false
                                         options:
                                           style:
                                             flex: 

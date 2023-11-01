@@ -1,4 +1,4 @@
-title: =@ctx.datasources.steps.isChecked
+title: ' '
 type: jig.default
 
 datasources:
@@ -151,21 +151,25 @@ children:
           stepsCount: =@ctx.datasources.row_count.row_count
           isDoneCount: =@ctx.datasources.isDone_count.isDone
   - type: component.custom-component
+    when: =@ctx.solution.state.activityIsFinished = true
+    componentId: finish
+  - type: component.custom-component
     when: =@ctx.solution.state.isActivityStarted = 1
     componentId: steps-actions
     inputs: 
       action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
       stepsCount: =@ctx.datasources.row_count.row_count
       isDoneCount: =@ctx.datasources.isDone_count.isDone
-      isDisabled: true
       strategyId: =@ctx.jig.inputs.strategyId
-  - type: component.image
-    when: =@ctx.solution.state.activityIsFinished = true
-    options:
-      height: 100
-      resizeMode: contain
-      source:
-        uri: https://t14345253.p.clickup-attachments.com/t14345253/ab7925cc-a8f7-4d17-9e51-961d0c5a00f0/Party.png?view=open
+      setActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :true}[]
+  # - type: component.image
+  #   when: =@ctx.solution.state.activityIsFinished = true
+  #   options:
+  #     height: 100
+  #     resizeMode: contain
+  #     source:
+  #       uri: https://t14345253.p.clickup-attachments.com/t14345253/ab7925cc-a8f7-4d17-9e51-961d0c5a00f0/Party.png?view=open
+      
   # - type: component.custom-component
   #   when: =@ctx.datasources.row_count.row_count = @ctx.datasources.isDone_count.isDone ? true:false
   #   componentId: button

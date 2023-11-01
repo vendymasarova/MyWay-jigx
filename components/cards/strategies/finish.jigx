@@ -3,18 +3,49 @@ children:
   - type: component.view
     options:
       style:
-        
+        margin:
+          bottom: large
       children:
         - type: component.text
           options:
-            value: you are finished
-        - type: component.text
+            value: Hurray!! 🎊
+            align: center
+            size: large
+            weight: bold
+        - type: component.view
           options:
-            value: =@ctx.inputs.startTime
-        - type: component.image
+            style:
+              margin: 
+                top: medium
+                bottom: medium
+            children:
+              - type: component.text
+                options:
+                  value: 'You finished this strategy in:'
+                  align: center
+                  size: medium
+                  weight: medium
+              - type: component.view
+                options:
+                  style:
+                    margin: 
+                      top: small
+                  children:
+                    - type: component.text
+                      options:
+                        align: center
+                        size: regular
+                        weight: semi-bold
+                        value: =$fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[m01]') & ' min. ' & $fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[s01]') & ' sec.'
+        - type: component.view
           options:
-            size: 
-              height: 100
-            resizeMode: contain
-            source:
-              uri: https://t14345253.p.clickup-attachments.com/t14345253/ab7925cc-a8f7-4d17-9e51-961d0c5a00f0/Party.png?view=open
+            style:
+              
+            children:
+              - type: component.image
+                options:
+                  size: 
+                    height: 100
+                  resizeMode: contain
+                  source:
+                    uri: https://t14345253.p.clickup-attachments.com/t14345253/ab7925cc-a8f7-4d17-9e51-961d0c5a00f0/Party.png?view=open
