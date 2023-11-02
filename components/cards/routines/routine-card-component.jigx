@@ -49,7 +49,7 @@ children:
                                 width: 40
                               resizeMode: contain
                               source:
-                                uri:  =@ctx.inputs.routines.image
+                                uri:  =@ctx.inputs.routines.routine_image
                     - type: component.view
                       options:
                         style:
@@ -67,15 +67,15 @@ children:
                               children:
                                 - type: component.text
                                   options:
-                                    value: =@ctx.inputs.routines.name
+                                    value: =@ctx.inputs.routines.routine_name
                                     weight: semi-bold
                     - type: component.progress-bar
                       options:
-                        steps: 5
+                        steps: =@ctx.inputs.numberOfSteps
                         size: small
                         value:
-                          current: 3
-                          max: 5
+                          current: =@ctx.inputs.isDoneNumber
+                          max: =@ctx.inputs.numberOfSteps
                         subtitle:
-                          value: '3/5'
-                        color: =@ctx.inputs.routines.type = 'school' ? 'color3':@ctx.inputs.routines.type = 'personal' ? 'color8':'color2'
+                          value: =@ctx.inputs.isDoneNumber & '/' & @ctx.inputs.numberOfSteps
+                        color:  =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? 'positive':'warning'

@@ -30,3 +30,7 @@ children:
                     options:
                       state: =@ctx.solution.state.activityStartTime
                       value: =$now()
+                  - type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.idStrategy
+                      value: =@ctx.inputs.strategyId

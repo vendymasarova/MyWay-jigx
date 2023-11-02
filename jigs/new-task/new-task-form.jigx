@@ -79,17 +79,17 @@ datasources:
     options:
       data:
         - id: 1
-          name: Math
+          name: ➕ Math
         - id: 2
-          name: History
+          name: 🦕 History
         - id: 3
-          name: Science
+          name: 👩‍🔬 Science
         - id: 4
-          name: English
+          name: 🇺🇸 English
         - id: 5
-          name: Art
+          name: 🎨 Art
         - id: 6
-          name: Music
+          name: 🎼 Music
         - id: 7
           name: Other
 
@@ -245,6 +245,7 @@ children:
                 instanceId: due-date
                 options:
                   label: Due-date
+                  format: L
               - type: component.date-picker
                 instanceId: time
                 options:

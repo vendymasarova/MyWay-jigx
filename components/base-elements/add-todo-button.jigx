@@ -1,0 +1,35 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        flex: 
+          grow: 1
+      children:
+        - type: component.button
+          options:
+            title: Create new todo
+            onPress: 
+              type: action.execute-entity
+              options:
+                provider: DATA_PROVIDER_DYNAMIC
+                entity: default/todos
+                method: save
+                goBack: stay
+                data:
+                  id: =@ctx.
+                  column1: =@ctx.
+              # type: action.submit-form
+              # when: =@ctx.solution.state.add-todo = 1 
+              # options:
+              #   formId: new-todo-routine-form
+              #   provider: DATA_PROVIDER_DYNAMIC
+              #   entity: default/todos
+              #   method: save
+              #   goBack: stay 
+              #   onSuccess: 
+              #     title: New todo created
+              #     type: action.set-state
+              #     options:
+              #       state: =@ctx.solution.state.add-todo
+              #       value: 0

@@ -1,7 +1,7 @@
 title: Name
 type: jig.default
 
-onRefresh: 
+onRefresh:
   type: action.action-list
   options:
     isSequential: true
@@ -27,7 +27,7 @@ onRefresh:
           state: =@ctx.solution.state.isActivityStarted
           value: 0
       - type: action.execute-entities
-        options: 
+        options:
           provider: DATA_PROVIDER_DYNAMIC
           entity: default/routines
           method: update
@@ -36,31 +36,31 @@ onRefresh:
             id: 'c20c2c99-1b80-4f21-aced-1f340735fe3a'
             isDone: false
       - type: action.execute-entities
-        options: 
+        options:
           provider: DATA_PROVIDER_DYNAMIC
           entity: default/mood-feelings
           method: update
           data: =@ctx.datasources.feelings.{"id" :id, "isChecked" :false}[]
       - type: action.execute-entities
-        options: 
+        options:
           provider: DATA_PROVIDER_DYNAMIC
           entity: default/mood-reasons
           method: update
           data: =@ctx.datasources.reasons.{"id" :id, "isChecked" :false}[]
-    
+
 datasources:
   reminders:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
-  
+
       entities:
         - default/routines
-  
-      query: 
-        SELECT 
-          id, 
-          '$.name', 
+
+      query:
+        SELECT
+          id,
+          '$.name',
           '$.image',
           '$.isDone',
           '$.type',
@@ -75,25 +75,25 @@ datasources:
           '$.has-detail',
           '$.priority',
           '$.linkTo'
-        FROM [default/routines] 
+        FROM [default/routines]
         WHERE '$.isReminiscent' = true
         AND '$.isDone' = false
         ORDER BY '$.priority'
       queryParameters:
         todoRoutineId: =@ctx.jig.inputs.routine
-          
+
   routines:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
-  
+
       entities:
         - default/routines
-  
-      query: 
-        SELECT 
-          id, 
-          '$.name', 
+
+      query:
+        SELECT
+          id,
+          '$.name',
           '$.image',
           '$.isDone',
           '$.type',
@@ -101,7 +101,7 @@ datasources:
           '$.routine_id',
           '$.isCheckable',
           '$.hasChecklist'
-        FROM [default/routines] 
+        FROM [default/routines]
         WHERE '$.isCheckable' = false
         AND '$.hasChecklist' = true
 
@@ -109,21 +109,21 @@ datasources:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
-  
+
       entities:
         - default/todos
-  
-      query: 
-        SELECT 
-          id, 
-          '$.type', 
+
+      query:
+        SELECT
+          id,
+          '$.type',
           '$.name',
           '$.image',
           '$.isChecked',
           '$.routine_id',
           '$.hasEmoji'
-        FROM [default/todos] 
-  
+        FROM [default/todos]
+
   mood-stats:
     type: datasource.sqlite
     options:
@@ -144,70 +144,70 @@ datasources:
         FROM [default/dates] a
         LEFT JOIN [default/mood-notes] b ON STRFTIME('%d.%m', json_extract(a.data, '$.date')) = STRFTIME('%d.%m', json_extract(b.data, '$.date'))
         ORDER BY numberOfDay
-        
+
   actualDay:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
-  
+
       entities:
         - default/dates
-  
-      query: 
-        SELECT 
-        id, 
+
+      query:
+        SELECT
+        id,
         STRFTIME('%d', json_extract(data, '$.date')) AS date,
-        '$.day' 
+        '$.day'
         FROM [default/dates]
         WHERE date = @today
       queryParameters:
         today: =$fromMillis($toMillis($now()), '[D01]')
-        
-  feelings: 
+
+  feelings:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
-    
+
       entities:
         - default/mood-feelings
-    
-      query: 
-        SELECT 
-          id, 
+
+      query:
+        SELECT
+          id,
           '$.isChecked'
         FROM [default/mood-feelings]
-        
-  reasons: 
+
+  reasons:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
-    
+
       entities:
         - default/mood-reasons
-    
-      query: 
-        SELECT 
-          id, 
+
+      query:
+        SELECT
+          id,
           '$.isChecked'
         FROM [default/mood-reasons]
-  
+
   categories:
     type: datasource.sqlite
     options:
       provider: DATA_PROVIDER_DYNAMIC
-  
+
       entities:
         - default/strategy-categories
-  
-      query: 
-        SELECT 
-          id, 
-          '$.name', 
+
+      query:
+        SELECT
+          id,
+          '$.name',
           '$.image',
           '$.category_id'
         FROM [default/strategy-categories]
         ORDER BY '$.category_id' desc
-        
+
   strategies-with-steps:
     type: datasource.sqlite
     options:
@@ -249,6 +249,48 @@ datasources:
         WHERE isActive = 1
         GROUP BY strategy_id
 
+  routines-with-todos:
+    type: datasource.sqlite
+    options:
+      provider: DATA_PROVIDER_LOCAL
+
+      entities:
+        - entity: default/todos
+        - entity: default/routines
+
+      query: |
+        SELECT
+          a.id AS id,
+          json_extract(a.data, '$.name') AS routine_name,
+          json_extract(a.data, '$.time') AS time,
+          json_extract(a.data, '$.type') AS type,
+          json_extract(a.data, '$.priority') AS priority,
+          json_extract(a.data, '$.description') AS description,
+          json_extract(a.data, '$.image') AS routine_image,
+          json_extract(a.data, '$.isDone') AS isDone,
+          json_extract(a.data, '$.routine_id') AS routine_id,
+          json_extract(a.data, '$.isCheckable') AS isCheckable,
+          json_extract(a.data, '$.hasChecklist') AS hasChecklist,
+          json_extract(b.data, '$.name') AS name,
+          json_extract(b.data, '$.image') AS image,
+          json_extract(b.data, '$.isChecked') AS isChecked,
+          (
+          SELECT COUNT(*)
+          FROM [default/todos] s
+          WHERE json_extract(s.data, '$.routine_id') = json_extract(a.data, '$.routine_id')
+          ) AS total_todos,
+          (
+            SELECT COUNT(*)
+            FROM [default/todos] s
+            WHERE json_extract(s.data, '$.isChecked') = 1
+            AND json_extract(s.data, '$.routine_id') = json_extract(a.data, '$.routine_id')
+          ) AS isDoneNumber
+        FROM [default/routines] a
+        LEFT JOIN [default/todos] b ON json_extract(a.data, '$.routine_id') = json_extract(b.data, '$.routine_id')
+        WHERE isCheckable = false
+        AND hasChecklist = true
+        GROUP BY routine_id
+
 children:
   - type: component.custom-component
     componentId: header-component
@@ -260,7 +302,24 @@ children:
   - type: component.custom-component
     componentId: title-with-link
     inputs:
-      title: Active strategies
+      title: Reminders
+      link: notifications
+      icon: arrow-right
+  - type: component.list
+    options:
+      data: =@ctx.datasources.reminders
+      maximumItemsToRender: 8
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      item:
+        type: component.custom-component
+        componentId: reminder-card-component
+        inputs:
+          reminder: =@ctx.current.item
+  - type: component.custom-component
+    componentId: title-with-link
+    inputs:
+      title: Available strategies
       link: strategies-composite
       icon: arrow-right
   - type: component.list
@@ -269,7 +328,7 @@ children:
       maximumItemsToRender: 8
       isHorizontal: true
       isHorizontalScrollIndicatorHidden: true
-      item: 
+      item:
         type: component.custom-component
         componentId: strategy-preview-card
         inputs:
@@ -290,7 +349,7 @@ children:
       maximumItemsToRender: 100
       isHorizontal: true
       isHorizontalScrollIndicatorHidden: true
-      item: 
+      item:
         type: component.custom-component
         componentId: daily-emotions-stats-card
         inputs:
@@ -301,23 +360,6 @@ children:
           goTo: true
           numberOfDay: =@ctx.current.item.numberOfDay
           numberOfActualDay: =@ctx.datasources.actualDay.day
-  - type: component.custom-component
-    componentId: title-with-link
-    inputs:
-      title: Reminders
-      link: notifications
-      icon: arrow-right
-  - type: component.list
-    options:
-      data: =@ctx.datasources.reminders
-      maximumItemsToRender: 8
-      isHorizontal: true
-      isHorizontalScrollIndicatorHidden: true
-      item: 
-        type: component.custom-component
-        componentId: reminder-card-component
-        inputs:
-          reminder: =@ctx.current.item
   - type: component.custom-component
     componentId: title-with-link
     inputs:
@@ -346,22 +388,22 @@ children:
   - type: component.custom-component
     componentId: weekly-plan
     inputs:
-      isClickable: true 
+      isClickable: true
       linkTo: weekly-plan-composite
   - type: component.custom-component
     componentId: create-new
-    inputs: 
+    inputs:
       icon: plus
       title: Create new assignment
       goTo: new-task-composite
-    
+
   # - type: component.list
   #   options:
   #     data: =@ctx.datasources.mood-stats
   #     maximumItemsToRender: 100
   #     isHorizontal: true
   #     isHorizontalScrollIndicatorHidden: true
-  #     item: 
+  #     item:
   #       type: component.custom-component
   #       componentId: weekly-plan-card
   #       inputs:
@@ -387,14 +429,14 @@ children:
       icon: arrow-right
   - type: component.list
     options:
-      data: =@ctx.datasources.routines
+      data: =@ctx.datasources.routines-with-todos
       maximumItemsToRender: 8
       isHorizontal: true
       isHorizontalScrollIndicatorHidden: true
-      item: 
+      item:
         type: component.custom-component
         componentId: routine-card-component
         inputs:
           routines: =@ctx.current.item
-          number: 3/5
- 
+          numberOfSteps: =@ctx.current.item.total_todos
+          isDoneNumber: =@ctx.current.item.isDoneNumber

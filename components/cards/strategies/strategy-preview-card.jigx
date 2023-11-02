@@ -1,19 +1,20 @@
 type: component.default
 children:
   - type: component.view
+    when: =(@ctx.inputs.strategies.strategy_id = @ctx.solution.state.idStrategy) or $not(@ctx.solution.state.idStrategy != null)
     options:
       style:
         flex: 
           grow: 1
-          shrink: 1
-          direction: row
         margin:
           right: small
       children:
         - type: component.card
           options:
+            # emphasis: =(@ctx.inputs.strategies.strategy_id = @ctx.solution.state.idStrategy) or $not(@ctx.solution.state.idStrategy != null) ? 'none':'high'
             color: =@ctx.inputs.strategies.category_id = 1 ? 'color2':@ctx.inputs.strategies.category_id = 2 ? 'color8':'color3'
             onPress: 
+              when: =(@ctx.inputs.strategies.strategy_id = @ctx.solution.state.idStrategy) or $not(@ctx.solution.state.idStrategy != null)
               type: action.go-to
               options:
                 linkTo: strategies-detail
@@ -26,8 +27,11 @@ children:
                   style:
                     flex: 
                       grow: 1
-                      # shrink: 1
+                      basis: 1
+                      shrink: 1
                       direction: row
+                    margin: 
+                      right: small
                     width: 
                       min: 320
                     gap: small

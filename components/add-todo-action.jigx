@@ -1,0 +1,77 @@
+type: component.default
+children:
+  - type: component.view
+    options:
+      style:
+        
+      children:
+        - type: component.form
+          when: =@ctx.solution.state.add-todo = 1
+          instanceId: new-todo-routine-form
+          options:
+            children:
+              - type: component.field-row
+                options:
+                  children:
+                    - type: component.text-field
+                      instanceId: name
+                      options:
+                        label: Name
+              - type: component.text-field
+                instanceId: type
+                options:
+                  label: type
+                  isHidden: true
+                  initialValue: =@ctx.inputs.routines.type
+              - type: component.number-field
+                instanceId: routine_id
+                options:
+                  isHidden: true
+                  label: routine id
+                  initialValue: =@ctx.inputs.routines.routine_id
+              - type: component.checkbox
+                instanceId: hasEmoji
+                options:
+                  isHidden: true
+                  label: hasEmoji
+                  initialValue: false
+              - type: component.dropdown
+                instanceId: image
+                options:
+                  label: Icon
+                  data: =@ctx.inputs.images
+                  style:
+                    flex: 1
+                  item:
+                    type: component.dropdown-item
+                    options:
+                      title: =@ctx.inputs.images.name
+                      value: =@ctx.inputs.images.image
+                      # leftElement: 
+                      #   element: image
+                      #   text: ''
+                      #   uri: =@ctx.inputs.images.image
+                      #   resizeMode: contain
+                      leftElement: 
+                        element: avatar
+                        text: =@ctx.inputs.images.name
+                        uri: =@ctx.inputs.images.image
+        - type: component.button
+          options:
+            title: Create new todo
+            onPress: 
+                type: action.submit-form
+                when: =@ctx.solution.state.add-todo = 1 
+                options:
+                  formId: new-todo-routine-form
+                  provider: DATA_PROVIDER_DYNAMIC
+                  entity: default/todos
+                  method: save
+                  goBack: stay 
+                  onSuccess: 
+                    title: New todo created
+                    type: action.set-state
+                    options:
+                      state: =@ctx.solution.state.add-todo
+                      value: 0
+        

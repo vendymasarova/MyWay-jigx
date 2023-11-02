@@ -1,4 +1,4 @@
-title: ' '
+title:  =(@ctx.jig.inputs.strategyId = @ctx.solution.state.idStrategy) or $not(@ctx.solution.state.idStrategy != null)
 type: jig.default
 
 datasources:
@@ -134,10 +134,11 @@ children:
       isDoneNumber: =@ctx.datasources.isDone_count.isDone
   - type: component.custom-component
     when: =@ctx.solution.state.isActivityStarted = 0
-    componentId: button
+    componentId: strategies-start-button
     inputs:
       title: Let's start
       isActivityStarted: true
+      strategyId: =@ctx.jig.inputs.strategyId
   - type: component.list
     when: =@ctx.solution.state.isActivityStarted = 1 
     options:
