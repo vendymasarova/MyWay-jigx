@@ -336,6 +336,7 @@ children:
           numberOfSteps: =@ctx.current.item.total_steps
           isDoneNumber: =@ctx.current.item.isDoneNumber
           goTo: true
+          strategyId: =@ctx.jig.inputs.strategyId
   - type: component.custom-component
     componentId: title-with-link
     inputs:

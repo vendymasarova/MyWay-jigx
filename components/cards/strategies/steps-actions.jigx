@@ -24,7 +24,7 @@ children:
                   onPress: 
                     type: action.action-list
                     options:
-                      isSequential: true
+                      isSequential: false
                       actions:
                         - type: action.set-state
                           options:
@@ -56,8 +56,22 @@ children:
                             parameters:
                               strategyId: =@ctx.inputs.strategyId
                               id: =$number($random())
+                        - type: action.execute-entities
+                          options:
+                            provider: DATA_PROVIDER_DYNAMIC
+                            entity: default/strategies
+                            method: update
+                            goBack: stay
+                            data: =@ctx.inputs.resetActivityAsDone
+                        - type: action.execute-entities
+                          options:
+                            provider: DATA_PROVIDER_DYNAMIC
+                            entity: default/strategies
+                            method: update
+                            goBack: stay
+                            data: =@ctx.inputs.resetActivityInProgress
         - type: component.view
-          when: =@ctx.solution.state.activityIsFinished = false
+          when: =@ctx.inputs.inProgress
           options:
             style:
               flex: 
@@ -90,24 +104,6 @@ children:
                             method: update
                             goBack: stay
                             data: =@ctx.inputs.setActivityAsDone
-        - type: component.view
-          when: =@ctx.solution.state.activityIsFinished = true 
-          # when: =@ctx.solution.state.activityIsFinished = true and @ctx.inputs.isDone = true
-          options:
-            style:
-              flex:
-                grow: 1
-                basis: 1
-            children:
-              - type: component.button
-                options:
-                  title: Save 
-                  type: primary
-                  onPress: 
-                    type: action.action-list
-                    options:
-                      isSequential: false
-                      actions:
                         - type: action.execute-entities
                           options: 
                             provider: DATA_PROVIDER_DYNAMIC
@@ -122,6 +118,13 @@ children:
                             onSuccess: 
                               title: Successfully saved
                               description: Your result for this strategy was saved
+                        - type: action.execute-entities
+                          options:
+                            provider: DATA_PROVIDER_DYNAMIC
+                            entity: default/strategies
+                            method: update
+                            goBack: stay
+                            data: =@ctx.inputs.finishTime
                         - type: action.reset-state
                           options:
                             state: =@ctx.solution.state.activityFinishTime
@@ -131,17 +134,74 @@ children:
                         - type: action.reset-state
                           options:
                             state: =@ctx.solution.state.activityStartTime
-                        # - type: action.go-to
-                        #   options:
-                        #     linkTo: strategies-detail
-                        #     parameters:
-                        #       strategyId: =@ctx.inputs.strategyId
-                        #       id: =$number($random())
-                        # - type: action.reset-state
-                        #   options:
-                        #     state: =@ctx.solution.state.isActivityStarted
-                            
-                        # - type: action.reset-state
-                        #   options:
-                        #     state: =@ctx.solution.state.activityIsFinished
-                              
+                        - type: action.execute-entities
+                          options:
+                            provider: DATA_PROVIDER_DYNAMIC
+                            entity: default/strategies
+                            method: update
+                            goBack: stay
+                            data: =@ctx.inputs.resetActivityInProgress
+
+        # - type: component.view
+        #   when: =@ctx.inputs.inProgress = 1 
+        #   # when: =@ctx.solution.state.activityIsFinished = true and @ctx.inputs.isDone = true
+        #   options:
+        #     style:
+        #       flex:
+        #         grow: 1
+        #         basis: 1
+        #     children:
+        #       - type: component.button
+        #         options:
+        #           title: Save 
+        #           type: primary
+        #           onPress: 
+        #             type: action.action-list
+        #             options:
+        #               isSequential: true
+        #               actions:
+        #                 - type: action.execute-entities
+        #                   options: 
+        #                     provider: DATA_PROVIDER_DYNAMIC
+        #                     entity: default/strategies-results
+        #                     method: update
+        #                     goBack: stay
+        #                     data:    
+        #                       id: =$uuid()
+        #                       start: =@ctx.solution.state.activityStartTime
+        #                       end: =@ctx.solution.state.activityFinishTime
+        #                       strategyId: =@ctx.inputs.strategyId
+        #                     onSuccess: 
+        #                       title: Successfully saved
+        #                       description: Your result for this strategy was saved
+        #                 - type: action.execute-entities
+        #                   options:
+        #                     provider: DATA_PROVIDER_DYNAMIC
+        #                     entity: default/strategies
+        #                     method: update
+        #                     goBack: stay
+        #                     data: =@ctx.inputs.finishTime
+        #                 - type: action.reset-state
+        #                   options:
+        #                     state: =@ctx.solution.state.activityFinishTime
+        #                 - type: action.reset-state
+        #                   options:
+        #                     state: =@ctx.solution.state.idStrategy
+        #                 - type: action.reset-state
+        #                   options:
+        #                     state: =@ctx.solution.state.activityStartTime
+        #                 - type: action.execute-entities
+        #                   options:
+        #                     provider: DATA_PROVIDER_DYNAMIC
+        #                     entity: default/strategies
+        #                     method: update
+        #                     goBack: stay
+        #                     data: =@ctx.inputs.resetActivityInProgress
+        #                 # - type: action.execute-entities
+        #                 #   options:
+        #                 #     provider: DATA_PROVIDER_DYNAMIC
+        #                 #     entity: default/strategies
+        #                 #     method: update
+        #                 #     goBack: stay
+        #                 #     data: =@ctx.inputs.finishTime
+                        

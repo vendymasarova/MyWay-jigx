@@ -36,7 +36,7 @@ children:
                         align: center
                         size: regular
                         weight: semi-bold
-                        value: =$fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[m01]') & ' min. ' & $fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[s01]') & ' sec.'
+                        value: =$type(@ctx.solution.state.activityFinishTime) != null ? $fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[m01]') & ' min. ' & $fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[s01]') & ' sec.':@ctx.inputs.finishTime
         - type: component.view
           options:
             style:

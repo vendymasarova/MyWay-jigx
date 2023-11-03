@@ -1,4 +1,4 @@
-title:  =(@ctx.jig.inputs.strategyId = @ctx.solution.state.idStrategy) or $not(@ctx.solution.state.idStrategy != null)
+title: ' '
 type: jig.default
 
 datasources:
@@ -17,9 +17,11 @@ datasources:
           '$.time',
           '$.category_id',
           '$.category_name',
+          '$.finishTime',
           '$.description',
           '$.image',
           '$.isDone',
+          '$.isInProgress',
           '$.strategy_id',
           '$.steps',
           json_array_length(json_extract(data, '$.steps')) AS numberOfSteps 
@@ -27,50 +29,6 @@ datasources:
         WHERE '$.strategy_id' = @strategyId
       queryParameters:
         strategyId: =@ctx.jig.inputs.strategyId
-  
-  strategies-with-steps:
-    type: datasource.sqlite
-    options:
-      provider: DATA_PROVIDER_LOCAL
-
-      entities:
-        - entity: default/steps
-        - entity: default/strategies
-
-      query: |
-        SELECT
-          a.id AS id,
-          json_extract(a.data, '$.name') AS name,
-          json_extract(a.data, '$.time') AS time,
-          json_extract(a.data, '$.category_id') AS category_id,
-          json_extract(a.data, '$.description') AS description,
-          json_extract(a.data, '$.image') AS image,
-          json_extract(a.data, '$.isDone') AS isDone,
-          json_extract(a.data, '$.strategy_id') AS strategy_id,
-          json_extract(a.data, '$.isActive') AS isActive,
-          json_extract(b.data, '$.step') AS step_title,
-          json_extract(b.data, '$.step') AS step,
-          json_extract(b.data, '$.step_id') AS step_id,
-          json_extract(b.data, '$.isChecked') AS step_isChecked,
-          (
-          SELECT COUNT(*)
-          FROM [default/steps] s
-          WHERE json_extract(s.data, '$.strategy_id') = json_extract(a.data, '$.strategy_id')
-          ) AS total_steps,
-          (
-            SELECT COUNT(*)
-            FROM [default/steps] s
-            WHERE json_extract(s.data, '$.isChecked') = 1
-            AND json_extract(s.data, '$.strategy_id') = json_extract(a.data, '$.strategy_id')
-          ) AS isDoneNumber
-        FROM [default/strategies] a
-        LEFT JOIN [default/steps] b ON json_extract(a.data, '$.strategy_id') = json_extract(b.data, '$.strategy_id')
-        WHERE strategy_id = @strategyId
-        GROUP BY strategy_id
-        ORDER BY step
-        AND isActive = 1
-      queryParameters:
-       strategyId: =@ctx.jig.inputs.strategyId
   
   steps:
     type: datasource.sqlite
@@ -133,14 +91,16 @@ children:
       numberOfSteps: =@ctx.datasources.row_count.row_count
       isDoneNumber: =@ctx.datasources.isDone_count.isDone
   - type: component.custom-component
-    when: =@ctx.solution.state.isActivityStarted = 0
-    componentId: strategies-start-button
+    when: =@ctx.datasources.strategies.isInProgress = 0 and @ctx.datasources.strategies.isDone = 0
+    componentId: strategies-start-restart-button
     inputs:
       title: Let's start
       isActivityStarted: true
       strategyId: =@ctx.jig.inputs.strategyId
+      setActivityInProgress:  =@ctx.datasources.strategies.{"id" :id, "isInProgress" :true}[]
+      action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
   - type: component.list
-    when: =@ctx.solution.state.isActivityStarted = 1 
+    when: =@ctx.datasources.strategies.isInProgress = 1
     options:
       data: =@ctx.datasources.steps
       item: 
@@ -152,10 +112,12 @@ children:
           stepsCount: =@ctx.datasources.row_count.row_count
           isDoneCount: =@ctx.datasources.isDone_count.isDone
   - type: component.custom-component
-    when: =@ctx.solution.state.activityIsFinished = true
+    when: =@ctx.datasources.strategies.isDone = 1
     componentId: finish
+    inputs:
+      finishTime: =@ctx.datasources.strategies.finishTime
   - type: component.custom-component
-    when: =@ctx.solution.state.isActivityStarted = 1
+    when: =@ctx.datasources.strategies.isInProgress = 1
     componentId: steps-actions
     inputs: 
       action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
@@ -163,24 +125,19 @@ children:
       isDoneCount: =@ctx.datasources.isDone_count.isDone
       strategyId: =@ctx.jig.inputs.strategyId
       setActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :true}[]
-  # - type: component.image
-  #   when: =@ctx.solution.state.activityIsFinished = true
-  #   options:
-  #     height: 100
-  #     resizeMode: contain
-  #     source:
-  #       uri: https://t14345253.p.clickup-attachments.com/t14345253/ab7925cc-a8f7-4d17-9e51-961d0c5a00f0/Party.png?view=open
+      resetActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :false}[]
+      resetActivityInProgress:  =@ctx.datasources.strategies.{"id" :id, "isInProgress" :false}[]
+      inProgress: =@ctx.datasources.strategies.isInProgress
+      finishTime: =@ctx.datasources.strategies.{"id" :id, "finishTime" :$fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[m01]') & ' min. ' & $fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[s01]') & ' sec.'}[]
+  - type: component.custom-component
+    when: =(@ctx.datasources.strategies.isInProgress = 0) and (@ctx.datasources.strategies.isDone = 1)
+    componentId: strategies-start-restart-button
+    inputs:
+      title: Start Over
+      isActivityStarted: true
+      strategyId: =@ctx.jig.inputs.strategyId
+      setActivityInProgress:  =@ctx.datasources.strategies.{"id" :id, "isInProgress" :true}[]
+      resetActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :false}[]
+      isDone: =@ctx.datasources.strategies.isDone
+      action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
       
-  # - type: component.custom-component
-  #   when: =@ctx.datasources.row_count.row_count = @ctx.datasources.isDone_count.isDone ? true:false
-  #   componentId: button
-  #   inputs: 
-  #     isActivityFinished: =@ctx.datasources.row_count.row_count = @ctx.datasources.isDone_count.isDone ? true:false
-  #     title: Finish Activity
-  # - type: component.custom-component
-  #   componentId: button
-  #   inputs: 
-  #     isActivityRestarted: true
-  #     title: Restart strategy
-  #     steps: =@ctx.datasources.steps
-  #     action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
