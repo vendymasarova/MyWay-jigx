@@ -30,7 +30,7 @@ children:
                   value: =@ctx.inputs.welcomeMessage
                   # align: center
                   weight: semi-bold
-                  size: large
+                  size: medium
               - type: component.view
                 options:
                   style:
@@ -47,3 +47,4 @@ children:
                         value: ="It's" & ' ' & @ctx.inputs.date
                         # emphasis: medium
                         size: small 
+                        emphasis: high

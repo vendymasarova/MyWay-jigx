@@ -5,15 +5,13 @@ expressions:
     =$boolean(@ctx.datasources.steps.isChecked)
     
 onFocus: 
-  type: action.execute-entity
+  type: action.execute-entities
   options:
     provider: DATA_PROVIDER_DYNAMIC
     entity: default/steps
     method: update
-    goBack: previous
-    data:
-      id: =@ctx.datasources.steps.id
-      isRevealed: false
+    goBack: stay
+    data: =@ctx.datasources.steps.{"id" :id, "isRevealed" :false}[]
 
 datasources:
   strategies: 
