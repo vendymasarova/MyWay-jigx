@@ -20,7 +20,7 @@ children:
                   - type: action.set-state
                     options:
                       state: =@ctx.solution.state.categoryId
-                      value: =@ctx.inputs.categories.category_id
+                      value: =@ctx.inputs.categories.id
                   - type: action.go-to
                     when: =@ctx.inputs.goTo
                     options:

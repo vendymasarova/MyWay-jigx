@@ -17,13 +17,13 @@ children:
           options:
             title: =@ctx.inputs.name
             uri: =@ctx.inputs.avatar
-            size: large
+            size: medium
             # align: left
         # Text
         - type: component.view
           options:
             style:
-              gap: small
+              # gap: small
             children:
               - type: component.text
                 options:

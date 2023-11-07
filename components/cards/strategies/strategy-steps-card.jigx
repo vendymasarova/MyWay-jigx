@@ -1,6 +1,7 @@
 type: component.default
 children:
   - type: component.view
+    when: =@ctx.inputs.steps.isRevealed = 1 ? true:false
     options:
       style:
         margin: 
@@ -71,9 +72,14 @@ children:
                                               method: update
                                               goBack: stay
                                               data:
+                                                id: =@ctx.datasources.steps[strategy_id = @ctx.inputs.steps.strategy_id and step = @ctx.inputs.steps.step + 1].id
+                                                isRevealed: true
+                                          - type: action.execute-entity
+                                            options:
+                                              provider: DATA_PROVIDER_DYNAMIC
+                                              entity: default/steps
+                                              method: update
+                                              goBack: stay
+                                              data:
                                                 id: =@ctx.inputs.steps.id
                                                 isChecked: =@ctx.components.step.state.value          
-
-        
-        
-        

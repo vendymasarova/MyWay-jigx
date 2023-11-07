@@ -1,5 +1,7 @@
-title: =@ctx.solution.state.categoryId = 1 ? 'Create To Do':'Create a new task'
+title: =@ctx.solution.state.categoryId = 1 ? 'Create To Do':'Create task'
 type: jig.default
+
+
 
 actions:
   - children:
@@ -29,8 +31,21 @@ actions:
                 method: save
                 onSuccess: 
                   title: Huraa
-
+                  
 datasources:
+  list: 
+    type: datasource.static
+    options:
+      data:
+        - id: 1
+          name: To Do
+          icon: checklist
+          image: https://t14345253.p.clickup-attachments.com/t14345253/43b53330-7073-41aa-9609-672e77c0c143/Checklist.png?view=open
+        - id: 2
+          name: Task
+          icon: notes
+          image: https://t14345253.p.clickup-attachments.com/t14345253/65bedc36-4a12-4bfc-8193-8cf8c17b2e7e/Homework.png?view=open
+          
   images: 
     type: datasource.static
     options:
@@ -104,6 +119,17 @@ datasources:
         - id: 3
           type: Test and exams
 children:
+  - type: component.list
+    options:
+      isHorizontal: true
+      isHorizontalScrollIndicatorHidden: true
+      data: =@ctx.datasources.list
+      maximumItemsToRender: 8
+      item: 
+        type: component.custom-component
+        componentId: category-card
+        inputs:
+          categories: =@ctx.current.item
   - type: component.form
     when: =@ctx.solution.state.categoryId = 1 ? true:false
     instanceId: todo-form
@@ -252,6 +278,3 @@ children:
                   label: Time
                   mode: time
                   format: HH:mm
-  
-  
-    

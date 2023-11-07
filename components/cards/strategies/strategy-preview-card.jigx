@@ -133,7 +133,7 @@ children:
                               style:
                               children:
                                 - type: component.view
-                                  when: =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps ? true:false
+                                  when: =@ctx.inputs.isDoneNumber = @ctx.inputs.numberOfSteps and @ctx.inputs.strategies.isDone = 1 ? true:false
                                   options:
                                     style:
                                       flex: 
@@ -160,6 +160,34 @@ children:
                                         options:
                                           icon: check
                                           size: medium
+                                - type: component.view
+                                  when: =@ctx.inputs.strategies.isInProgress = 1 
+                                  options:
+                                    style:
+                                      flex: 
+                                        grow: 0
+                                        shrink: 1
+                                        direction: row
+                                      gap: small
+                                      padding: 
+                                        vertical: minimal
+                                        horizontal: small
+                                      background:
+                                        color: warning
+                                      alignItems: center
+                                      justifyContent: center
+                                      radius: tiny
+                                      alignSelf: flex-start
+                                      margin: 
+                                        top: medium
+                                    children:
+                                      - type: component.text
+                                        options:
+                                          value: In progress
+                                      # - type: component.icon
+                                      #   options:
+                                      #     icon: check
+                                      #     size: medium
                                 - type: component.progress-bar
                                   options:
                                     steps: =@ctx.inputs.numberOfSteps

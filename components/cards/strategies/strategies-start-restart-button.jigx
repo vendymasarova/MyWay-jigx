@@ -46,3 +46,22 @@ children:
                       goBack: stay
                       method: update
                       data: =@ctx.inputs.action
+                  - type: action.execute-entity
+                    options:
+                      provider: DATA_PROVIDER_DYNAMIC
+                      entity: default/steps
+                      method: update
+                      goBack: stay
+                      data:
+                        id: =@ctx.datasources.steps[strategy_id = @ctx.inputs.strategyId and step = 1].id
+                        isRevealed: true
+                  - type: action.execute-entity
+                    when: =@ctx.inputs.isDone = 1
+                    options:
+                      provider: DATA_PROVIDER_DYNAMIC
+                      entity: default/steps
+                      method: update
+                      goBack: stay
+                      data:
+                        id: =@ctx.datasources.steps[strategy_id = @ctx.inputs.strategyId].id
+                        
