@@ -13,7 +13,7 @@ children:
             onPress: 
               type: action.action-list
               options:
-                isSequential: false
+                isSequential: true
                 actions:
                   - type: action.set-state
                     when: =@ctx.solution.state.isActivityStarted = 0
@@ -30,22 +30,22 @@ children:
                       entity: default/strategies
                       method: update
                       goBack: stay
-                      data: =@ctx.inputs.setActivityInProgress
-                  - type: action.execute-entities
+                      data: =@ctx.datasources.strategies[strategy_id = @ctx.inputs.strategyId].{"id" :id, "isInProgress" :true}[]
+                  - type: action.execute-entity
                     when: =@ctx.inputs.isDone = 1
                     options:
                       provider: DATA_PROVIDER_DYNAMIC
                       entity: default/strategies
                       method: update
                       goBack: stay
-                      data: =@ctx.inputs.resetActivityAsDone
+                      data: =@ctx.datasources.strategies[strategy_id = @ctx.inputs.strategyId].{"id" :id, "isDone" :false}[]
                   - type: action.execute-entities
                     options: 
                       provider: DATA_PROVIDER_DYNAMIC
                       entity: default/steps
                       goBack: stay
                       method: update
-                      data: =@ctx.inputs.action
+                      data: =@ctx.datasources.steps[strategy_id = @ctx.inputs.strategyId].{"id" :id, "isChecked" :0}[]
                   - type: action.execute-entity
                     options:
                       provider: DATA_PROVIDER_DYNAMIC
@@ -55,13 +55,6 @@ children:
                       data:
                         id: =@ctx.datasources.steps[strategy_id = @ctx.inputs.strategyId and step = 1].id
                         isRevealed: true
-                  - type: action.execute-entity
-                    when: =@ctx.inputs.isDone = 1
-                    options:
-                      provider: DATA_PROVIDER_DYNAMIC
-                      entity: default/steps
-                      method: update
-                      goBack: stay
-                      data:
-                        id: =@ctx.datasources.steps[strategy_id = @ctx.inputs.strategyId].id
+              
+                                  
                         

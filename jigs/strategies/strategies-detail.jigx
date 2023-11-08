@@ -1,17 +1,17 @@
-title: =@ctx.datasources.strategies.isDone
+title: =@ctx.datasources.steps.isRevealed
 type: jig.default
 expressions:
   loadNumber: |
     =$boolean(@ctx.datasources.steps.isChecked)
     
-onFocus: 
-  type: action.execute-entities
-  options:
-    provider: DATA_PROVIDER_DYNAMIC
-    entity: default/steps
-    method: update
-    goBack: stay
-    data: =@ctx.datasources.steps.{"id" :id, "isRevealed" :false}[]
+# onFocus: 
+#   type: action.execute-entities
+#   options:
+#     provider: DATA_PROVIDER_DYNAMIC
+#     entity: default/steps
+#     method: update
+#     goBack: stay
+#     data: =@ctx.datasources.steps.{"id" :id, "isRevealed" :false}[]
 
 datasources:
   strategies: 
@@ -114,7 +114,6 @@ children:
       setActivityInProgress:  =@ctx.datasources.strategies.{"id" :id, "isInProgress" :true}[]
       action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
   - type: component.list
-    when: =@ctx.datasources.strategies.isInProgress = 1
     options:
       data: =@ctx.datasources.steps
       item: 
@@ -125,30 +124,44 @@ children:
           isChecked: =@ctx.current.item.isChecked
           numberOfSteps: =@ctx.datasources.row_count.row_count
           isDoneCount: =@ctx.datasources.isDone_count.isDone
-          value: =$loadNumber
   # - type: component.list
-  #   instanceId: =@ctx.datasources.strategies.strategy_id
   #   options:
   #     data: =@ctx.datasources.steps
   #     maximumItemsToRender: 8
   #     item: 
   #       type: component.list-item
+  #       when: =@ctx.current.item.isRevealed
   #       options:
+  #         style:
+  #           isDisabled: =@ctx.current.item.isRevealed = 0 ? true:false
   #         title: =@ctx.current.item.step
   #         subtitle: =@ctx.current.item.title
   #         rightElement: 
   #           element: checkbox
-  #           value: =@ctx.current.item.isChecked
+  #           value: =$number(@ctx.current.item.isChecked)
   #           onChange: 
-  #             type: action.execute-entity
+  #             type: action.action-list
   #             options:
-  #               provider: DATA_PROVIDER_DYNAMIC
-  #               entity: default/steps
-  #               method: update
-  #               goBack: stay
-  #               data:
-  #                 id: =@ctx.current.item.id
-  #                 isChecked: =@ctx.current.state.checked
+  #               actions:
+  #                 - type: action.execute-entity
+  #                   when: =@ctx.datasources.row_count.row_count != @ctx.datasources.isDone_count.isDone ? true:false
+  #                   options:
+  #                     provider: DATA_PROVIDER_DYNAMIC
+  #                     entity: default/steps
+  #                     method: update
+  #                     goBack: stay
+  #                     data:
+  #                       id: =@ctx.datasources.steps[step = @ctx.current.item.step + 1].id
+  #                       isRevealed: true
+  #                 - type: action.execute-entity
+  #                   options:
+  #                     provider: DATA_PROVIDER_DYNAMIC
+  #                     entity: default/steps
+  #                     method: update
+  #                     goBack: stay
+  #                     data:
+  #                       id: =@ctx.current.item.id
+  #                       isChecked: =@ctx.current.state.checked
             
   - type: component.custom-component
     when: =@ctx.datasources.strategies.isDone = 1
@@ -159,15 +172,14 @@ children:
     when: =@ctx.datasources.strategies.isInProgress = 1
     componentId: steps-actions
     inputs: 
-      action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
+      # action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
       stepsCount: =@ctx.datasources.row_count.row_count
       isDoneCount: =@ctx.datasources.isDone_count.isDone
       strategyId: =@ctx.jig.inputs.strategyId
-      setActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :true}[]
-      resetActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :false}[]
-      resetActivityInProgress:  =@ctx.datasources.strategies.{"id" :id, "isInProgress" :false}[]
-      inProgress: =@ctx.datasources.strategies.isInProgress
-      finishTime: =@ctx.datasources.strategies.{"id" :id, "finishTime" :$fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[m01]') & ' min. ' & $fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[s01]') & ' sec.'}[]
+      # setActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :true}[]
+      # resetActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :false}[]
+      # resetActivityInProgress:  =@ctx.datasources.strategies.{"id" :id, "isInProgress" :false}[]
+      # finishTime: =@ctx.datasources.strategies.{"id" :id, "finishTime" :$fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[m01]') & ' min. ' & $fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[s01]') & ' sec.'}[]
   - type: component.custom-component
     when: =(@ctx.datasources.strategies.isInProgress = 0) and (@ctx.datasources.strategies.isDone = 1)
     componentId: strategies-start-restart-button
@@ -175,10 +187,10 @@ children:
       title: Start Over
       isActivityStarted: true
       strategyId: =@ctx.jig.inputs.strategyId
-      setActivityInProgress:  =@ctx.datasources.strategies.{"id" :id, "isInProgress" :true}[]
-      resetActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :false}[]
-      isDone: =@ctx.datasources.strategies.isDone
-      action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
-      resetRevealedSteps: =@ctx.datasources.steps.{"id" :id, "isRevealed" :0}[]
+      # setActivityInProgress:  =@ctx.datasources.strategies.{"id" :id, "isInProgress" :true}[]
+      # resetActivityAsDone: =@ctx.datasources.strategies.{"id" :id, "isDone" :false}[]
+      # isDone: =@ctx.datasources.strategies.isDone
+      # action: =@ctx.datasources.steps.{"id" :id, "isChecked" :0}[]
+      # resetRevealedSteps: =@ctx.datasources.steps.{"id" :id, "isRevealed" :0}[]
       
       

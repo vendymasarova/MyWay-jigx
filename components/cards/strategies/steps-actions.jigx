@@ -24,7 +24,7 @@ children:
                   onPress: 
                     type: action.action-list
                     options:
-                      isSequential: false
+                      isSequential: true
                       actions:
                         - type: action.set-state
                           options:
@@ -49,27 +49,28 @@ children:
                             entity: default/steps
                             goBack: stay
                             method: update
-                            data: =@ctx.inputs.action
-                        - type: action.go-to
-                          options:
-                            linkTo: strategies-detail
-                            parameters:
-                              strategyId: =@ctx.inputs.strategyId
-                              id: =$number($random())
-                        - type: action.execute-entities
+                            data: =@ctx.datasources.steps[strategy_id = @ctx.inputs.strategyId].{"id" :id, "isChecked" :0}[]
+                        - type: action.execute-entity
                           options:
                             provider: DATA_PROVIDER_DYNAMIC
                             entity: default/strategies
                             method: update
                             goBack: stay
-                            data: =@ctx.inputs.resetActivityAsDone
-                        - type: action.execute-entities
+                            data: =@ctx.datasources.strategies[strategy_id = @ctx.inputs.strategyId].{"id" :id, "isDone" :false}[]
+                        - type: action.execute-entity
                           options:
                             provider: DATA_PROVIDER_DYNAMIC
                             entity: default/strategies
                             method: update
                             goBack: stay
-                            data: =@ctx.inputs.resetActivityInProgress
+                            data: =@ctx.datasources.strategies[strategy_id = @ctx.inputs.strategyId].{"id" :id, "isInProgress" :false}
+                        - type: action.execute-entities
+                          options:
+                            provider: DATA_PROVIDER_DYNAMIC
+                            goBack: stay
+                            entity: default/steps
+                            method: update
+                            data: =@ctx.datasources.steps.{'id':id,'isRevealed':false}[]
         - type: component.view
           when: =@ctx.inputs.inProgress
           options:
@@ -97,13 +98,13 @@ children:
                           options:
                             state: =@ctx.solution.state.activityFinishTime
                             value: =$now()
-                        - type: action.execute-entities
+                        - type: action.execute-entity
                           options:
                             provider: DATA_PROVIDER_DYNAMIC
                             entity: default/strategies
                             method: update
                             goBack: stay
-                            data: =@ctx.inputs.setActivityAsDone
+                            data: =@ctx.datasources.strategies[strategy_id = @ctx.inputs.strategyId].{"id" :id, "isDone" :true}[]
                         - type: action.execute-entities
                           options: 
                             provider: DATA_PROVIDER_DYNAMIC
@@ -124,7 +125,7 @@ children:
                             entity: default/strategies
                             method: update
                             goBack: stay
-                            data: =@ctx.inputs.finishTime
+                            data: =@ctx.datasources.strategies[strategy_id = @ctx.inputs.strategyId].{"id" :id, "finishTime" :$fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[m01]') & ' min. ' & $fromMillis($toMillis(@ctx.solution.state.activityFinishTime) - $toMillis(@ctx.solution.state.activityStartTime), '[s01]') & ' sec.'}[]
                         - type: action.reset-state
                           options:
                             state: =@ctx.solution.state.activityFinishTime
@@ -140,68 +141,11 @@ children:
                             entity: default/strategies
                             method: update
                             goBack: stay
-                            data: =@ctx.inputs.resetActivityInProgress
-
-        # - type: component.view
-        #   when: =@ctx.inputs.inProgress = 1 
-        #   # when: =@ctx.solution.state.activityIsFinished = true and @ctx.inputs.isDone = true
-        #   options:
-        #     style:
-        #       flex:
-        #         grow: 1
-        #         basis: 1
-        #     children:
-        #       - type: component.button
-        #         options:
-        #           title: Save 
-        #           type: primary
-        #           onPress: 
-        #             type: action.action-list
-        #             options:
-        #               isSequential: true
-        #               actions:
-        #                 - type: action.execute-entities
-        #                   options: 
-        #                     provider: DATA_PROVIDER_DYNAMIC
-        #                     entity: default/strategies-results
-        #                     method: update
-        #                     goBack: stay
-        #                     data:    
-        #                       id: =$uuid()
-        #                       start: =@ctx.solution.state.activityStartTime
-        #                       end: =@ctx.solution.state.activityFinishTime
-        #                       strategyId: =@ctx.inputs.strategyId
-        #                     onSuccess: 
-        #                       title: Successfully saved
-        #                       description: Your result for this strategy was saved
-        #                 - type: action.execute-entities
-        #                   options:
-        #                     provider: DATA_PROVIDER_DYNAMIC
-        #                     entity: default/strategies
-        #                     method: update
-        #                     goBack: stay
-        #                     data: =@ctx.inputs.finishTime
-        #                 - type: action.reset-state
-        #                   options:
-        #                     state: =@ctx.solution.state.activityFinishTime
-        #                 - type: action.reset-state
-        #                   options:
-        #                     state: =@ctx.solution.state.idStrategy
-        #                 - type: action.reset-state
-        #                   options:
-        #                     state: =@ctx.solution.state.activityStartTime
-        #                 - type: action.execute-entities
-        #                   options:
-        #                     provider: DATA_PROVIDER_DYNAMIC
-        #                     entity: default/strategies
-        #                     method: update
-        #                     goBack: stay
-        #                     data: =@ctx.inputs.resetActivityInProgress
-        #                 # - type: action.execute-entities
-        #                 #   options:
-        #                 #     provider: DATA_PROVIDER_DYNAMIC
-        #                 #     entity: default/strategies
-        #                 #     method: update
-        #                 #     goBack: stay
-        #                 #     data: =@ctx.inputs.finishTime
-                        
+                            data: =@ctx.datasources.strategies[strategy_id = @ctx.inputs.strategyId].{"id" :id, "isInProgress" :false}
+                        - type: action.execute-entities
+                          options:
+                            provider: DATA_PROVIDER_DYNAMIC
+                            goBack: stay
+                            entity: default/steps
+                            method: update
+                            data: =@ctx.datasources.steps.{'id':id,'isRevealed':false}[]

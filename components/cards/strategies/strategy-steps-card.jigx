@@ -66,6 +66,7 @@ children:
                                         isSequential: true
                                         actions:
                                           - type: action.execute-entity
+                                            when: =@ctx.inputs.numberOfSteps != @ctx.inputs.isDoneCount
                                             options:
                                               provider: DATA_PROVIDER_DYNAMIC
                                               entity: default/steps
